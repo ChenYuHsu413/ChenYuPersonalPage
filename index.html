@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal Profile and Real-Time Clock of Chen Yu - Built with modern HTML/CSS.">
+    <title>Chen Yu | Profile & Real-Time Clock</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #080710;
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --primary-glow: #6f40f3;
+            --secondary-glow: #00f0ff;
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Abstract glowing background shapes */
+        .background-glows {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .glow-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: float-around 20s infinite alternate ease-in-out;
+        }
+
+        .glow-circle-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary-glow);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-circle-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--secondary-glow);
+            bottom: -150px;
+            right: -100px;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-around {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(80px, 50px) scale(1.1);
+            }
+        }
+
+        /* Glassmorphism Dashboard Card */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 45px 50px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(111, 64, 243, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Profile Greeting Section */
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(111, 64, 243, 0.4);
+            position: relative;
+        }
+
+        .profile-avatar::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: #00ff66;
+            border: 2px solid var(--bg-dark);
+            border-radius: 50%;
+            bottom: 4px;
+            right: 4px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(0, 255, 102, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 255, 102, 0);
+            }
+        }
+
+        .greeting-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .name-highlight {
+            background: linear-gradient(135deg, #00f0ff, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 35px;
+        }
+
+        /* Divider line */
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            margin: 0 auto 30px;
+        }
+
+        /* Clock Widget Section */
+        .clock-container {
+            margin-bottom: 10px;
+        }
+
+        .time-display {
+            font-family: var(--font-mono);
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            margin-bottom: 10px;
+        }
+
+        .date-display {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* Interactive trigger button */
+        .action-button {
+            margin-top: 30px;
+            background: linear-gradient(90deg, rgba(111, 64, 243, 0.8), rgba(0, 240, 255, 0.8));
+            border: none;
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(111, 64, 243, 0.2);
+        }
+
+        .action-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(111, 64, 243, 0.4);
+            background: linear-gradient(90deg, rgba(111, 64, 243, 1), rgba(0, 240, 255, 1));
+        }
+
+        .action-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background glowing ambient lights -->
+    <div class="background-glows">
+        <div class="glow-circle glow-circle-1"></div>
+        <div class="glow-circle glow-circle-2"></div>
+    </div>
+
+    <!-- Main Card Container -->
+    <main class="glass-card">
+
+        <!-- Avatar/Profile Icon -->
+        <div class="profile-avatar">CY</div>
+
+        <!-- Greeting Info -->
+        <h1 class="greeting-title">Hello, my name: <span class="name-highlight">Chen Yu</span></h1>
+        <div class="status-badge">🟢 Online & Connected</div>
+
+        <div class="divider"></div>
+
+        <!-- Clock Widget -->
+        <section class="clock-container">
+            <div class="time-display" id="clock-time">00:00:00</div>
+            <div class="date-display" id="clock-date">Loading date...</div>
+        </section>
+
+        <!-- Interactive action button -->
+        <button class="action-button" onclick="celebrate()">Greeting Action</button>
+
+    </main>
+
+    <!-- JavaScript to make Clock dynamic and interactive -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            // Format Time: HH:MM:SS
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock-time').textContent = `${hours}:${minutes}:${seconds}`;
+
+            // Format Date: Weekday, Month Day, Year
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Run clock updates every second
+        setInterval(updateClock, 1000);
+        updateClock(); // Run immediately on load
+
+        // Greeting action handler
+        function celebrate() {
+            alert("Hello from Chen Yu! Have a wonderful day! Time is ticking: " + new Date().toLocaleTimeString());
+        }
+    </script>
+</body>
+
+</html>
