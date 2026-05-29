@@ -6,6 +6,10 @@ A responsive, high-end personal greeting and real-time clock dashboard designed 
 ![Tech Stack](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
+## 🌐 Live Demo
+
+👉 **[Click here to view the live site](https://chenyuhsu413.github.io/ChenYu/)**
+
 ---
 
 ## ✨ Features
