@@ -39,6 +39,7 @@ ChenYu/
 |   |-- dev-log.md
 |   `-- 工作報告.md
 `-- sources/
+    |-- PikaSheen.jpg
     |-- demo-screenshot.png
     `-- workflow_infographic.jpg
 ```
@@ -52,6 +53,7 @@ ChenYu/
 - `docs/AGENT.md`: Working rules for AI-assisted project maintenance.
 - `docs/dev-log.md`: Development log maintained according to `docs/AGENT.md`.
 - `docs/工作報告.md`: Project report with the daily work log merged into the opening section.
+- `sources/PikaSheen.jpg`: Personal profile image used in the hero section.
 - `sources/demo-screenshot.png`: Homepage preview image shown in this README.
 - `sources/workflow_infographic.jpg`: Supporting image asset used by the project report.
 

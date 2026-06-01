@@ -1,5 +1,83 @@
 ﻿# Development Log
 
+## 2026-06-01 13:41
+
+### 任務摘要
+- 依照最新 `docs/dev-log.md` 內容更新 `docs/工作報告.md`。
+- 將 PikaSheen 個人圖片替換事項補進工作報告開頭的今日維護紀錄。
+- 準備將目前所有變更 commit 並推送到 GitHub。
+
+### 修改檔案
+- `docs/工作報告.md`
+- `docs/dev-log.md`
+
+### 重要決策
+- 在工作報告的「今日工作總覽」、「今日完成事項」、「今日專案結構」與「驗證結果」同步補上 `sources/PikaSheen.jpg`。
+- 保持工作報告仍以摘要與表格形式呈現，不直接複製 dev-log 的詳細指令區塊。
+
+### 執行指令
+```bash
+Get-Content -TotalCount 90 -Encoding UTF8 docs\dev-log.md
+Get-Content -TotalCount 120 -Encoding UTF8 docs\工作報告.md
+git status --short
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+```
+
+### 測試 / 驗證結果
+- 已確認 `docs/工作報告.md` 包含 PikaSheen 圖片替換紀錄。
+- 待 commit 前再次檢查 Git 狀態與暫存內容。
+
+### 遇到的問題
+- 無。
+
+### 下一步建議
+- commit 並推送到 GitHub。
+
+---
+
+## 2026-06-01 13:39
+
+### 任務摘要
+- 將首頁主視覺右側的個人圖像改為使用 `sources/PikaSheen.jpg`。
+- 移除原本以 CSS `::before` 產生的 `CY` 圖像。
+- 調整 `.portrait` 樣式，讓圖片填滿既有框線區塊並保持置中裁切。
+
+### 修改檔案
+- `index.html`
+- `style.css`
+- `README.md`
+- `docs/dev-log.md`
+- `sources/PikaSheen.jpg`
+
+### 重要決策
+- 使用真正的 `<img>` 元素取代裝飾用 `div`，讓圖片具備可讀的 `alt` 文字。
+- 保留原本 `portrait-panel`、caption 與整體主視覺版面，只替換圖像內容與圖片呈現方式。
+- 使用 `object-fit: cover` 與 `object-position: center`，避免圖片變形。
+
+### 執行指令
+```bash
+Get-ChildItem -Force sources
+Select-String -Path index.html,style.css -Pattern "portrait|Pika|sources" -Context 2,3
+Get-Content -Raw -Encoding UTF8 docs\AGENT.md
+Test-Path sources\PikaSheen.jpg
+git status --short
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+```
+
+### 測試 / 驗證結果
+- 已確認 `sources/PikaSheen.jpg` 存在。
+- 已確認 `index.html` 目前引用 `sources/PikaSheen.jpg`。
+- 已確認 `style.css` 不再包含 `.portrait::before` 的 CSS 產生式頭像。
+- 已更新 README 的 `sources/` 檔案結構，加入 `PikaSheen.jpg`。
+
+### 遇到的問題
+- 尚未開啟瀏覽器進行視覺預覽。
+
+### 下一步建議
+- 預覽首頁，確認 PikaSheen 圖片在桌面與手機尺寸下裁切效果符合預期。
+
+---
+
 ## 2026-06-01 13:29
 
 ### 任務摘要

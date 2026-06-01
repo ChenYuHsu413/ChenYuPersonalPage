@@ -244,29 +244,13 @@ h1 {
 .portrait {
     position: absolute;
     inset: 64px 46px 132px 46px;
-    display: grid;
-    place-items: center;
     overflow: hidden;
-    background:
-        radial-gradient(circle at 50% 22%, #f4d6bd 0 10%, transparent 10.3%),
-        linear-gradient(145deg, #d7e0d0 0 48%, #bf6049 48% 100%);
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    background: #f7efe6;
     border: 2px solid var(--ink);
-}
-
-.portrait::before {
-    content: "CY";
-    width: min(68%, 260px);
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
-    color: var(--surface);
-    background: var(--blue);
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    font-family: var(--font-display);
-    font-size: clamp(4rem, 10vw, 7rem);
-    font-weight: 800;
-    box-shadow: 18px 18px 0 rgba(23, 23, 23, 0.14);
 }
 
 .portrait-caption {
