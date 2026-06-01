@@ -1,5 +1,7 @@
 # ChenYu - Personal Profile & Real-Time Clock Dashboard
 
+Repo: [ChenYuHsu413/ChenYu](https://github.com/ChenYuHsu413/ChenYu)
+
 A responsive, high-end personal greeting and real-time clock dashboard designed with modern web aesthetics.
 
 ![Dashboard Preview](https://img.shields.io/badge/Aesthetics-Glassmorphism-purple?style=for-the-badge)
