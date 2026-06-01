@@ -34,11 +34,10 @@ ChenYu/
 |-- style.css
 |-- script.js
 |-- README.md
-|-- AGENT.md
-|-- 工作報告.md
 |-- docs/
-|   |-- 2026-06-01-work-log.md
-|   `-- dev-log.md
+|   |-- AGENT.md
+|   |-- dev-log.md
+|   `-- 工作報告.md
 `-- sources/
     |-- demo-screenshot.png
     `-- workflow_infographic.jpg
@@ -50,12 +49,11 @@ ChenYu/
 - `style.css`: All visual styling, layout rules, responsive design, and component styles.
 - `script.js`: Live clock logic for updating the current time and date.
 - `README.md`: Project overview, setup notes, and file structure.
-- `AGENT.md`: Working rules for AI-assisted project maintenance.
-- `docs/2026-06-01-work-log.md`: Daily work log generated from today's dev-log entries.
-- `docs/dev-log.md`: Development log maintained according to `AGENT.md`.
+- `docs/AGENT.md`: Working rules for AI-assisted project maintenance.
+- `docs/dev-log.md`: Development log maintained according to `docs/AGENT.md`.
+- `docs/工作報告.md`: Project report with the daily work log merged into the opening section.
 - `sources/demo-screenshot.png`: Homepage preview image shown in this README.
 - `sources/workflow_infographic.jpg`: Supporting image asset used by the project report.
-- `工作報告.md`: Project report and workflow documentation.
 
 ## How to Run Locally
 

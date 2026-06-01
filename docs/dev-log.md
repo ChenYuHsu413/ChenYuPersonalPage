@@ -1,5 +1,89 @@
 ﻿# Development Log
 
+## 2026-06-01 13:29
+
+### 任務摘要
+- 將 `AGENT.md` 從根目錄移動到 `docs/AGENT.md`。
+- 刪除 `docs/2026-06-01-work-log.md`。
+- 更新 README 與 `docs/工作報告.md` 的檔案結構與檔案說明。
+
+### 變更檔案
+- `docs/AGENT.md`
+- `docs/2026-06-01-work-log.md`
+- `README.md`
+- `docs/工作報告.md`
+- `docs/dev-log.md`
+
+### 重要決策
+- 將專案維護相關文件集中放在 `docs/`，讓根目錄保留主要網站檔案與 README。
+- 由於今日工作日誌已整併進 `docs/工作報告.md` 開頭，因此刪除獨立的 `docs/2026-06-01-work-log.md`。
+- README 與工作報告皆改以 `docs/AGENT.md` 作為 AI 工作規則文件位置。
+
+### 執行指令
+```bash
+git status --short
+Get-ChildItem -Force docs
+Select-String -Path README.md,docs\工作報告.md,docs\dev-log.md -Pattern "AGENT|2026-06-01-work-log" -Context 1,1
+Move-Item -LiteralPath AGENT.md -Destination docs\AGENT.md
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+```
+
+### 測試 / 驗證結果
+- 已確認 `docs/AGENT.md` 存在。
+- 已確認 `docs/2026-06-01-work-log.md` 已刪除。
+- 已確認 README 與 `docs/工作報告.md` 的檔案結構不再列出根目錄 `AGENT.md` 或單日 work log。
+
+### 遇到的問題
+- 無。
+
+### 下一步建議
+- 將本次文件整理 commit 並推送到 GitHub。
+
+---
+
+## 2026-06-01 13:26
+
+### 任務摘要
+- 將 `docs/2026-06-01-work-log.md` 的內容參考 `工作報告.md` 的形式，整併到工作報告開頭。
+- 將根目錄的 `工作報告.md` 移動到 `docs/工作報告.md`。
+- 更新 README 的檔案結構與檔案說明，改為指向 `docs/工作報告.md`。
+
+### 變更檔案
+- `docs/工作報告.md`
+- `README.md`
+- `docs/dev-log.md`
+
+### 重要決策
+- 保留 `docs/2026-06-01-work-log.md` 作為單日工作日誌原始整理稿。
+- 在 `docs/工作報告.md` 開頭新增「2026-06-01 維護與整理紀錄」，並用表格方式與原工作報告風格保持一致。
+- 工作報告移入 `docs/` 後，報告內圖片路徑改為 `../sources/workflow_infographic.jpg`。
+
+### 執行指令
+```bash
+Get-Content -TotalCount 80 -Encoding UTF8 工作報告.md
+Get-Content -Raw -Encoding UTF8 docs\2026-06-01-work-log.md
+Get-Content -Raw -Encoding UTF8 README.md
+git status --short
+Move-Item -LiteralPath 工作報告.md -Destination docs\工作報告.md
+Select-String -Path README.md -Pattern "File Structure|docs/|工作報告|2026-06-01" -Context 1,4
+Get-ChildItem -Force docs
+Select-String -Path docs\工作報告.md -Pattern "2026-06-01|workflow_infographic|今日專案結構" -Context 1,2
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+```
+
+### 測試 / 驗證結果
+- 已確認 `docs/工作報告.md` 開頭包含 2026-06-01 維護與整理紀錄。
+- 已確認 `docs/工作報告.md` 內的資訊圖表路徑改為 `../sources/workflow_infographic.jpg`。
+- 已確認 README 的檔案結構列出 `docs/工作報告.md`。
+
+### 遇到的問題
+- README 的 `docs/` 樹狀結構第一次更新後縮排不一致，已修正。
+
+### 下一步建議
+- commit 並推送這次文件整理變更。
+
+---
+
 ## 2026-06-01 13:21
 
 ### 任務摘要
