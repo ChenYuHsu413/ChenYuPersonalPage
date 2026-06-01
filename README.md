@@ -1,54 +1,69 @@
-# ChenYu - Personal Profile & Real-Time Clock Dashboard
+﻿# ChenYu - Personal Portfolio
 
 Repo: [ChenYuHsu413/ChenYu](https://github.com/ChenYuHsu413/ChenYu)
 
-A responsive, high-end personal greeting and real-time clock dashboard designed with modern web aesthetics.
+A responsive personal portfolio website for Chen Yu Hsu. The site includes a hero profile section, live current time display, resume-style content, selected work cards, contact links, and a GitHub repository shortcut in the navigation bar.
 
-![Dashboard Preview](https://img.shields.io/badge/Aesthetics-Glassmorphism-purple?style=for-the-badge)
-![Tech Stack](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-blue?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+## Live Demo
 
-## 🌐 Live Demo
+[View the live site](https://chenyuhsu413.github.io/ChenYu/)
 
-👉 **[Click here to view the live site](https://chenyuhsu413.github.io/ChenYu/)**
+![Site preview](sources/demo-screenshot.png)
 
----
+## Features
 
-## ✨ Features
+- Responsive portfolio layout for desktop and mobile.
+- Live current time and date display updated every second.
+- Sticky header navigation with GitHub repository link.
+- About, resume, work, and contact sections.
+- Separate HTML, CSS, and JavaScript files for easier maintenance.
 
-- **Glassmorphic UI**: Sleek, modern cards using `backdrop-filter` for a blurred frost glass effect over dark glowing backdrops.
-- **Dynamic Clock Widget**: Real-time high-precision digital clock updating every second with custom formatted dates.
-- **Ambient floating glows**: CSS-animated glowing spheres that float smoothly in the background.
-- **Interactive Greeting Button**: Engaging greetings that display pop-up alerts with real-time greetings.
-- **Fully Responsive**: Perfectly adapts to all device screen sizes (mobile, tablet, and desktop).
+## Tech Stack
 
----
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Google Fonts
+- GitHub Pages
 
-## 🛠️ Technology Stack
+## File Structure
 
-- **Structure**: HTML5 Semantic Elements
-- **Styling**: Modern Vanilla CSS3 (Custom properties, keyframe animations, glassmorphism filters)
-- **Typography**: Google Fonts ([Outfit](https://fonts.google.com/specimen/Outfit) & [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono))
-- **Logic**: Vanilla JavaScript ES6+ (Interval timers and Date manipulation)
+```text
+ChenYu/
+|-- index.html
+|-- style.css
+|-- script.js
+|-- README.md
+|-- AGENT.md
+|-- 工作報告.md
+|-- docs/
+|   |-- 2026-06-01-work-log.md
+|   `-- dev-log.md
+`-- sources/
+    |-- demo-screenshot.png
+    `-- workflow_infographic.jpg
+```
 
----
+## File Notes
 
-## 🚀 How to Run Locally
+- `index.html`: Main page structure and content.
+- `style.css`: All visual styling, layout rules, responsive design, and component styles.
+- `script.js`: Live clock logic for updating the current time and date.
+- `README.md`: Project overview, setup notes, and file structure.
+- `AGENT.md`: Working rules for AI-assisted project maintenance.
+- `docs/2026-06-01-work-log.md`: Daily work log generated from today's dev-log entries.
+- `docs/dev-log.md`: Development log maintained according to `AGENT.md`.
+- `sources/demo-screenshot.png`: Homepage preview image shown in this README.
+- `sources/workflow_infographic.jpg`: Supporting image asset used by the project report.
+- `工作報告.md`: Project report and workflow documentation.
 
-### Method 1: Double-Click (Simple)
-Simply locate the [index.html](index.html) file in your file explorer and double-click to open it in any modern web browser.
+## How to Run Locally
 
-### Method 2: Local Web Server (Recommended)
-To serve the files properly and prevent any caching issues:
-1. Open your terminal in the project directory.
-2. Run a local web server (requires Node.js):
-   ```bash
-   npx http-server
-   ```
-3. Open `http://127.0.0.1:8080` in your web browser.
+Open `index.html` directly in a browser, or run a local static server from the project folder:
 
----
+```bash
+npx http-server
+```
 
-## 📄 License
+Then open `http://127.0.0.1:8080` in your browser.
 
-This project is licensed under the MIT License. Feel free to use and customize it!
