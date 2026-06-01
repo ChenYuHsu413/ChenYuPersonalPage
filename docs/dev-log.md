@@ -1,5 +1,76 @@
 ﻿# Development Log
 
+## 2026-06-01 14:08
+
+### 任務摘要
+- 依照最新 dev-log 更新 `docs/工作報告.md`。
+- 將 Repo 改名同步事項補進工作報告的今日工作總覽、今日完成事項與驗證結果。
+- 準備提交並推送本次連結更新與報告更新。
+
+### 修改檔案
+- `docs/工作報告.md`
+- `docs/dev-log.md`
+
+### 重要決策
+- 工作報告保留原本摘要表格格式，只新增與 `ChenYuPersonalPage` 改名相關的必要紀錄。
+- 驗證結果補上 README、首頁、工作報告連結與 git remote origin 的確認狀態。
+
+### 執行指令
+```bash
+Get-Content -TotalCount 90 -Encoding UTF8 docs\dev-log.md
+Get-Content -TotalCount 110 -Encoding UTF8 docs\工作報告.md
+git status --short
+```
+
+### 測試 / 驗證結果
+- 已確認 `docs/工作報告.md` 包含 Repo 改名同步紀錄。
+- 待 commit 前再次檢查 diff 與 git 狀態。
+
+### 遇到的問題
+- 無。
+
+### 下一步建議
+- commit 並推送到 GitHub。
+
+---
+
+## 2026-06-01 14:02
+
+### 任務摘要
+- 將專案內舊 repo 與 GitHub Pages 連結從 `ChenYu` 更新為 `ChenYuPersonalPage`。
+- 同步修正 README、首頁導覽與聯絡區、工作報告、dev log 中的舊路徑紀錄。
+- 將本機 git remote origin 改指向新的 GitHub repo。
+
+### 修改檔案
+- `README.md`
+- `index.html`
+- `docs/工作報告.md`
+- `docs/dev-log.md`
+
+### 重要決策
+- 保留個人名稱 `Chen Yu Hsu` 與 GitHub 帳號 `ChenYuHsu413` 不變，只更新 repo / Pages / 資料夾名稱。
+- 歷史開發紀錄中的舊 repo URL 與舊本機路徑也同步更新，避免日後照文件操作時連到舊位置。
+
+### 執行指令
+```bash
+rg -n -i "old repo/live/path patterns" README.md index.html docs
+git remote set-url origin https://github.com/ChenYuHsu413/ChenYuPersonalPage.git
+git remote -v
+git status --short
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+```
+
+### 測試 / 驗證結果
+- 已確認 `origin` 指向 `https://github.com/ChenYuHsu413/ChenYuPersonalPage.git`。
+- 已搜尋舊 repo / Pages URL，沒有留下舊的 `ChenYu` repo 連結。
+
+### 遇到的問題
+- 第一次批次替換出現重疊字串，已修正所有重複的專案名稱字串。
+
+### 下一步建議
+- 推送前可再次確認 GitHub Pages 設定已指向 `ChenYuPersonalPage` 專案頁面。
+
+---
 ## 2026-06-01 13:49
 
 ### 任務摘要
@@ -53,7 +124,7 @@ Get-Date -Format 'yyyy-MM-dd HH:mm'
 
 ### 執行指令
 ```bash
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=1440,1000 --screenshot=D:\ChenYu\sources\demo-screenshot.png file:///D:/ChenYu/index.html
+& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=1440,1000 --screenshot=D:\AI Class ChenYu\ChenYuPersonalPage\sources\demo-screenshot.png file:///D:/AI%20Class%20ChenYu/ChenYuPersonalPage/index.html
 Get-Item sources\demo-screenshot.png | Select-Object Name,Length,LastWriteTime
 Get-Date -Format 'yyyy-MM-dd HH:mm'
 git status --short
@@ -335,7 +406,7 @@ Test-Path 'C:\Program Files\Google\Chrome\Application\chrome.exe'
 Test-Path 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
 Test-Path 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
 Test-Path 'C:\Program Files\Microsoft\Edge\Application\msedge.exe'
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=1440,1000 --screenshot=D:\ChenYu\sources\demo-screenshot.png file:///D:/ChenYu/index.html
+& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=1440,1000 --screenshot=D:\AI Class ChenYu\ChenYuPersonalPage\sources\demo-screenshot.png file:///D:/AI%20Class%20ChenYu/ChenYuPersonalPage/index.html
 Get-ChildItem -Force sources
 Get-Date -Format 'yyyy-MM-dd HH:mm'
 ```
@@ -609,7 +680,7 @@ Get-Content -TotalCount 8 README.md
 ```
 
 ### 測試 / 驗證結果
-- 已檢查 diff，確認 GitHub 連結為 `https://github.com/ChenYuHsu413/ChenYu`。
+- 已檢查 diff，確認 GitHub 連結為 `https://github.com/ChenYuHsu413/ChenYuPersonalPage`。
 - 已確認 README 開頭出現 Repo 連結。
 
 ### 遇到的問題
@@ -743,7 +814,7 @@ Get-Content docs\dev-log.md -Encoding UTF8
 - 建立單頁個人作品集 / 即時時鐘頁面。
 - 使用 HTML、CSS、JavaScript 完成即時日期與時間顯示。
 - 初始化 Git repo，使用 `main` 分支。
-- GitHub 遠端設定為 `https://github.com/ChenYuHsu413/ChenYu.git`。
+- GitHub 遠端設定為 `https://github.com/ChenYuHsu413/ChenYuPersonalPage.git`。
 - README 補上專案說明、功能、技術棧與本機執行方式。
 
 ### 執行指令
@@ -765,7 +836,7 @@ Get-ChildItem -Path d:\ -Recurse -ErrorAction SilentlyContinue | Where-Object { 
 Get-ChildItem -Path C:\Users\admin -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-1) } | Select-Object FullName, LastWriteTime
 Get-ChildItem -Force
 git remote -v
-git remote add origin https://github.com/ChenYuHsu413/ChenYu.git
+git remote add origin https://github.com/ChenYuHsu413/ChenYuPersonalPage.git
 git push -u origin main
 git add index.html; git commit -m "Update name to Chen Yu Hsu"; git push origin main
 git add README.md; git commit -m "Add README.md with project description"; git push origin main

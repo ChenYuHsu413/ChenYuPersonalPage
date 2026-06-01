@@ -1,12 +1,12 @@
-﻿# ChenYu - Personal Portfolio
+﻿# ChenYuPersonalPage - Personal Portfolio
 
-Repo: [ChenYuHsu413/ChenYu](https://github.com/ChenYuHsu413/ChenYu)
+Repo: [ChenYuHsu413/ChenYuPersonalPage](https://github.com/ChenYuHsu413/ChenYuPersonalPage)
 
 A responsive personal portfolio website for Chen Yu Hsu. The site includes a hero profile section, live current time display, resume-style content, selected work cards, contact links, and a GitHub repository shortcut in the navigation bar.
 
 ## Live Demo
 
-[View the live site](https://chenyuhsu413.github.io/ChenYu/)
+[View the live site](https://chenyuhsu413.github.io/ChenYuPersonalPage/)
 
 ![Site preview](sources/demo-screenshot.png)
 
@@ -29,7 +29,7 @@ A responsive personal portfolio website for Chen Yu Hsu. The site includes a her
 ## File Structure
 
 ```text
-ChenYu/
+ChenYuPersonalPage/
 |-- index.html
 |-- style.css
 |-- script.js
