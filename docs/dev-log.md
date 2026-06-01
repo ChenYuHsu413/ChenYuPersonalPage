@@ -1,5 +1,112 @@
 ﻿# Development Log
 
+## 2026-06-01 13:49
+
+### 任務摘要
+- 依照最新 dev-log 更新 `docs/工作報告.md`。
+- 將 PikaSheen 圖片方形限縮修正與新 demo 截圖更新補進工作報告。
+- 準備提交並推送目前所有變更到 GitHub。
+
+### 修改檔案
+- `docs/工作報告.md`
+- `docs/dev-log.md`
+
+### 重要決策
+- 在工作報告的今日工作總覽新增「圖片版面修正」與「預覽截圖更新」。
+- 在今日完成事項補上第 10、11 項，讓工作報告能對應最新 dev-log。
+- 在驗證結果明確記錄 `.portrait` 的方形限制與新截圖狀態。
+
+### 執行指令
+```bash
+Get-Content -TotalCount 120 -Encoding UTF8 docs\dev-log.md
+Get-Content -TotalCount 90 -Encoding UTF8 docs\工作報告.md
+git status --short
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+```
+
+### 測試 / 驗證結果
+- 已確認 `docs/工作報告.md` 補上圖片方形限縮與 demo 截圖更新紀錄。
+- 待 commit 前再次檢查 Git 暫存內容。
+
+### 遇到的問題
+- 無。
+
+### 下一步建議
+- commit 並推送到 GitHub。
+
+---
+
+## 2026-06-01 13:47
+
+### 任務摘要
+- 重新擷取首頁首屏截圖。
+- 使用新截圖覆蓋 `sources/demo-screenshot.png`。
+- 確認截圖中 PikaSheen 圖片已被限制在方形區域內，沒有破壞排版。
+
+### 修改檔案
+- `sources/demo-screenshot.png`
+- `docs/dev-log.md`
+
+### 重要決策
+- 使用本機 Chrome headless 擷取實際 `index.html` 首屏，確保 README 預覽圖反映目前版面。
+- 直接覆蓋既有 `sources/demo-screenshot.png`，README 相對路徑不需要更動。
+
+### 執行指令
+```bash
+& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=1440,1000 --screenshot=D:\ChenYu\sources\demo-screenshot.png file:///D:/ChenYu/index.html
+Get-Item sources\demo-screenshot.png | Select-Object Name,Length,LastWriteTime
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+git status --short
+```
+
+### 測試 / 驗證結果
+- 已成功輸出 `sources/demo-screenshot.png`。
+- 已檢視新截圖，確認首頁主視覺與 PikaSheen 圖片顯示正常。
+
+### 遇到的問題
+- 無。
+
+### 下一步建議
+- commit 並推送截圖與版面修正。
+
+---
+
+## 2026-06-01 13:45
+
+### 任務摘要
+- 修正 PikaSheen 圖片在首頁主視覺中超出框線、破壞排版的問題。
+- 將 `.portrait` 圖片區域限制為面板內的正方形。
+- 改用 `object-fit: contain`，讓圖片完整顯示於方形區域內且不變形。
+
+### 修改檔案
+- `style.css`
+- `docs/dev-log.md`
+
+### 重要決策
+- 不改動 HTML 結構，只調整 CSS 約束圖片尺寸。
+- 保留原本面板、邊框與 caption 版面。
+- 桌面版使用 `width: calc(100% - 92px)` 搭配 `aspect-ratio: 1`，手機版則使用 `width: calc(100% - 56px)` 維持一致縮放。
+
+### 執行指令
+```bash
+Select-String -Path style.css -Pattern "\.portrait \{|object-fit|aspect-ratio|width: calc|top: 64|top: 44" -Context 0,3
+Get-Date -Format 'yyyy-MM-dd HH:mm'
+git status --short
+```
+
+### 測試 / 驗證結果
+- 已確認 `.portrait` 設定為正方形比例。
+- 已確認圖片使用 `object-fit: contain` 限縮在方形區域內。
+- 尚未重新擷取瀏覽器截圖。
+
+### 遇到的問題
+- 原本 `<img>` 作為絕對定位元素時未被明確寬高限制，導致使用原圖尺寸外溢。
+
+### 下一步建議
+- 重新開啟首頁確認桌面與手機版圖片位置符合預期。
+
+---
+
 ## 2026-06-01 13:41
 
 ### 任務摘要

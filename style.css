@@ -243,11 +243,13 @@ h1 {
 
 .portrait {
     position: absolute;
-    inset: 64px 46px 132px 46px;
+    top: 64px;
+    left: 46px;
     overflow: hidden;
-    width: auto;
-    height: auto;
-    object-fit: cover;
+    width: calc(100% - 92px);
+    aspect-ratio: 1;
+    display: block;
+    object-fit: contain;
     object-position: center;
     background: #f7efe6;
     border: 2px solid var(--ink);
@@ -498,7 +500,9 @@ footer {
     }
 
     .portrait {
-        inset: 44px 28px 120px;
+        top: 44px;
+        left: 28px;
+        width: calc(100% - 56px);
     }
 
     .stats,
