@@ -61,7 +61,7 @@ createApp({
                     tags: ['HTML5', 'CSS3', 'JavaScript', 'RWD', 'Institution'],
                     demoUrl: 'https://chenyuhsu413.github.io/YYXTest/',
                     githubUrl: 'https://github.com/ChenYuHsu413/YYXTest',
-                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/YYXTest/main/sources/work-report-summary.png',
+                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/YYXTest/main/sources/demo-screenshot.png',
                     colorGradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
                     date: '2026'
                 },
@@ -75,7 +75,7 @@ createApp({
                     tags: ['HTML5', 'CSS3', 'JavaScript', 'Sulawesi Shrimp', 'Aquarium'],
                     demoUrl: 'https://chenyuhsu413.github.io/SulawesiTest/',
                     githubUrl: 'https://github.com/ChenYuHsu413/SulawesiTest',
-                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/SulawesiTest/main/assets/media/IMG_6377.webp',
+                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/SulawesiTest/main/sources/demo-screenshot.png',
                     colorGradient: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
                     date: '2026'
                 },

@@ -625,7 +625,66 @@ header.scrolled {
 }
 
 /* ==========================================================================
-   Section 3: Work (Interactive Grid with Tab Filters)
+   Section 3: Honors
+   ========================================================================== */
+.honors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.honor-card {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 22px;
+    align-items: start;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 26px;
+    min-height: 170px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+}
+
+.honor-card:hover {
+    border-color: var(--border-color-hover);
+    background: var(--bg-surface-hover);
+    transform: translateY(-5px);
+    box-shadow: var(--glow-shadow);
+}
+
+.honor-year {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.45);
+    color: var(--accent-color);
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: 800;
+    box-shadow: var(--glow-shadow);
+}
+
+.honor-content h3 {
+    font-size: 1.15rem;
+    line-height: 1.45;
+    margin-bottom: 12px;
+}
+
+.honor-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* ==========================================================================
+   Section 4: Work (Interactive Grid with Tab Filters)
    ========================================================================== */
 .filter-tabs {
     display: flex;
@@ -1235,6 +1294,10 @@ footer {
         grid-template-columns: 1fr;
         gap: 50px;
     }
+
+    .honors-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1291,6 +1354,12 @@ footer {
     .modal-header-banner {
         padding: 40px 24px;
     }
+
+    .honor-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        min-height: auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1312,6 +1381,16 @@ footer {
     
     .contact-form-panel {
         padding: 24px;
+    }
+
+    .honor-card {
+        padding: 22px;
+    }
+
+    .honor-year {
+        width: 64px;
+        height: 64px;
+        font-size: 0.9rem;
     }
     
     .modal-header-banner h2 {

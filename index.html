@@ -32,6 +32,7 @@
                 <ul class="nav-links" :class="{ 'active': menuActive }">
                     <li><a href="#about" @click.prevent="scrollToSection('about')">About</a></li>
                     <li><a href="#resume" @click.prevent="scrollToSection('resume')">Resume</a></li>
+                    <li><a href="#honors" @click.prevent="scrollToSection('honors')">Honors</a></li>
                     <li><a href="#work" @click.prevent="scrollToSection('work')">Work</a></li>
                     <li><a href="#contact" @click.prevent="scrollToSection('contact')">Contact</a></li>
                     <li>
@@ -132,7 +133,7 @@
         <section id="resume" class="section-container">
             <div class="section-header">
                 <span class="section-num">02 / Resume</span>
-                <h2>Education, skills, and tools in one readable path.</h2>
+                <h2>Education and career experience in one readable path.</h2>
             </div>
             <div class="resume-grid">
                 <div class="timeline">
@@ -140,25 +141,84 @@
                         <div class="timeline-marker"></div>
                         <div class="timeline-time">2026</div>
                         <div class="timeline-content">
-                            <h3>Personal Portfolio Platform</h3>
-                            <p>Created a centralized showcase hub for projects and academic works using progressive web frameworks and animation suites.</p>
+                            <h3>AI Course</h3>
+                            <p>Currently studying artificial intelligence fundamentals, practical tools, and applied project workflows.</p>
                             <div class="skills-tags">
-                                <span class="tag">Vue 3</span>
-                                <span class="tag">GSAP</span>
-                                <span class="tag">Glassmorphism</span>
+                                <span class="tag">AI</span>
+                                <span class="tag">Coursework</span>
+                                <span class="tag">Now</span>
                             </div>
                         </div>
                     </article>
                     <article class="timeline-item">
                         <div class="timeline-marker"></div>
-                        <div class="timeline-time">2025</div>
+                        <div class="timeline-time">2022</div>
                         <div class="timeline-content">
-                            <h3>Front-End Web Design Course</h3>
-                            <p>Studied semantic HTML, CSS layout systems (Flexbox/Grid), responsive design paradigms, and modern DOM interactivity.</p>
+                            <h3>VisionAsia Corporation</h3>
+                            <p>Worked as an engineer, supporting technical implementation, troubleshooting, and product-related engineering tasks.</p>
                             <div class="skills-tags">
-                                <span class="tag">HTML5 / CSS3</span>
-                                <span class="tag">Flexbox / Grid</span>
-                                <span class="tag">Vanilla JS</span>
+                                <span class="tag">Engineer</span>
+                                <span class="tag">Technical Support</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">2017 - 2018</div>
+                        <div class="timeline-content">
+                            <h3>Genie Network</h3>
+                            <p>Worked as a full stack engineer, building and maintaining web application features across front-end and back-end layers.</p>
+                            <div class="skills-tags">
+                                <span class="tag">Full Stack Engineer</span>
+                                <span class="tag">Web Development</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">2017</div>
+                        <div class="timeline-content">
+                            <h3>Want Want China</h3>
+                            <p>Worked as a Java engineer, contributing to enterprise application development and maintenance.</p>
+                            <div class="skills-tags">
+                                <span class="tag">Java Engineer</span>
+                                <span class="tag">Enterprise Systems</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">2015 - 2016</div>
+                        <div class="timeline-content">
+                            <h3>NVIDIA Taiwan</h3>
+                            <p>Served as a student ambassador, supporting campus outreach and technology promotion activities.</p>
+                            <div class="skills-tags">
+                                <span class="tag">Student Ambassador</span>
+                                <span class="tag">Campus Outreach</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">2015</div>
+                        <div class="timeline-content">
+                            <h3>Industrial Technology Research Institute (ITRI)</h3>
+                            <p>Worked part time, gaining early industry experience in a research and technology environment.</p>
+                            <div class="skills-tags">
+                                <span class="tag">Part Time</span>
+                                <span class="tag">Research Institute</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-time">2012 - 2016</div>
+                        <div class="timeline-content">
+                            <h3>National Tsing Hua University</h3>
+                            <p>Majored in Computer Science, building a foundation in programming, systems, and software engineering.</p>
+                            <div class="skills-tags">
+                                <span class="tag">Computer Science</span>
+                                <span class="tag">Education</span>
                             </div>
                         </div>
                     </article>
@@ -166,10 +226,48 @@
             </div>
         </section>
 
-        <!-- Section 3: Work (Interactive Project Grid with Category Filters) -->
+        <!-- Section 3: Honors -->
+        <section id="honors" class="section-container">
+            <div class="section-header">
+                <span class="section-num">03 / Honors</span>
+                <h2>Programming contests and academic achievements.</h2>
+            </div>
+            <div class="honors-grid">
+                <article class="honor-card">
+                    <div class="honor-year">2015</div>
+                    <div class="honor-content">
+                        <h3>Taiwan Student Cluster Competition</h3>
+                        <p>First Prize</p>
+                    </div>
+                </article>
+                <article class="honor-card">
+                    <div class="honor-year">2012</div>
+                    <div class="honor-content">
+                        <h3>National College Programming Contest</h3>
+                        <p>Third Prize</p>
+                    </div>
+                </article>
+                <article class="honor-card">
+                    <div class="honor-year">2012</div>
+                    <div class="honor-content">
+                        <h3>The ACM-ICPC Asia Kaohsiung Regional Contest</h3>
+                        <p>Honorable Mention</p>
+                    </div>
+                </article>
+                <article class="honor-card">
+                    <div class="honor-year">2010</div>
+                    <div class="honor-content">
+                        <h3>High School Student Academic Competence Contest, Computer Science</h3>
+                        <p>Regional semi-final Sixth Prize, qualified to participate in the national final contest.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section 4: Work (Interactive Project Grid with Category Filters) -->
         <section id="work" class="section-container">
             <div class="section-header">
-                <span class="section-num">03 / Work</span>
+                <span class="section-num">04 / Work</span>
                 <h2>Interactive Showcase &amp; Assignment Hub</h2>
             </div>
             
@@ -208,10 +306,10 @@
             </div>
         </section>
 
-        <!-- Section 4: Contact -->
+        <!-- Section 5: Contact -->
         <section id="contact" class="section-container">
             <div class="section-header">
-                <span class="section-num">04 / Contact</span>
+                <span class="section-num">05 / Contact</span>
                 <h2>Open to new ideas, collaborations, and discussions.</h2>
             </div>
             <div class="contact-grid">
@@ -318,6 +416,7 @@
                 <div class="footer-links">
                     <a href="https://github.com/ChenYuHsu413" target="_blank" rel="noreferrer">GitHub</a>
                     <a href="#about" @click.prevent="scrollToSection('about')">About</a>
+                    <a href="#honors" @click.prevent="scrollToSection('honors')">Honors</a>
                     <a href="#work" @click.prevent="scrollToSection('work')">Work</a>
                 </div>
             </div>
