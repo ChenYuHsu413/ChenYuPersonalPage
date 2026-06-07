@@ -34,29 +34,18 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 
 ```text
 ChenYuPersonalPage/
-├── index.html                 # Main portfolio page (Vue 3 templates)
-├── style.css                  # Core CSS styles (glassmorphism & layout)
-├── script.js                  # Application logic (Vue 3 instance + GSAP trigger)
-├── README.md                  # Project overview & guidelines
-│
-├── homeworks/                 # Course homework assignments
-│   ├── hw1/                   # Homework 1: Semantic HTML
-│   │   └── index.html
-│   └── hw2/                   # Homework 2: CSS Flexbox Layout
-│       └── index.html
-│
-├── projects/                  # Personal web projects
-│   └── proj1/                 # Project 1: Glassmorphism Calculator
-│       └── index.html
-│
-├── sources/                   # Media assets (profile pictures, icons)
-│   ├── PikaSheen.jpg
-│   └── demo-screenshot.png
-│
-└── docs/                      # AI assistant documents & reports
-    ├── AGENT.md
-    ├── dev-log.md
-    └── 工作報告.md
+|-- index.html                 # Main portfolio page (Vue 3 templates)
+|-- style.css                  # Core CSS styles (glassmorphism & layout)
+|-- script.js                  # Application logic (Vue 3 instance + GSAP trigger)
+|-- README.md                  # Project overview & guidelines
+|-- sources/                   # Media assets
+|   |-- PikaSheen.jpg
+|   |-- demo-screenshot.png
+|   `-- workflow_infographic.jpg
+`-- docs/                      # AI assistant documents & reports
+    |-- AGENT.md
+    |-- dev-log.md
+    `-- work report files
 ```
 
 ---
@@ -66,11 +55,16 @@ ChenYuPersonalPage/
 To add a new work to your portfolio, follow these two steps:
 
 ### Step 1: Create the Work Directory
-Place your code files inside a self-contained sub-folder under `homeworks/` or `projects/`:
+
+If the demo should live inside this repository, place your code files inside a self-contained sub-folder under `homeworks/` or `projects/`:
+
 - For homework: `homeworks/hw3/index.html` (include any accompanying styles or scripts in the same folder)
 - For personal projects: `projects/proj2/index.html`
 
+If the demo already lives in another GitHub repository or deployed site, you can skip creating a local folder and link directly to that external URL.
+
 ### Step 2: Register in `script.js`
+
 Open `script.js` and add a new item object into the `projects` array inside the Vue data object. Fill out the metadata fields:
 
 ```javascript
@@ -82,10 +76,11 @@ Open `script.js` and add a new item object into the `projects` array inside the 
     shortDescription: 'One-line summary for card',  // Short card copy
     longDescription: 'Detailed description for modal popup.', // Long modal description
     tags: ['HTML5', 'CSS3', 'JavaScript'],          // Technical tags
-    demoUrl: 'homeworks/hw3/index.html',            // Relative path to your folder
+    demoUrl: 'homeworks/hw3/index.html',            // Relative path or external demo URL
     githubUrl: 'https://github.com/ChenYuHsu413/ChenYuPersonalPage/tree/main/homeworks/hw3', // GitHub code path
-    colorGradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)', // Custom card background gradient
-    date: 'Feb 2026'                                // Completion date
+    previewImage: 'https://example.com/preview.png', // Card and modal preview image
+    colorGradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+    date: 'Feb 2026'
 }
 ```
 
@@ -96,7 +91,6 @@ Open `script.js` and add a new item object into the `projects` array inside the 
 Open `index.html` directly in a browser, or run a local static server from the project folder:
 
 ```bash
-# Run local HTTP server
 npx http-server
 ```
 
