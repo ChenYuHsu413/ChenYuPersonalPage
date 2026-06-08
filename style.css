@@ -858,7 +858,7 @@ header.scrolled {
 }
 
 /* ==========================================================================
-   Section 4: Contact
+   Section 5: Contact
    ========================================================================== */
 .contact-grid {
     display: grid;
@@ -964,6 +964,45 @@ header.scrolled {
 .submit-btn {
     width: 100%;
     border: none;
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.form-group input:disabled,
+.form-group textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    gap: 16px;
+    color: #10b981;
+}
+
+.form-success i {
+    font-size: 2.8rem;
+}
+
+.form-success p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.form-error {
+    font-size: 0.85rem;
+    color: #f43f5e;
+    margin-bottom: 12px;
 }
 
 /* ==========================================================================
@@ -1359,6 +1398,11 @@ footer {
         grid-template-columns: 1fr;
         gap: 18px;
         min-height: auto;
+    }
+
+    .card-action-hint {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

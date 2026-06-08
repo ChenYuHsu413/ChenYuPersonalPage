@@ -9,12 +9,14 @@ createApp({
             activeTab: 'all',
             modalActive: false,
             selectedProject: null,
+            timerInterval: null,
             
             // Time states
             currentTime: '--:--:--',
             currentDate: 'Loading date...',
             
             // Contact form fields
+            formState: 'idle',
             contactForm: {
                 name: '',
                 email: '',
@@ -133,7 +135,7 @@ createApp({
             this.menuActive = false;
             const element = document.getElementById(sectionId);
             if (element) {
-                const headerHeight = this.scrolled ? 70 : 80;
+                const headerHeight = document.querySelector('header').offsetHeight;
                 const elementPosition = element.getBoundingClientRect().top + window.scrollY;
                 const offsetPosition = elementPosition - headerHeight;
                 
@@ -152,19 +154,39 @@ createApp({
         },
         closeModal() {
             this.modalActive = false;
-            // Delay cleanup to allow scale animation to finish
             setTimeout(() => {
                 this.selectedProject = null;
             }, 300);
-            document.body.style.overflow = 'auto'; // Enable scrolling
+            document.body.style.overflow = 'auto';
+        },
+        handleKeydown(e) {
+            if (e.key === 'Escape' && this.modalActive) {
+                this.closeModal();
+            }
         },
         
-        // Form Handler
-        submitContactForm() {
-            alert(`Thank you for your message, ${this.contactForm.name}! I will get back to you at ${this.contactForm.email} as soon as possible.`);
-            this.contactForm.name = '';
-            this.contactForm.email = '';
-            this.contactForm.message = '';
+        // Form Handler — 到 https://formspree.io 建立表單後將 YOUR_FORM_ID 替換為實際 ID
+        async submitContactForm() {
+            this.formState = 'submitting';
+            try {
+                const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        name: this.contactForm.name,
+                        email: this.contactForm.email,
+                        message: this.contactForm.message
+                    })
+                });
+                if (response.ok) {
+                    this.formState = 'success';
+                    this.contactForm = { name: '', email: '', message: '' };
+                } else {
+                    this.formState = 'error';
+                }
+            } catch {
+                this.formState = 'error';
+            }
         },
         
         // Timer updates
@@ -172,13 +194,15 @@ createApp({
             const now = new Date();
             
             this.currentTime = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Asia/Taipei',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
                 hour12: false
             }).format(now);
-            
+
             this.currentDate = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Asia/Taipei',
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
@@ -263,8 +287,8 @@ createApp({
         this.updateTime();
         this.timerInterval = setInterval(this.updateTime, 1000);
         
-        // Bind scroll listener for sticky header
         window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('keydown', this.handleKeydown);
         
         // Run GSAP on next DOM rendering tick
         this.$nextTick(() => {
@@ -276,5 +300,6 @@ createApp({
         // Clear listeners and timers
         clearInterval(this.timerInterval);
         window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('keydown', this.handleKeydown);
     }
 }).mount('#app');
