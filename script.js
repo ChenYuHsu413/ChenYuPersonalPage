@@ -52,6 +52,20 @@ createApp({
                     date: '2025'
                 },
                 {
+                    id: 'hw-ml-algorithms',
+                    title: '機器學習十大演算法互動式學習平台',
+                    category: 'homework',
+                    categoryLabel: 'Course Homework',
+                    shortDescription: '涵蓋十大機器學習演算法的互動式視覺化學習平台。',
+                    longDescription: '此課程作業建構了一個互動式機器學習教學平台，完整介紹十大經典機器學習演算法，包含線性回歸、邏輯回歸、決策樹、隨機森林、SVM、K-Means 等。使用者可透過視覺化圖表與即時參數調整，深入理解各演算法的運作原理與適用情境，兼具學習性與實用性。',
+                    tags: ['Python', 'Machine Learning', 'Interactive', 'Data Visualization', 'Algorithms'],
+                    demoUrl: 'https://ml-algorithm-learning.onrender.com/',
+                    githubUrl: 'https://github.com/ChenYuHsu413/MLAlgorithmLearning',
+                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/MLAlgorithmLearning/main/sources/demo_screenchot.png',
+                    colorGradient: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)',
+                    date: '2026'
+                },
+                {
                     id: 'proj-yyx-cramschool',
                     title: '楊宜修國文文理補習班形象網站',
                     category: 'project',
