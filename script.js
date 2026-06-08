@@ -61,7 +61,7 @@ createApp({
                     tags: ['Python', 'Machine Learning', 'Interactive', 'Data Visualization', 'Algorithms'],
                     demoUrl: 'https://ml-algorithm-learning.onrender.com/',
                     githubUrl: 'https://github.com/ChenYuHsu413/MLAlgorithmLearning',
-                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/MLAlgorithmLearning/main/sources/demo_screenchot.png',
+                    previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/MLAlgorithmLearning/main/sources/demo_screenshot.png',
                     colorGradient: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)',
                     date: '2026'
                 },
