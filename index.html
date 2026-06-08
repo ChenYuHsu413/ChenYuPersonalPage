@@ -297,7 +297,7 @@
                         <img :src="item.previewImage" :alt="`${item.title} preview image`" loading="lazy" @error="$event.target.style.display='none'">
                     </div>
                     <div class="card-info">
-                        <span class="card-category">{{ item.categoryLabel }}</span>
+                        <span class="card-category">{{ getCategoryLabel(item.category) }}</span>
                         <h3>{{ item.title }}</h3>
                         <p class="card-desc">{{ item.shortDescription }}</p>
                         <div class="card-tags">
@@ -377,7 +377,7 @@
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="modal-header-banner" :style="{ background: selectedProject.colorGradient }">
-                        <span class="modal-category-badge">{{ selectedProject.categoryLabel }}</span>
+                        <span class="modal-category-badge">{{ getCategoryLabel(selectedProject.category) }}</span>
                         <h2>{{ selectedProject.title }}</h2>
                     </div>
                     <div class="modal-body">
@@ -398,7 +398,7 @@
                                 <div class="sidebar-info-box">
                                     <h4>Project Metadata</h4>
                                     <ul>
-                                        <li><strong>Category:</strong> {{ selectedProject.category === 'project' ? 'Personal Project' : 'Course Assignment' }}</li>
+                                        <li><strong>Category:</strong> {{ getCategoryLabel(selectedProject.category) }}</li>
                                         <li><strong>Published:</strong> {{ selectedProject.date }}</li>
                                     </ul>
                                 </div>
