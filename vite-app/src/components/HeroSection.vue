@@ -1,9 +1,17 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
     currentTime: String,
     currentDate: String
 })
 const emit = defineEmits(['scroll-to'])
+
+const timeParts = computed(() => {
+    const t = props.currentTime || '--:--:--'
+    const [h = '--', m = '--', s = '--'] = t.split(':')
+    return { h, m, s }
+})
 </script>
 
 <template>
@@ -20,14 +28,29 @@ const emit = defineEmits(['scroll-to'])
                     <a class="btn secondary-btn" href="#contact" @click.prevent="emit('scroll-to', 'contact')">Get in Touch</a>
                 </div>
 
-                <div class="hero-time fade-in-up">
-                    <div class="time-box">
-                        <span class="time-label">Current Time (Taipei)</span>
-                        <span class="time-val">{{ currentTime }}</span>
+                <div class="clock-widget fade-in-up">
+                    <div class="clock-header">
+                        <span class="clock-dot"></span>
+                        <span class="clock-label">Taipei</span>
+                        <span class="clock-live">Live</span>
                     </div>
-                    <div class="date-box">
-                        <span class="date-val">{{ currentDate }}</span>
+                    <div class="clock-digits">
+                        <div class="digit-group">
+                            <span class="digit">{{ timeParts.h[0] }}</span>
+                            <span class="digit">{{ timeParts.h[1] }}</span>
+                        </div>
+                        <span class="digit-sep">:</span>
+                        <div class="digit-group">
+                            <span class="digit">{{ timeParts.m[0] }}</span>
+                            <span class="digit">{{ timeParts.m[1] }}</span>
+                        </div>
+                        <span class="digit-sep">:</span>
+                        <div class="digit-group">
+                            <span class="digit">{{ timeParts.s[0] }}</span>
+                            <span class="digit">{{ timeParts.s[1] }}</span>
+                        </div>
                     </div>
+                    <div class="clock-date">{{ currentDate }}</div>
                 </div>
             </div>
 

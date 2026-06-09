@@ -1,5 +1,67 @@
 ﻿# Development Log
 
+## 2026-06-09（三）CDN 清理 + 時鐘 UI 改版
+
+### 任務摘要
+- 刪除根目錄 CDN 舊檔，將 Vite SFC 設為唯一版本。
+- 將 Hero Section 的即時時鐘從簡單 pill badge 重新設計為分位數字卡片 widget。
+
+### 修改檔案
+- `index.html`、`script.js`、`style.css`（根目錄）— 刪除（CDN 版退役）
+- `sources/`（根目錄）— 刪除（圖片已存於 `vite-app/public/sources/`）
+- `vite-app/README.md` — 刪除（Vite scaffold 預設 README，無實際內容）
+- `vite-app/src/components/HeroSection.vue` — 時鐘 markup 改版
+- `vite-app/src/style.css` — 舊時鐘 CSS 替換為新 `.clock-widget` 樣式
+- `README.md` — Tech Stack 改單欄表、File Structure 更新、移除 CDN 執行說明
+
+### 時鐘改版設計
+舊版：inline pill badge，單行顯示 `HH:MM:SS` + 日期文字。
+
+新版：玻璃卡片 widget，包含：
+- 頂部 header 列：綠色脈衝圓點 + "TAIPEI" 標籤 + "LIVE" 徽章
+- 中央數字列：6 個獨立玻璃方塊，每個方塊一個數字（HH:MM:SS）
+- 冒號分隔符每秒閃爍動畫（`step-end` blink）
+- 底部日期文字列
+- Hover 時卡片上浮 + glow 加強
+
+### HeroSection.vue 改動
+- 加入 `import { computed } from 'vue'`
+- 新增 `timeParts` computed，將 `"HH:MM:SS"` 字串拆成 `{ h, m, s }` 各兩位
+- template 從 `.hero-time > .time-box + .date-box` 改為 `.clock-widget > .clock-header + .clock-digits + .clock-date`
+
+### 新增 CSS class
+`.clock-widget`、`.clock-header`、`.clock-dot`（+ `@keyframes pulse-dot`）、`.clock-label`、`.clock-live`、`.clock-digits`、`.digit-group`、`.digit`、`.digit-sep`（+ `@keyframes blink-sep`）、`.clock-date`
+
+### light mode 調整
+`[data-theme="light"]` 區塊：將 `.time-val` 替換為 `.digit`，確保數字在 light mode 顯示深色文字。
+
+### 執行指令
+```bash
+# 刪除 CDN 舊檔
+git rm index.html script.js style.css
+git rm -r sources/
+git rm vite-app/README.md
+
+# 本機預覽
+cd vite-app && npm run dev
+# → http://localhost:5173/ChenYuPersonalPage/
+
+# 打包驗證
+npm run build
+
+# 提交
+git add README.md vite-app/src/components/HeroSection.vue vite-app/src/style.css
+git commit && git push
+```
+
+### 驗證結果
+- 根目錄清潔，只剩 `README.md`、`.github/`、`vite-app/`、`docs/`
+- dev server 啟動正常，時鐘數字正確顯示且每秒更新
+- 冒號閃爍、dot 脈衝動畫運作正常
+- light mode 切換後數字文字顏色正確
+
+---
+
 ## 2026-06-09（三）
 
 ### 任務摘要

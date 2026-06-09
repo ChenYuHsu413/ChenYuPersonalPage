@@ -16,7 +16,7 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 - **Glassmorphism UI**: High-end modern styling with sticky blur headers, sophisticated dark theme, and micro-hover animations.
 - **GSAP Motion Suite**: Smooth scroll-triggered entrance animations for section titles, timeline blocks, stats, and project cards.
 - **Detailed Project Overlays**: Clicking any card opens a details modal with project descriptions, meta tags, and source code links.
-- **Live Local Clock**: A real-time Taipei clock updating dynamically.
+- **Live Clock Widget**: Segmented digit-card clock for Taipei time — individual glass boxes per digit, pulsing live indicator, and blinking colon separators.
 - **Fully Responsive**: Adapts automatically to mobile, tablet, and widescreen views.
 - **EmailJS Contact Form**: Real email delivery via EmailJS — no backend required. Form shows loading / success / error states. Auto-reply sent to the submitter.
 - **Social Preview (OG Tags)**: Open Graph and Twitter Card meta tags for rich link previews on LINE, Facebook, and Twitter.

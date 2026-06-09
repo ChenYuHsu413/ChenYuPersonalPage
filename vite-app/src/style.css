@@ -280,40 +280,119 @@ header.scrolled {
     margin-bottom: 50px;
 }
 
-.hero-time {
+/* Clock Widget — segmented digit card */
+.clock-widget {
     display: inline-flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 12px;
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-radius: 50px;
-    padding: 8px 20px;
-    font-family: monospace;
-    font-size: 0.9rem;
+    border-radius: var(--border-radius-md);
+    padding: 16px 22px;
     box-shadow: var(--glow-shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: var(--transition-smooth);
 }
 
-.time-box {
+.clock-widget:hover {
+    border-color: var(--border-color-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
+}
+
+.clock-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    border-right: 1px solid var(--border-color);
-    padding-right: 15px;
-    margin-right: 15px;
+    gap: 8px;
 }
 
-.time-label {
-    font-size: 0.7rem;
+.clock-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.9);
+    animation: pulse-dot 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(16, 185, 129, 0.9); }
+    50%       { opacity: 0.4; box-shadow: 0 0 14px rgba(16, 185, 129, 0.3); }
+}
+
+.clock-label {
+    font-size: 0.68rem;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 2px;
     color: var(--text-muted);
+    flex: 1;
 }
 
-.time-val {
+.clock-live {
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.clock-digits {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.digit-group {
+    display: flex;
+    gap: 3px;
+}
+
+.digit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 44px;
+    background: rgba(59, 130, 246, 0.07);
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    border-radius: 7px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #fff;
-    font-weight: 600;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255,255,255,0.04);
+    transition: color 0.1s;
 }
 
-.date-box {
-    color: var(--text-secondary);
+.digit-sep {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    width: 12px;
+    text-align: center;
+    line-height: 1;
+    padding-bottom: 2px;
+    animation: blink-sep 1s step-end infinite;
+}
+
+@keyframes blink-sep {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.15; }
+}
+
+.clock-date {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.4px;
+    text-align: center;
 }
 
 /* Portrait Card Styling */
@@ -1585,7 +1664,7 @@ footer {
 
 [data-theme="light"] .contact-item .val { color: #0f172a; }
 
-[data-theme="light"] .time-val,
+[data-theme="light"] .digit,
 [data-theme="light"] .caption-title,
 [data-theme="light"] .logo,
 [data-theme="light"] .menu-toggle { color: #0f172a; }
