@@ -1574,8 +1574,16 @@ footer {
 [data-theme="light"] h4 { color: #0f172a; }
 
 [data-theme="light"] .hero-text-content h1 {
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    background: none;
+    -webkit-text-fill-color: #1e293b;
 }
+
+[data-theme="light"] .btn.secondary-btn {
+    color: #0f172a;
+    border-color: var(--border-color);
+}
+
+[data-theme="light"] .contact-item .val { color: #0f172a; }
 
 [data-theme="light"] .time-val,
 [data-theme="light"] .caption-title,
