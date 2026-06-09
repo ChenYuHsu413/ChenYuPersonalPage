@@ -1,5 +1,46 @@
 ﻿# Development Log
 
+## 2026-06-09（續）
+
+### 任務摘要
+- 實作 Light mode 切換、Honors 獎牌 badge 視覺強化、GitHub API 動態 repo 數。
+- 修正 light mode 多處文字消失問題。
+- 新增 EmailJS 自動回覆功能，表單送出後同時寄信給站長與填表人。
+- 整理 Vite + Vue 3 SFC 遷移計畫（未實作）。
+
+### 修改檔案
+- `index.html` — html tag 加 `data-theme`、anti-FOUC script、theme toggle button、honor cards prize badges、GitHub stats 動態卡片
+- `script.js` — 新增 `isDark`、`githubStats`、`toggleTheme()`、`fetchGitHubStats()`；`submitContactForm()` 改用 `Promise.all` 同時送兩封信；`mounted()` 初始化 theme 與 GitHub API
+- `style.css` — 修正多餘 `}` bug；新增 `.nav-actions`、`.theme-toggle`、`.prize-badge` 系列、`[data-theme="light"]` 完整 light mode 覆寫；修正 hero h1、secondary button、contact `.val` 在 light mode 消失問題
+
+### 重要決策
+- Light mode 使用 `[data-theme="light"]` 覆寫 CSS 變數，搭配 `localStorage` 持久化偏好，並於 `<head>` 加入 inline script 防止切換時頁面閃白（FOUC）。
+- Hero h1 在 light mode 捨棄 `background-clip: text` 漸層方案，改用 `-webkit-text-fill-color: #1e293b` 實心深色文字，避免背景矩形 bug。
+- Honor cards 依獎項等級分四種 badge：`prize-gold`（第一名）、`prize-bronze`（第三名）、`prize-silver`（Honorable Mention）、`prize-default`（其他）。
+- GitHub API 靜默失敗（catch 空函式），不影響頁面其他功能。
+- 自動回覆使用 `Promise.all([ownerNotify, autoReply])`，兩封信同時送出，任一失敗整體進入 error 狀態。
+
+### EmailJS 設定（完整）
+- Service ID：`service_48keklo`
+- 站長通知 Template：`template_zgegwvk`
+- 自動回覆 Template：`template_337686k`（TO 欄位設為 `{{from_email}}`）
+- Public Key：已填入 `emailjs.init()`
+
+### 測試 / 驗證結果
+- Light mode 切換正常，localStorage 持久化正常，重整不閃爍。
+- Honor cards 四種 badge 顯示正確顏色。
+- GitHub API 成功回傳 `public_repos`，顯示在 About section stat card。
+- EmailJS 雙重發信驗證：站長信箱收到通知、填表人收到自動回覆確認信。
+
+### 遇到的問題
+- Light mode 初版有三處文字消失：hero h1（gradient 未正確 clip）、secondary button（`color: #fff` 未覆寫）、contact `.val`（`color: #fff` 未覆寫）→ 已修正。
+- EmailJS template 變數 `{{from_name}}` 在站長通知信中未帶入，需至 dashboard 確認 template 內容。
+
+### 待辦事項（下一步建議）
+- [ ] 遷移至 Vite + Vue 3 SFC（已有完整計畫，待執行）
+
+---
+
 ## 2026-06-09
 
 ### 任務摘要
