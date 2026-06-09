@@ -1,5 +1,51 @@
 ﻿# Development Log
 
+## 2026-06-09
+
+### 任務摘要
+- 以全端工程師、UI/UX 工程師與面試官三個角度審視作品集網站。
+- 實作三項高優先級改善：OG meta tags、EmailJS 聯絡表單、Project card highlight badges。
+- 新增面試官常見問答文件 `docs/interview-qa.md`。
+- 更新 README 與工作報告，並推送至 GitHub。
+
+### 修改檔案
+- `index.html`
+- `script.js`
+- `style.css`
+- `docs/interview-qa.md` （新增）
+- `docs/dev-log.md`
+- `docs/工作報告.md`
+- `README.md`
+
+### 重要決策
+- OG image 使用 `sources/demo-screenshot.png`，社群分享時顯示網站截圖而非個人照。
+- Contact form 改用 EmailJS（`service_48keklo` / `template_zgegwvk`），移除 `alert()`，加入 loading / success / error 三種 UI 狀態。
+- Project card 新增 `highlight` 欄位（紫色小徽章），提供具體成果說明，避免面試官看不出作品價值。
+- 面試 Q&A 以獨立 Markdown 保存，不放進 README，避免版面過長。
+
+### EmailJS 設定
+- Service ID：`service_48keklo`
+- Template ID：`template_zgegwvk`
+- Public Key：已填入 `emailjs.init()`
+
+### 測試 / 驗證結果
+- 已確認 OG tags 正確填入 `og:url`、`og:title`、`og:description`、`og:image`。
+- 已確認 EmailJS CDN 引入、`init()`、`send()` 與狀態 UI 邏輯一致。
+- 已確認五個 project 的 `highlight` 欄位顯示在 card 上。
+- 面試 Q&A 涵蓋技術決策、RWD 斷點、GSAP vs CSS 選擇、作品成果量化、架構判斷等 9 題。
+
+### 遇到的問題
+- EmailJS template 的變數名稱需與 `script.js` 傳入的 key（`from_name`、`from_email`、`message`、`to_name`）對應，需自行在 EmailJS dashboard 確認。
+
+### 待辦事項（下一步建議）
+- [ ] EmailJS dashboard 確認 template 變數名稱與 script.js 一致，實際測試一次送信
+- [ ] Honors section 視覺強化（大字數字/金牌 icon，讓競賽亮點更突出）
+- [ ] 加入 light mode 切換（目前 dark-only 對亮光環境使用者不友好）
+- [ ] 遷移至 Vite + Vue 3 SFC 架構，解決單一大檔案維護問題
+- [ ] 加入 GitHub API 動態功能（例如自動拉取 repo 列表），展示真實 API 整合能力
+
+---
+
 ## 2026-06-01 14:08
 
 ### 任務摘要

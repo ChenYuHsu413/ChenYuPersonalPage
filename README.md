@@ -18,6 +18,9 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 - **Detailed Project Overlays**: Clicking any card opens a details modal with project descriptions, meta tags, and source code links.
 - **Live Local Clock**: A real-time Taipei clock updating dynamically.
 - **Fully Responsive**: Adapts automatically to mobile, tablet, and widescreen views.
+- **EmailJS Contact Form**: Real email delivery via EmailJS — no backend required. Form shows loading / success / error states.
+- **Social Preview (OG Tags)**: Open Graph and Twitter Card meta tags for rich link previews on LINE, Facebook, and Twitter.
+- **Project Highlight Badges**: Each project card shows a one-line outcome badge for quick-scan value communication.
 
 ---
 
@@ -45,6 +48,7 @@ ChenYuPersonalPage/
 `-- docs/                      # AI assistant documents & reports
     |-- AGENT.md
     |-- dev-log.md
+    |-- interview-qa.md
     `-- work report files
 ```
 
@@ -80,6 +84,7 @@ Open `script.js` and add a new item object into the `projects` array inside the 
     githubUrl: 'https://github.com/ChenYuHsu413/ChenYuPersonalPage/tree/main/homeworks/hw3', // GitHub code path
     previewImage: 'https://example.com/preview.png', // Card and modal preview image
     colorGradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+    highlight: 'One-line outcome shown as a badge on the card',  // Optional
     date: 'Feb 2026'
 }
 ```

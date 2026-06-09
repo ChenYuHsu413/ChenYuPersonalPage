@@ -14,6 +14,7 @@ const PROJECTS = [
         id: 'hw-cosmos-img',
         title: 'AI生圖工作室',
         category: 'homework',
+        highlight: '已部署 Streamlit Cloud · 即時文字轉圖像',
         shortDescription: '結合 Cosmos 與 Streamlit 開發的 AI 文本生成圖像工具。',
         longDescription: '此課程作業使用 Python 配合 Streamlit 框架，建構一個 AI 圖像生成工作室。使用者可以輸入文字描述（Prompt），系統將呼叫 Cosmos 生成模型，將文本描述轉換成高品質的圖像，並提供方便的參數調整與下載功能。',
         tags: ['Python', 'Streamlit', 'Cosmos AI', 'Text-to-Image'],
@@ -27,6 +28,7 @@ const PROJECTS = [
         id: 'hw-linear-regression',
         title: '線性回歸分析',
         category: 'homework',
+        highlight: '互動調參 · 動態視覺化梯度下降收斂',
         shortDescription: '基於 Streamlit 視覺化呈現線性回歸模型預測與訓練分析。',
         longDescription: '此課程作業展示了機器學習中的線性回歸（Linear Regression）演算法。透過 Streamlit 網頁介面，動態呈現數據點分佈、擬合回歸線、損失函數收斂曲線，並允許使用者動態調整超參數以觀察模型學習成效。',
         tags: ['Python', 'Streamlit', 'Machine Learning', 'Linear Regression'],
@@ -40,6 +42,7 @@ const PROJECTS = [
         id: 'hw-ml-algorithms',
         title: '機器學習十大演算法互動式學習平台',
         category: 'homework',
+        highlight: '10 大演算法 · 互動式視覺化調參',
         shortDescription: '涵蓋十大機器學習演算法的互動式視覺化學習平台。',
         longDescription: '此課程作業建構了一個互動式機器學習教學平台，完整介紹十大經典機器學習演算法，包含線性回歸、邏輯回歸、決策樹、隨機森林、SVM、K-Means 等。使用者可透過視覺化圖表與即時參數調整，深入理解各演算法的運作原理與適用情境，兼具學習性與實用性。',
         tags: ['Python', 'Machine Learning', 'Interactive', 'Data Visualization', 'Algorithms'],
@@ -53,6 +56,7 @@ const PROJECTS = [
         id: 'proj-yyx-cramschool',
         title: '楊宜修國文文理補習班形象網站',
         category: 'project',
+        highlight: '全響應式 RWD · 課程 / 師資 / 報名完整功能',
         shortDescription: '為文理補習班量身打造的現代化響應式形象官網。',
         longDescription: '此專案是為楊宜修國文文理補習班設計的形象網站。網站採用響應式網頁設計（RWD），包含班級介紹、師資陣容、最新消息與聯絡表單，旨在提供家長與學生一個清晰、專業且易於瀏覽的補習班入口平台。',
         tags: ['HTML5', 'CSS3', 'JavaScript', 'RWD', 'Institution'],
@@ -66,6 +70,7 @@ const PROJECTS = [
         id: 'proj-sulawesi-shrimp',
         title: '蘇拉威西蝦形象網站',
         category: 'project',
+        highlight: '多品種圖鑑 · 詳細飼育水質環境參數',
         shortDescription: '介紹蘇拉威西觀賞蝦品種、飼養水質與生態環境的形象網站。',
         longDescription: '此專案是一個專門為蘇拉威西觀賞蝦打造的介紹與形象展示網站。網站呈現了細緻的各類蝦種圖鑑、特有的飼養環境參數（如 pH 值、溫度、礦物質等）以及造景建議，以流暢的介面推廣觀賞蝦養殖愛好。',
         tags: ['HTML5', 'CSS3', 'JavaScript', 'Sulawesi Shrimp', 'Aquarium'],
@@ -79,6 +84,7 @@ const PROJECTS = [
         id: 'proj-account-system',
         title: '個人智慧記帳與股票追蹤系統',
         category: 'project',
+        highlight: '串接即時股價 API · 多類別收支統計圖表',
         shortDescription: '整合日常記帳收支管理與即時股票數據追蹤的個人理財系統。',
         longDescription: '此專案是一個整合性個人理財管理系統。除了提供直覺的每日收支記帳與分類統計圖表外，亦結合了股票數據追蹤功能，讓使用者能在單一平台上掌握日常消費狀況與股票投資組合的即時損益變動。',
         tags: ['JavaScript', 'Chart.js', 'Stock API', 'Financial Tracker', 'RWD'],
@@ -105,7 +111,8 @@ createApp({
             timerInterval: null,
             currentTime: '--:--:--',
             currentDate: 'Loading date...',
-            formState: 'idle',
+            formStatus: 'idle', // 'idle' | 'loading' | 'success' | 'error'
+            formStatusMessage: '',
             contactForm: { name: '', email: '', message: '' },
             projects: PROJECTS
         };
@@ -153,24 +160,29 @@ createApp({
             if (e.key === 'Escape' && this.modalActive) this.closeModal();
         },
 
-        // Form Handler — 到 https://formspree.io 建立表單後將 YOUR_FORM_ID 替換為實際 ID
-        async submitContactForm() {
-            this.formState = 'submitting';
-            try {
-                const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify(this.contactForm)
-                });
-                if (response.ok) {
-                    this.formState = 'success';
-                    this.contactForm = { name: '', email: '', message: '' };
-                } else {
-                    this.formState = 'error';
+        // EmailJS — configure at https://dashboard.emailjs.com
+        submitContactForm() {
+            this.formStatus = 'loading';
+
+            emailjs.send(
+                'service_48keklo',
+                'template_zgegwvk',
+                {
+                    from_name:  this.contactForm.name,
+                    from_email: this.contactForm.email,
+                    message:    this.contactForm.message,
+                    to_name:    'Chen Yu Hsu'
                 }
-            } catch {
-                this.formState = 'error';
-            }
+            ).then(() => {
+                this.formStatus = 'success';
+                this.formStatusMessage = `Message sent! I'll reply to ${this.contactForm.email} shortly.`;
+                this.contactForm = { name: '', email: '', message: '' };
+                setTimeout(() => { this.formStatus = 'idle'; }, 6000);
+            }).catch(() => {
+                this.formStatus = 'error';
+                this.formStatusMessage = 'Failed to send. Please email me directly.';
+                setTimeout(() => { this.formStatus = 'idle'; }, 6000);
+            });
         },
 
         updateTime() {
@@ -185,7 +197,6 @@ createApp({
                 duration: 1.0, stagger: 0.15, ease: 'power3.out'
             });
 
-            // Helper: apply a scroll-triggered fromTo to every matching element
             const scrollReveal = (selector, from, to, start = 'top bottom-=80') => {
                 gsap.utils.toArray(selector).forEach(el => {
                     gsap.fromTo(el, from, {
@@ -213,6 +224,8 @@ createApp({
     },
 
     mounted() {
+        emailjs.init({ publicKey: 'bLwqLWUY10o9p19az' });
+
         this.updateTime();
         this.timerInterval = setInterval(this.updateTime, 1000);
         window.addEventListener('scroll', this.handleScroll);
