@@ -16,7 +16,7 @@
 
 <br/><br/>
 
-[![Site Preview](https://raw.githubusercontent.com/ChenYuHsu413/ChenYuPersonalPage/main/vite-app/public/sources/demo-screenshot.png)](https://chenyuhsu413.github.io/ChenYuPersonalPage/)
+[![Site Preview](https://raw.githubusercontent.com/ChenYuHsu413/ChenYuPersonalPage/main/vite-app/public/sources/preview.png)](https://chenyuhsu413.github.io/ChenYuPersonalPage/)
 
 </div>
 
