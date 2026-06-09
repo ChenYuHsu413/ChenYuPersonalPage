@@ -1,5 +1,84 @@
 ﻿# Development Log
 
+## 2026-06-09（三）
+
+### 任務摘要
+- 將 CDN 版單頁專案遷移至 Vite 5 + Vue 3 SFC 架構（`vite-app/` 子目錄）。
+- 建立 GitHub Actions workflow，推送 main 後自動 build 並部署至 GitHub Pages。
+
+### 修改檔案
+- `vite-app/` — Vite 5 專案（全新建立）
+- `.github/workflows/deploy.yml` — GitHub Actions CI/CD 設定
+
+### vite-app 結構
+```
+vite-app/
+  index.html              ← meta tags、OG、anti-FOUC、FontAwesome CDN
+  vite.config.js          ← base: '/ChenYuPersonalPage/'
+  src/
+    main.js               ← createApp + emailjs.init()
+    style.css             ← 完整複製原 style.css
+    data/projects.js      ← PROJECTS 靜態資料獨立模組
+    App.vue               ← 所有共享狀態（theme, timer, modal, form, GitHub API）
+    components/
+      AppHeader.vue       ← nav + theme toggle
+      HeroSection.vue     ← hero + time panel
+      AboutSection.vue    ← about + GitHub stats
+      ResumeSection.vue   ← timeline（靜態）
+      HonorsSection.vue   ← honors grid（靜態）
+      WorkSection.vue     ← filter tabs + project cards
+      ContactSection.vue  ← contact form（本地 form state）
+      ProjectModal.vue    ← overlay modal
+      AppFooter.vue       ← footer
+```
+
+### 重要決策
+- 使用 `<script setup>` Composition API（Vue 3 現代標準），而非 Options API，提升可讀性與 TypeScript 相容性。
+- GSAP + EmailJS 從 CDN 改為 npm 安裝，打包進 bundle（離線可用、版本鎖定）。
+- `contactForm` 狀態放在 `ContactSection.vue` 內部，`App.vue` 只需接收 emit 的 formData 執行 EmailJS 送信，責任分離清晰。
+- `getCategoryLabel` 以 prop 傳入 `WorkSection` 與 `ProjectModal`，避免在多個元件內重複定義。
+- GitHub Pages 使用官方 `actions/upload-pages-artifact` + `actions/deploy-pages`，需在 repo Settings → Pages → Source 改為「GitHub Actions」才能啟用。
+- 舊的 CDN 版（`index.html`、`script.js`、`style.css`）暫時保留在根目錄，待 GH Pages 改用 Actions 部署後自然被 Vite build 取代。
+
+### 執行指令
+```bash
+node -v && npm -v
+# Node 18.20.8, npm 10.8.2
+
+npm create vite@5 vite-app -- --template vue
+cd vite-app && npm install
+npm install gsap @emailjs/browser
+
+cp -r sources vite-app/public/sources
+
+# 寫入所有 SFC 與設定檔...
+
+npm run build
+# ✓ 47 modules transformed.
+# dist/assets/index.css  23.88 kB │ gzip: 5.03 kB
+# dist/assets/index.js   215.57 kB │ gzip: 84.48 kB
+
+npm run dev -- --port 5174
+# VITE v5.4.21 ready at http://localhost:5174/ChenYuPersonalPage/
+
+git add vite-app/ && git commit && git push
+git add .github/workflows/deploy.yml && git commit && git push
+```
+
+### 測試 / 驗證結果
+- `npm run build` 0 errors，生成 CSS 5 kB gzip、JS 84 kB gzip。
+- `npm run dev` 成功啟動 `http://localhost:5174/ChenYuPersonalPage/`。
+- GitHub Actions workflow 已 push，等待 Pages Source 設定後自動觸發。
+
+### 遇到的問題
+- `create-vite@9` 要求 Node `>=20`，但環境為 Node 18 → 改用 `create-vite@5` 解決。
+
+### 下一步建議
+- GitHub repo Settings → Pages → Source 改為「GitHub Actions」後，Actions tab 可看到自動部署進度。
+- 未來新增作品只需修改 `vite-app/src/data/projects.js`，push 後 CI 自動重新部署。
+
+---
+
 ## 2026-06-09（續）
 
 ### 任務摘要

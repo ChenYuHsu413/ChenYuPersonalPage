@@ -18,18 +18,25 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 - **Detailed Project Overlays**: Clicking any card opens a details modal with project descriptions, meta tags, and source code links.
 - **Live Local Clock**: A real-time Taipei clock updating dynamically.
 - **Fully Responsive**: Adapts automatically to mobile, tablet, and widescreen views.
-- **EmailJS Contact Form**: Real email delivery via EmailJS — no backend required. Form shows loading / success / error states.
+- **EmailJS Contact Form**: Real email delivery via EmailJS — no backend required. Form shows loading / success / error states. Auto-reply sent to the submitter.
 - **Social Preview (OG Tags)**: Open Graph and Twitter Card meta tags for rich link previews on LINE, Facebook, and Twitter.
 - **Project Highlight Badges**: Each project card shows a one-line outcome badge for quick-scan value communication.
+- **Light / Dark Mode Toggle**: Full CSS-variable-based theme switching with localStorage persistence and anti-FOUC inline script.
+- **GitHub API Stats**: Fetches live public repo count from the GitHub API and displays it as a stat card.
+- **Vite Build (SFC)**: Parallel Vite 5 + Vue 3 SFC version in `vite-app/` — bundled, tree-shaken, deployed via GitHub Actions CI/CD.
 
 ---
 
 ## Tech Stack
 
-- **Framework**: Vue 3 (Progressive CDN)
-- **Animation**: GSAP (GreenSock Animation Platform) + ScrollTrigger
-- **Styling**: Vanilla CSS3 (Custom properties, Flexbox/Grid)
-- **Icons**: FontAwesome 6
+| Layer | CDN version | Vite SFC version |
+|---|---|---|
+| Framework | Vue 3 CDN (Options API) | Vue 3 + Vite 5 (`<script setup>`) |
+| Animation | GSAP CDN | gsap (npm) |
+| Email | @emailjs/browser CDN | @emailjs/browser (npm) |
+| Styling | Vanilla CSS3 (Custom properties) | Same CSS, bundled by Vite |
+| Icons | FontAwesome 6 | FontAwesome 6 CDN |
+| Deploy | GitHub Pages (branch) | GitHub Actions → GitHub Pages |
 
 ---
 
@@ -37,66 +44,76 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 
 ```text
 ChenYuPersonalPage/
-|-- index.html                 # Main portfolio page (Vue 3 templates)
-|-- style.css                  # Core CSS styles (glassmorphism & layout)
-|-- script.js                  # Application logic (Vue 3 instance + GSAP trigger)
-|-- README.md                  # Project overview & guidelines
+|-- index.html                 # CDN version — Vue 3 templates (legacy)
+|-- style.css                  # Core CSS styles (glassmorphism, light mode)
+|-- script.js                  # CDN version — Vue 3 instance + GSAP
+|-- README.md
+|-- .github/
+|   `-- workflows/
+|       `-- deploy.yml         # GitHub Actions: build vite-app → GitHub Pages
+|-- vite-app/                  # Vite 5 + Vue 3 SFC version
+|   |-- index.html
+|   |-- vite.config.js
+|   |-- public/sources/
+|   `-- src/
+|       |-- App.vue            # Shared state, GSAP, EmailJS, theme
+|       |-- main.js
+|       |-- style.css
+|       |-- data/projects.js   # PROJECTS static data module
+|       `-- components/        # 9 SFCs (Header/Hero/About/Resume/Honors/
+|                              #         Work/Contact/Modal/Footer)
 |-- sources/                   # Media assets
 |   |-- PikaSheen.jpg
 |   |-- demo-screenshot.png
 |   `-- workflow_infographic.jpg
-`-- docs/                      # AI assistant documents & reports
+`-- docs/
     |-- AGENT.md
     |-- dev-log.md
     |-- interview-qa.md
-    `-- work report files
+    `-- 工作報告.md
 ```
 
 ---
 
 ## How to Add New Homework or Projects
 
-To add a new work to your portfolio, follow these two steps:
-
-### Step 1: Create the Work Directory
-
-If the demo should live inside this repository, place your code files inside a self-contained sub-folder under `homeworks/` or `projects/`:
-
-- For homework: `homeworks/hw3/index.html` (include any accompanying styles or scripts in the same folder)
-- For personal projects: `projects/proj2/index.html`
-
-If the demo already lives in another GitHub repository or deployed site, you can skip creating a local folder and link directly to that external URL.
-
-### Step 2: Register in `script.js`
-
-Open `script.js` and add a new item object into the `projects` array inside the Vue data object. Fill out the metadata fields:
+Open `vite-app/src/data/projects.js` and add a new object to the `PROJECTS` array:
 
 ```javascript
 {
-    id: 'hw-3',                                     // Unique ID string
-    title: 'Your Homework Title',                   // Display title
-    category: 'homework',                           // Category: 'homework' or 'project'
-    categoryLabel: 'Course Homework',               // Display label
-    shortDescription: 'One-line summary for card',  // Short card copy
-    longDescription: 'Detailed description for modal popup.', // Long modal description
-    tags: ['HTML5', 'CSS3', 'JavaScript'],          // Technical tags
-    demoUrl: 'homeworks/hw3/index.html',            // Relative path or external demo URL
-    githubUrl: 'https://github.com/ChenYuHsu413/ChenYuPersonalPage/tree/main/homeworks/hw3', // GitHub code path
-    previewImage: 'https://example.com/preview.png', // Card and modal preview image
+    id: 'hw-new',
+    title: 'Your Project Title',
+    category: 'homework',          // 'homework' or 'project'
+    highlight: 'One-line outcome badge shown on the card',
+    shortDescription: 'Short card description.',
+    longDescription: 'Full description shown in the modal.',
+    tags: ['Python', 'Streamlit'],
+    demoUrl: 'https://your-demo-url.com',
+    githubUrl: 'https://github.com/ChenYuHsu413/your-repo',
+    previewImage: 'https://raw.githubusercontent.com/.../screenshot.png',
     colorGradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-    highlight: 'One-line outcome shown as a badge on the card',  // Optional
-    date: 'Feb 2026'
+    date: '2026'
 }
 ```
+
+Then push to `main` — GitHub Actions will automatically rebuild and redeploy.
 
 ---
 
 ## How to Run Locally
 
-Open `index.html` directly in a browser, or run a local static server from the project folder:
+**Vite version (recommended):**
+
+```bash
+cd vite-app
+npm install
+npm run dev
+# → http://localhost:5173/ChenYuPersonalPage/
+```
+
+**CDN version (legacy, no build needed):**
 
 ```bash
 npx http-server
+# → http://127.0.0.1:8080
 ```
-
-Then open `http://127.0.0.1:8080` in your web browser.
