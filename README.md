@@ -23,20 +23,20 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 - **Project Highlight Badges**: Each project card shows a one-line outcome badge for quick-scan value communication.
 - **Light / Dark Mode Toggle**: Full CSS-variable-based theme switching with localStorage persistence and anti-FOUC inline script.
 - **GitHub API Stats**: Fetches live public repo count from the GitHub API and displays it as a stat card.
-- **Vite Build (SFC)**: Parallel Vite 5 + Vue 3 SFC version in `vite-app/` — bundled, tree-shaken, deployed via GitHub Actions CI/CD.
+- **Vite Build (SFC)**: Vite 5 + Vue 3 SFC architecture in `vite-app/` — bundled, tree-shaken, deployed via GitHub Actions CI/CD.
 
 ---
 
 ## Tech Stack
 
-| Layer | CDN version | Vite SFC version |
-|---|---|---|
-| Framework | Vue 3 CDN (Options API) | Vue 3 + Vite 5 (`<script setup>`) |
-| Animation | GSAP CDN | gsap (npm) |
-| Email | @emailjs/browser CDN | @emailjs/browser (npm) |
-| Styling | Vanilla CSS3 (Custom properties) | Same CSS, bundled by Vite |
-| Icons | FontAwesome 6 | FontAwesome 6 CDN |
-| Deploy | GitHub Pages (branch) | GitHub Actions → GitHub Pages |
+| Layer | Technology |
+|---|---|
+| Framework | Vue 3 + Vite 5 (`<script setup>` Composition API) |
+| Animation | gsap + ScrollTrigger (npm) |
+| Email | @emailjs/browser (npm) |
+| Styling | Vanilla CSS3 (Custom properties, glassmorphism) |
+| Icons | FontAwesome 6 CDN |
+| Deploy | GitHub Actions → GitHub Pages |
 
 ---
 
@@ -44,17 +44,16 @@ A responsive personal portfolio website for Chen Yu Hsu, redesigned as an intera
 
 ```text
 ChenYuPersonalPage/
-|-- index.html                 # CDN version — Vue 3 templates (legacy)
-|-- style.css                  # Core CSS styles (glassmorphism, light mode)
-|-- script.js                  # CDN version — Vue 3 instance + GSAP
 |-- README.md
 |-- .github/
 |   `-- workflows/
 |       `-- deploy.yml         # GitHub Actions: build vite-app → GitHub Pages
-|-- vite-app/                  # Vite 5 + Vue 3 SFC version
+|-- vite-app/                  # Vite 5 + Vue 3 SFC
 |   |-- index.html
 |   |-- vite.config.js
-|   |-- public/sources/
+|   |-- package.json
+|   |-- public/
+|   |   `-- sources/           # Static assets (images)
 |   `-- src/
 |       |-- App.vue            # Shared state, GSAP, EmailJS, theme
 |       |-- main.js
@@ -62,10 +61,6 @@ ChenYuPersonalPage/
 |       |-- data/projects.js   # PROJECTS static data module
 |       `-- components/        # 9 SFCs (Header/Hero/About/Resume/Honors/
 |                              #         Work/Contact/Modal/Footer)
-|-- sources/                   # Media assets
-|   |-- PikaSheen.jpg
-|   |-- demo-screenshot.png
-|   `-- workflow_infographic.jpg
 `-- docs/
     |-- AGENT.md
     |-- dev-log.md
@@ -102,18 +97,9 @@ Then push to `main` — GitHub Actions will automatically rebuild and redeploy.
 
 ## How to Run Locally
 
-**Vite version (recommended):**
-
 ```bash
 cd vite-app
 npm install
 npm run dev
 # → http://localhost:5173/ChenYuPersonalPage/
-```
-
-**CDN version (legacy, no build needed):**
-
-```bash
-npx http-server
-# → http://127.0.0.1:8080
 ```
