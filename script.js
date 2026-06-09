@@ -180,18 +180,19 @@ createApp({
         submitContactForm() {
             this.formStatus = 'loading';
 
-            emailjs.send(
-                'service_48keklo',
-                'template_zgegwvk',
-                {
-                    from_name:  this.contactForm.name,
-                    from_email: this.contactForm.email,
-                    message:    this.contactForm.message,
-                    to_name:    'Chen Yu Hsu'
-                }
-            ).then(() => {
+            const params = {
+                from_name:  this.contactForm.name,
+                from_email: this.contactForm.email,
+                message:    this.contactForm.message,
+                to_name:    'Chen Yu Hsu'
+            };
+
+            Promise.all([
+                emailjs.send('service_48keklo', 'template_zgegwvk',  params),
+                emailjs.send('service_48keklo', 'template_337686k', params)
+            ]).then(() => {
                 this.formStatus = 'success';
-                this.formStatusMessage = `Message sent! I'll reply to ${this.contactForm.email} shortly.`;
+                this.formStatusMessage = `Message sent! A confirmation has been sent to ${this.contactForm.email}.`;
                 this.contactForm = { name: '', email: '', message: '' };
                 setTimeout(() => { this.formStatus = 'idle'; }, 6000);
             }).catch(() => {
