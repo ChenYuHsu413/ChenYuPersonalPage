@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light');</script>
     <meta name="description" content="Chen Yu Hsu - Personal portfolio showcasing personal projects and course homework assignments.">
     <title>Chen Yu Hsu | Personal Page & Project Collection</title>
 
@@ -54,9 +55,14 @@
                     </li>
                 </ul>
                 
-                <button class="menu-toggle" @click="toggleMenu" aria-label="Toggle navigation menu">
-                    <i :class="menuActive ? 'fas fa-times' : 'fas fa-bars'"></i>
-                </button>
+                <div class="nav-actions">
+                    <button class="theme-toggle" @click="toggleTheme" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+                        <i :class="isDark ? 'fas fa-sun' : 'fas fa-moon'"></i>
+                    </button>
+                    <button class="menu-toggle" @click="toggleMenu" aria-label="Toggle navigation menu">
+                        <i :class="menuActive ? 'fas fa-times' : 'fas fa-bars'"></i>
+                    </button>
+                </div>
             </nav>
         </header>
 
@@ -135,6 +141,10 @@
                         <div class="stat-card">
                             <span class="stat-number">100%</span>
                             <span class="stat-label">Responsive Grid</span>
+                        </div>
+                        <div v-if="githubStats.repos !== null" class="stat-card">
+                            <span class="stat-number">{{ githubStats.repos }}</span>
+                            <span class="stat-label">GitHub Repos</span>
                         </div>
                     </div>
                 </div>
@@ -249,28 +259,29 @@
                     <div class="honor-year">2015</div>
                     <div class="honor-content">
                         <h3>Taiwan Student Cluster Competition</h3>
-                        <p>First Prize</p>
+                        <span class="prize-badge prize-gold"><i class="fas fa-trophy"></i> First Prize</span>
                     </div>
                 </article>
                 <article class="honor-card">
                     <div class="honor-year">2012</div>
                     <div class="honor-content">
                         <h3>National College Programming Contest</h3>
-                        <p>Third Prize</p>
+                        <span class="prize-badge prize-bronze"><i class="fas fa-medal"></i> Third Prize</span>
                     </div>
                 </article>
                 <article class="honor-card">
                     <div class="honor-year">2012</div>
                     <div class="honor-content">
                         <h3>The ACM-ICPC Asia Kaohsiung Regional Contest</h3>
-                        <p>Honorable Mention</p>
+                        <span class="prize-badge prize-silver"><i class="fas fa-star"></i> Honorable Mention</span>
                     </div>
                 </article>
                 <article class="honor-card">
                     <div class="honor-year">2010</div>
                     <div class="honor-content">
                         <h3>High School Student Academic Competence Contest, Computer Science</h3>
-                        <p>Regional semi-final Sixth Prize, qualified to participate in the national final contest.</p>
+                        <span class="prize-badge prize-default"><i class="fas fa-award"></i> Regional Semi-Final · 6th Place</span>
+                        <p>Qualified to participate in the national final contest.</p>
                     </div>
                 </article>
             </div>
@@ -451,7 +462,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
 </body>
 
 </html>

@@ -114,7 +114,9 @@ createApp({
             formStatus: 'idle', // 'idle' | 'loading' | 'success' | 'error'
             formStatusMessage: '',
             contactForm: { name: '', email: '', message: '' },
-            projects: PROJECTS
+            projects: PROJECTS,
+            isDark: true,
+            githubStats: { repos: null }
         };
     },
 
@@ -158,6 +160,20 @@ createApp({
         },
         handleKeydown(e) {
             if (e.key === 'Escape' && this.modalActive) this.closeModal();
+        },
+
+        toggleTheme() {
+            this.isDark = !this.isDark;
+            const theme = this.isDark ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        },
+
+        fetchGitHubStats() {
+            fetch('https://api.github.com/users/ChenYuHsu413')
+                .then(r => r.json())
+                .then(data => { this.githubStats.repos = data.public_repos; })
+                .catch(() => {});
         },
 
         // EmailJS — configure at https://dashboard.emailjs.com
@@ -226,11 +242,16 @@ createApp({
     mounted() {
         emailjs.init({ publicKey: 'bLwqLWUY10o9p19az' });
 
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        this.isDark = savedTheme === 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
         this.updateTime();
         this.timerInterval = setInterval(this.updateTime, 1000);
         window.addEventListener('scroll', this.handleScroll);
         window.addEventListener('keydown', this.handleKeydown);
         this.$nextTick(() => this.initGSAPAnimations());
+        this.fetchGitHubStats();
     },
 
     unmounted() {
