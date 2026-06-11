@@ -46,7 +46,12 @@ const filteredProjects = computed(() => {
 })
 
 function getCategoryLabel(category) {
-    return category === 'project' ? 'Personal Project' : 'Course Homework'
+    const labels = {
+        project: 'Personal Project',
+        homework: 'Course Homework',
+        archive: 'Archive Work'
+    }
+    return labels[category] || category
 }
 
 function updateTime() {

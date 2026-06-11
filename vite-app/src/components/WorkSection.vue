@@ -24,6 +24,9 @@ const emit = defineEmits(['update:activeTab', 'open-modal'])
             <button :class="{ 'active': activeTab === 'homework' }" @click="emit('update:activeTab', 'homework')">
                 <i class="fas fa-graduation-cap"></i> Course Homework
             </button>
+            <button :class="{ 'active': activeTab === 'archive' }" @click="emit('update:activeTab', 'archive')">
+                <i class="fas fa-archive"></i> Archive
+            </button>
         </div>
 
         <div class="work-grid">

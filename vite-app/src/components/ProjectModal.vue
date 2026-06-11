@@ -19,7 +19,13 @@ const emit = defineEmits(['close-modal'])
                     <h2>{{ selectedProject.title }}</h2>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-preview" v-if="selectedProject.previewImage">
+                    <div class="modal-gallery" v-if="selectedProject.gallery">
+                        <figure v-for="img in selectedProject.gallery" :key="img.src">
+                            <img :src="img.src" :alt="img.alt" loading="lazy">
+                            <figcaption>{{ img.caption }}</figcaption>
+                        </figure>
+                    </div>
+                    <div class="modal-preview" v-else-if="selectedProject.previewImage">
                         <img
                             :src="selectedProject.previewImage"
                             :alt="`${selectedProject.title} preview image`"
@@ -44,15 +50,25 @@ const emit = defineEmits(['close-modal'])
                                     <li><strong>Published:</strong> {{ selectedProject.date }}</li>
                                 </ul>
                             </div>
-                            <div class="modal-action-buttons">
+                            <div
+                                class="modal-action-buttons"
+                                v-if="selectedProject.demoUrl || selectedProject.githubUrl"
+                            >
                                 <a
+                                    v-if="selectedProject.demoUrl"
                                     :href="selectedProject.demoUrl"
                                     class="modal-btn live-btn"
                                     :target="selectedProject.demoUrl.startsWith('http') ? '_blank' : '_self'"
                                 >
                                     <i class="fas fa-external-link-alt"></i> Open Live Demo
                                 </a>
-                                <a :href="selectedProject.githubUrl" class="modal-btn git-btn" target="_blank" rel="noreferrer">
+                                <a
+                                    v-if="selectedProject.githubUrl"
+                                    :href="selectedProject.githubUrl"
+                                    class="modal-btn git-btn"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
                                     <i class="fab fa-github"></i> View Source Code
                                 </a>
                             </div>

@@ -1,3 +1,5 @@
+const BASE = import.meta.env.BASE_URL
+
 export const PROJECTS = [
     {
         id: 'hw-cosmos-img',
@@ -82,5 +84,29 @@ export const PROJECTS = [
         previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/PersonalAccountSystem/main/docs/screenshot_bookkeeping.png',
         colorGradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
         date: '2026'
+    },
+    {
+        id: 'arc-sketchup-modeling',
+        title: '清大原子爐 SketchUp 還原建模',
+        category: 'archive',
+        highlight: '實體建築觀察還原 · 模型與實景對照',
+        shortDescription: '2013 年的 SketchUp 自主建模練習，觀察清大原子爐建築並還原其量體結構與入口門牌細節。',
+        longDescription: '此為 2013 年在學期間自主完成的 SketchUp 3D 建模練習，並非課程作業，而是出於對 3D 建模的興趣，以國立清華大學的原子爐建築（原科中心反應器組）為還原對象。建模從整體量體的觀察與拆解開始，先建立主體的階狀量體組合與立面的垂直板狀結構，再針對入口門牌進行細部還原，包含深紅色門框造型與牌面題字的位置比例，最後以模型與實景照片並排對照，檢視還原的準確度。雖然屬於練習性質的作品，但過程中扎實練習了空間結構的觀察與拆解、比例與尺度的掌握，以及將實體建築轉化為 3D 模型的基本工作流程，也是我接觸 3D 建模與空間設計的起點。',
+        tags: ['SketchUp', '3D Modeling', 'Architecture Reference', 'Spatial Design', 'Archive'],
+        previewImage: BASE + 'sources/sketchup-building-model.jpg',
+        gallery: [
+            {
+                src: BASE + 'sources/sketchup-building-model.jpg',
+                alt: 'SketchUp white massing model of the building with vertical fin structures',
+                caption: '建築主體白模：階狀量體組合與立面垂直板狀結構'
+            },
+            {
+                src: BASE + 'sources/sketchup-entrance-comparison.jpg',
+                alt: 'Side-by-side comparison of the SketchUp entrance model and the real building photo',
+                caption: '入口門牌還原：左為 SketchUp 模型，右為實景照片對照'
+            }
+        ],
+        colorGradient: 'linear-gradient(135deg, #64748b 0%, #334155 100%)',
+        date: '2013'
     }
 ]
