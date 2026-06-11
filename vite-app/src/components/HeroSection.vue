@@ -12,6 +12,15 @@ const timeParts = computed(() => {
     const [h = '--', m = '--', s = '--'] = t.split(':')
     return { h, m, s }
 })
+
+const clockAngles = computed(() => {
+    const [h, m, s] = (props.currentTime || '00:00:00').split(':').map(v => Number(v) || 0)
+    return {
+        hour: (h % 12) * 30 + m * 0.5,
+        minute: m * 6 + s * 0.1,
+        second: s * 6
+    }
+})
 </script>
 
 <template>
@@ -34,20 +43,58 @@ const timeParts = computed(() => {
                         <span class="clock-label">Taipei</span>
                         <span class="clock-live">Live</span>
                     </div>
-                    <div class="clock-digits">
+                    <div class="clock-body">
+                        <div class="clock-dial" aria-hidden="true">
+                            <span
+                                v-for="n in 12"
+                                :key="n"
+                                class="dial-tick"
+                                :style="{ transform: `rotate(${n * 30}deg)` }"
+                            ></span>
+                            <span class="dial-hand hand-hour" :style="{ transform: `rotate(${clockAngles.hour}deg)` }"></span>
+                            <span class="dial-hand hand-minute" :style="{ transform: `rotate(${clockAngles.minute}deg)` }"></span>
+                            <span class="dial-hand hand-second" :style="{ transform: `rotate(${clockAngles.second}deg)` }"></span>
+                            <span class="dial-center"></span>
+                        </div>
+                        <div class="clock-digits">
                         <div class="digit-group">
-                            <span class="digit">{{ timeParts.h[0] }}</span>
-                            <span class="digit">{{ timeParts.h[1] }}</span>
+                            <span class="digit">
+                                <transition name="digit-roll">
+                                    <span class="digit-value" :key="timeParts.h[0]">{{ timeParts.h[0] }}</span>
+                                </transition>
+                            </span>
+                            <span class="digit">
+                                <transition name="digit-roll">
+                                    <span class="digit-value" :key="timeParts.h[1]">{{ timeParts.h[1] }}</span>
+                                </transition>
+                            </span>
                         </div>
                         <span class="digit-sep">:</span>
                         <div class="digit-group">
-                            <span class="digit">{{ timeParts.m[0] }}</span>
-                            <span class="digit">{{ timeParts.m[1] }}</span>
+                            <span class="digit">
+                                <transition name="digit-roll">
+                                    <span class="digit-value" :key="timeParts.m[0]">{{ timeParts.m[0] }}</span>
+                                </transition>
+                            </span>
+                            <span class="digit">
+                                <transition name="digit-roll">
+                                    <span class="digit-value" :key="timeParts.m[1]">{{ timeParts.m[1] }}</span>
+                                </transition>
+                            </span>
                         </div>
                         <span class="digit-sep">:</span>
                         <div class="digit-group">
-                            <span class="digit">{{ timeParts.s[0] }}</span>
-                            <span class="digit">{{ timeParts.s[1] }}</span>
+                            <span class="digit">
+                                <transition name="digit-roll">
+                                    <span class="digit-value" :key="timeParts.s[0]">{{ timeParts.s[0] }}</span>
+                                </transition>
+                            </span>
+                            <span class="digit">
+                                <transition name="digit-roll">
+                                    <span class="digit-value" :key="timeParts.s[1]">{{ timeParts.s[1] }}</span>
+                                </transition>
+                            </span>
+                        </div>
                         </div>
                     </div>
                     <div class="clock-date">{{ currentDate }}</div>
