@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import emailjs from '@emailjs/browser'
 import { PROJECTS } from './data/projects.js'
+import GlassBackground from './components/GlassBackground.vue'
 import AppHeader from './components/AppHeader.vue'
 import HeroSection from './components/HeroSection.vue'
 import AboutSection from './components/AboutSection.vue'
@@ -176,6 +177,8 @@ onUnmounted(() => {
 </script>
 
 <template>
+    <GlassBackground />
+
     <AppHeader
         :scrolled="scrolled"
         :menu-active="menuActive"
