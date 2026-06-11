@@ -1,5 +1,49 @@
 ﻿# Development Log
 
+## 2026-06-11（四）Glassmorphism 改版紀錄整理 + 工作檔案
+
+### 任務摘要
+- 整理與 Claude 討論 glassmorphism / liquid glass 改版的完整紀錄。
+- 新增根目錄 `log.md` 作為可快速閱讀的改版紀錄。
+- 新增 `docs/glassmorphism-redesign-workfile.md` 作為工作檔案與驗收清單。
+- 更新 README 的文件索引與改版狀態。
+- 排除本機 `.claude/settings.local.json`，避免把 local tool config 推上 GitHub。
+
+### 修改檔案
+- `log.md` — 新增，整理需求、功能盤點、調參過程、驗證與後續建議
+- `docs/glassmorphism-redesign-workfile.md` — 新增，交付項目、驗收清單、可調參數與 Git 操作備忘
+- `docs/dev-log.md` — 新增本次工作紀錄
+- `README.md` — 補上 redesign notes 與 documentation index
+- `.gitignore` — 新增 `.claude/settings.local.json`
+- `vite-app/src/components/GlassBackground.vue` — Claude 改版中的背景與液態濾鏡改動
+- `vite-app/src/style.css` — Claude 改版中的玻璃配方、網格、幾何背景與 fallback 改動
+
+### 重要決策
+- `log.md` 放根目錄，方便課程作業或 GitHub 首頁快速找到本次改版紀錄。
+- 詳細驗收與調參資料放 `docs/`，維持專案文件集中管理。
+- 不提交 `.claude/settings.local.json`，因為它是本機權限設定，不屬於專案交付內容。
+- 保留液態玻璃效果的 Chromium-only 啟用策略，其他瀏覽器與行動版退回純玻璃模糊。
+
+### 執行指令
+```bash
+git status --short --branch
+npm run build
+```
+
+### 測試 / 驗證結果
+- `npm run build` 通過。
+- Vite build 成功產生 `dist/assets/index-ClqstKvJ.css` 與 `dist/assets/index-CCY7FmcL.js`。
+
+### 遇到的問題
+- 附件初次用 PowerShell 預設編碼讀取時出現亂碼，改用 UTF-8 後正常。
+- `.claude/settings.local.json` 出現在 untracked 狀態，已透過 `.gitignore` 排除。
+
+### 下一步建議
+- 在實體 Chromium / Edge 瀏覽器檢查液態折射是否符合肉眼觀感。
+- 若效果過霧，優先調整 `--glass-blur`、`--glass-bg` alpha 與 `feDisplacementMap scale`。
+
+---
+
 ## 2026-06-09（三）CDN 清理 + 時鐘 UI 改版
 
 ### 任務摘要

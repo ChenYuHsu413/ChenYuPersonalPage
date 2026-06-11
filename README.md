@@ -25,7 +25,7 @@
 ## ✨ Features
 
 - 🔍 **Dynamic Work Filtering** — Vue 3 reactive tabs switching between All Works, Personal Projects, and Course Homework
-- 🪟 **Glassmorphism UI** — Sticky blur header, glass-surface cards, and micro-hover animations on dark/light themes
+- 🪟 **Glassmorphism UI** — CSS-variable glass recipe, animated global background, grid texture, and Chromium-only liquid-glass fallback path
 - 🎬 **GSAP Motion Suite** — Scroll-triggered stagger entrance animations across all sections via ScrollTrigger
 - 🗂 **Project Detail Modals** — Click any card for a full overlay with description, tech tags, and source links
 - 🕐 **Live Clock Widget** — Segmented digit-card for Taipei time with pulsing live dot and blinking colon separators
@@ -53,11 +53,30 @@
 
 ---
 
+## 🧊 Redesign Notes
+
+The current `glassmorphism-redesign` work keeps the original Vue logic intact while refining the visual system:
+
+- `GlassBackground.vue` owns the animated gradient, glow orbs, grid, geometric details, cursor glow, and shared SVG liquid filter.
+- `style.css` centralizes glass parameters through CSS variables such as `--glass-bg`, `--glass-blur`, `--glass-saturate`, and `--grid-line`.
+- Liquid refraction is attempted only on Chromium via `html.liquid-ok`; other browsers and mobile layouts gracefully fall back to blur + saturate glass.
+- The latest implementation was verified with `npm run build` on 2026-06-11.
+
+Detailed notes:
+
+- [log.md](./log.md) — 整理 Claude 討論與改版過程
+- [docs/glassmorphism-redesign-workfile.md](./docs/glassmorphism-redesign-workfile.md) — 工作檔案、驗收清單與可調參數
+- [docs/dev-log.md](./docs/dev-log.md) — 專案開發紀錄
+
+---
+
 ## 📁 File Structure
 
 ```text
 ChenYuPersonalPage/
 |-- README.md
+|-- log.md                    # Glassmorphism redesign discussion summary
+|-- .gitignore
 |-- .github/
 |   └── workflows/
 |       └── deploy.yml         # GitHub Actions: build vite-app → GitHub Pages
@@ -79,6 +98,7 @@ ChenYuPersonalPage/
 └── docs/
     |-- AGENT.md
     |-- dev-log.md
+    |-- glassmorphism-redesign-workfile.md
     |-- interview-qa.md
     └── 工作報告.md
 ```

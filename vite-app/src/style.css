@@ -4,12 +4,13 @@
    ========================================================================== */
 :root {
     /* Glass recipe（玻璃配方）— 斜向光澤漸層讓玻璃質感更明顯 */
-    --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%);
-    --glass-bg-hover: linear-gradient(160deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0.09) 100%);
+    --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.025) 100%);
+    --glass-bg-hover: linear-gradient(160deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.05) 100%);
     --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
     --glass-sweep: rgba(255, 255, 255, 0.16);
     --noise-opacity: 0.05;
-    --glass-blur: 14px;
+    --glass-blur: 6px;
+    --glass-saturate: 150%;
     --glass-border: rgba(255, 255, 255, 0.18);
     --glass-border-hover: rgba(255, 255, 255, 0.38);
     --glass-radius: 18px;
@@ -25,8 +26,17 @@
     --orb-purple: #a855f7;
     --orb-cyan: #06b6d4;
     --orb-pink: #ec4899;
-    --orb-blur: 70px;
-    --orb-opacity: 0.45;
+    --orb-blur: 60px;
+    --orb-opacity: 0.3;
+
+    /* Background decorations（網格 / 幾何元素 / 滑鼠光源） */
+    --grid-line: rgba(255, 255, 255, 0.16);
+    --shape-white: rgba(255, 255, 255, 0.3);
+    --shape-purple: rgba(168, 85, 247, 0.5);
+    --shape-cyan: rgba(103, 232, 249, 0.4);
+    --shape-pink: rgba(236, 72, 153, 0.45);
+    --cursor-glow-core: rgba(103, 232, 249, 0.3);
+    --cursor-glow-mid: rgba(168, 85, 247, 0.18);
 
     /* Solid surface（時間軸圓點等需要不透明底色處） */
     --solid-surface: #150d38;
@@ -63,8 +73,8 @@
 }
 
 [data-theme="light"] {
-    --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.38) 100%);
-    --glass-bg-hover: linear-gradient(160deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.52) 100%);
+    --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.24) 100%);
+    --glass-bg-hover: linear-gradient(160deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.36) 100%);
     --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(255, 255, 255, 0.2);
     --glass-sweep: rgba(255, 255, 255, 0.6);
     --noise-opacity: 0.035;
@@ -75,7 +85,15 @@
 
     --bg-grad-start: #e9e4f9;
     --bg-grad-end: #d8e4f5;
-    --orb-opacity: 0.28;
+    --orb-opacity: 0.22;
+
+    --grid-line: rgba(24, 18, 58, 0.12);
+    --shape-white: rgba(24, 18, 58, 0.25);
+    --shape-purple: rgba(124, 58, 237, 0.4);
+    --shape-cyan: rgba(8, 145, 178, 0.35);
+    --shape-pink: rgba(219, 39, 119, 0.35);
+    --cursor-glow-core: rgba(124, 58, 237, 0.16);
+    --cursor-glow-mid: rgba(8, 145, 178, 0.1);
 
     --solid-surface: #e6e3f5;
 
@@ -111,7 +129,8 @@ html {
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, var(--bg-grad-start) 0%, var(--bg-grad-end) 100%);
+    /* 背景交給 .glass-bg 元件；body 鋪不透明背景會蓋住 z-index:-1 的固定背景層 */
+    background: transparent;
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
@@ -178,6 +197,25 @@ h1, h2, h3, h4 {
     pointer-events: none;
 }
 
+/* 視差圖層：JS 依捲動量平移，內部光暈/幾何元素照常播自己的動畫 */
+.bg-layer {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+}
+
+/* 細網格：有清晰邊緣的背景素材，透過玻璃會被磨成霧面 */
+.bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--grid-line) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, var(--grid-line) 1.5px, transparent 1.5px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 130% 110% at 50% 45%, black 35%, transparent 95%);
+    -webkit-mask-image: radial-gradient(ellipse 130% 110% at 50% 45%, black 35%, transparent 95%);
+}
+
 .glass-orb {
     position: absolute;
     border-radius: 50%;
@@ -192,7 +230,7 @@ h1, h2, h3, h4 {
     background: var(--orb-purple);
     top: -8%;
     left: 4%;
-    animation: orb-float-1 26s ease-in-out infinite;
+    animation: orb-float-1 13s ease-in-out infinite;
 }
 
 .glass-orb-cyan {
@@ -201,7 +239,7 @@ h1, h2, h3, h4 {
     background: var(--orb-cyan);
     top: 36%;
     right: -4%;
-    animation: orb-float-2 32s ease-in-out infinite;
+    animation: orb-float-2 16s ease-in-out infinite;
 }
 
 .glass-orb-pink {
@@ -210,7 +248,147 @@ h1, h2, h3, h4 {
     background: var(--orb-pink);
     bottom: -8%;
     left: 30%;
-    animation: orb-float-3 29s ease-in-out infinite;
+    animation: orb-float-3 14s ease-in-out infinite;
+}
+
+/* 幾何裝飾元素：清晰邊緣 + 漂浮/旋轉，從卡片後滑過時玻璃感最明顯 */
+.bg-shape {
+    position: absolute;
+    display: block;
+}
+
+.bg-ring-1 {
+    width: 110px;
+    height: 110px;
+    top: 16%;
+    left: 31%;
+    border: 1.5px dashed var(--shape-purple);
+    border-radius: 50%;
+    animation: shape-spin 36s linear infinite;
+}
+
+.bg-ring-2 {
+    width: 70px;
+    height: 70px;
+    top: 62%;
+    left: 76%;
+    border: 1.5px solid var(--shape-cyan);
+    border-radius: 50%;
+    animation: shape-bob 9s ease-in-out infinite;
+}
+
+.bg-dot-1 {
+    width: 8px;
+    height: 8px;
+    top: 30%;
+    left: 12%;
+    border-radius: 50%;
+    background: var(--shape-white);
+    animation: shape-bob 11s ease-in-out infinite;
+}
+
+.bg-dot-2 {
+    width: 5px;
+    height: 5px;
+    top: 70%;
+    left: 38%;
+    border-radius: 50%;
+    background: var(--shape-purple);
+    animation: shape-bob 8s ease-in-out infinite reverse;
+}
+
+.bg-dot-3 {
+    width: 6px;
+    height: 6px;
+    top: 24%;
+    left: 80%;
+    border-radius: 50%;
+    background: var(--shape-cyan);
+    animation: shape-bob 10s ease-in-out infinite;
+}
+
+.bg-diamond-1 {
+    width: 14px;
+    height: 14px;
+    top: 78%;
+    left: 64%;
+    border: 1.5px solid var(--shape-pink);
+    animation: shape-spin 22s linear infinite;
+}
+
+.bg-ring-3 {
+    width: 180px;
+    height: 180px;
+    top: 44%;
+    left: 50%;
+    border: 1px solid var(--shape-white);
+    border-radius: 50%;
+    animation: shape-bob 14s ease-in-out infinite reverse;
+}
+
+.bg-dot-4 {
+    width: 7px;
+    height: 7px;
+    top: 52%;
+    left: 28%;
+    border-radius: 50%;
+    background: var(--shape-pink);
+    animation: shape-bob 9s ease-in-out infinite;
+}
+
+.bg-line-1 {
+    width: 1px;
+    height: 140px;
+    top: 40%;
+    left: 22%;
+    background: linear-gradient(to bottom, transparent, var(--shape-white), transparent);
+    animation: line-bob-45 12s ease-in-out infinite;
+}
+
+.bg-line-2 {
+    width: 1px;
+    height: 110px;
+    top: 12%;
+    left: 60%;
+    background: linear-gradient(to bottom, transparent, var(--shape-cyan), transparent);
+    animation: line-bob-m30 10s ease-in-out infinite;
+}
+
+@keyframes shape-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes shape-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-18px); }
+}
+
+@keyframes line-bob-45 {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50%      { transform: rotate(45deg) translateY(-14px); }
+}
+
+@keyframes line-bob-m30 {
+    0%, 100% { transform: rotate(-30deg) translateY(0); }
+    50%      { transform: rotate(-30deg) translateY(-14px); }
+}
+
+/* 滑鼠跟隨光源：JS 以 transform 平移，經過卡片背後時被磨成霧面 */
+.glow-cursor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 340px;
+    height: 340px;
+    margin: -170px 0 0 -170px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(255, 255, 255, 0.18) 0%,
+        var(--cursor-glow-core) 18%,
+        var(--cursor-glow-mid) 45%,
+        transparent 72%);
+    will-change: transform;
 }
 
 @keyframes orb-float-1 {
@@ -232,8 +410,13 @@ h1, h2, h3, h4 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .glass-orb {
+    .glass-orb,
+    .bg-shape {
         animation: none;
+    }
+
+    .glow-cursor {
+        display: none;
     }
 }
 
@@ -252,8 +435,8 @@ h1, h2, h3, h4 {
 .contact-form-panel,
 .sidebar-info-box {
     background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid var(--glass-border);
     border-radius: var(--glass-radius);
     box-shadow: var(--glass-shadow), var(--glass-inset);
@@ -275,6 +458,31 @@ h1, h2, h3, h4 {
     border-color: var(--glass-border-hover);
     background: var(--glass-bg-hover);
     box-shadow: var(--glass-shadow-hover), var(--glass-inset);
+}
+
+/* 液態折射：位移濾鏡直接串進卡片的 backdrop-filter 濾鏡鏈。
+   url() 濾鏡只有 Chromium 的 GPU 路徑支援，由 GlassBackground.vue
+   偵測後在 <html> 加 liquid-ok class，其他瀏覽器維持上面的純模糊配方 */
+html.liquid-ok .glass-card,
+html.liquid-ok .clock-widget,
+html.liquid-ok .portrait-card,
+html.liquid-ok .stat-card,
+html.liquid-ok .honor-card,
+html.liquid-ok .project-card,
+html.liquid-ok .timeline-content,
+html.liquid-ok .contact-item,
+html.liquid-ok .contact-form-panel,
+html.liquid-ok .sidebar-info-box {
+    backdrop-filter: url(#liquid-glass) blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: url(#liquid-glass) blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+/* 隱藏的 SVG 濾鏡定義容器 */
+.liquid-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 /* Hover 光澤掃過動畫（light sweep）— 斜向光帶從左掃到右 */
@@ -1870,6 +2078,21 @@ footer {
     .glass-orb-purple { width: 320px; height: 320px; }
     .glass-orb-cyan   { width: 280px; height: 280px; }
     .glass-orb-pink   { width: 260px; height: 260px; }
+
+    /* 位移濾鏡較耗 GPU，行動裝置退回純模糊 */
+    html.liquid-ok .glass-card,
+    html.liquid-ok .clock-widget,
+    html.liquid-ok .portrait-card,
+    html.liquid-ok .stat-card,
+    html.liquid-ok .honor-card,
+    html.liquid-ok .project-card,
+    html.liquid-ok .timeline-content,
+    html.liquid-ok .contact-item,
+    html.liquid-ok .contact-form-panel,
+    html.liquid-ok .sidebar-info-box {
+        backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    }
 }
 
 @media (max-width: 480px) {
