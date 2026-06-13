@@ -45,13 +45,14 @@ const filteredProjects = computed(() => {
     return PROJECTS.filter(p => p.category === activeTab.value)
 })
 
+const CATEGORY_LABELS = {
+    project: 'Personal Project',
+    homework: 'Course Homework',
+    archive: 'Archive Work'
+}
+
 function getCategoryLabel(category) {
-    const labels = {
-        project: 'Personal Project',
-        homework: 'Course Homework',
-        archive: 'Archive Work'
-    }
-    return labels[category] || category
+    return CATEGORY_LABELS[category] ?? 'Project'
 }
 
 function updateTime() {

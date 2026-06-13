@@ -19,7 +19,7 @@ const emit = defineEmits(['close-modal'])
                     <h2>{{ selectedProject.title }}</h2>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-gallery" v-if="selectedProject.gallery">
+                    <div class="modal-gallery" v-if="selectedProject.gallery?.length">
                         <figure v-for="img in selectedProject.gallery" :key="img.src">
                             <img :src="img.src" :alt="img.alt" loading="lazy">
                             <figcaption>{{ img.caption }}</figcaption>
@@ -59,6 +59,7 @@ const emit = defineEmits(['close-modal'])
                                     :href="selectedProject.demoUrl"
                                     class="modal-btn live-btn"
                                     :target="selectedProject.demoUrl.startsWith('http') ? '_blank' : '_self'"
+                                    rel="noopener noreferrer"
                                 >
                                     <i class="fas fa-external-link-alt"></i> Open Live Demo
                                 </a>
@@ -67,7 +68,7 @@ const emit = defineEmits(['close-modal'])
                                     :href="selectedProject.githubUrl"
                                     class="modal-btn git-btn"
                                     target="_blank"
-                                    rel="noreferrer"
+                                    rel="noopener noreferrer"
                                 >
                                     <i class="fab fa-github"></i> View Source Code
                                 </a>

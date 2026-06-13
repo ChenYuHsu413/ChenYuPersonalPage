@@ -1,5 +1,63 @@
 ﻿# Development Log
 
+## 2026-06-13（六）Archive 專案 code review + 修正
+
+### 任務摘要
+- 對前一個 commit `6e117c0`（SketchUp archive 專案）做 extra-high recall 等級的 code review。
+- 將 review 結果寫入根目錄 `todo.md`，逐項修正。
+- 撤回多餘的 `c9a312e`（在 repo root 重複追蹤了已在 `vite-app/public/sources/` 下的圖片），維持單一來源。
+- 本地 `npm run build` + dev server 驗證所有修改不破壞既有行為。
+
+### 修改檔案
+- `vite-app/src/App.vue` — `CATEGORY_LABELS` 提升至模組層常數，`getCategoryLabel` 改回 `??` fallback 為 `'Project'`
+- `vite-app/src/components/ProjectModal.vue` — 三處：gallery `v-if` 用 `?.length`、demoUrl anchor 新增 `rel="noopener noreferrer"`、githubUrl 從 `rel="noreferrer"` 升級為 `rel="noopener noreferrer"`
+- `vite-app/src/data/projects.js` — 抽出 `sketchupBuildingImg` 與 `sketchupEntranceImg` 兩個檔頂常數，archive 專案的 `previewImage` 與 `gallery[].src` 全部引用同一個變數
+- `todo.md` — 新增（review 追蹤清單，所有項目均標記已修正）
+- `docs/dev-log.md` — 本次工作紀錄
+- 刪除：root `sources/building.jpg`、`sources/door.jpg`（為 `vite-app/public/sources/sketchup-*.jpg` 的未改名複本，byte-for-byte 相同，已透過 `git reset --hard HEAD~1` 一併撤回）
+
+### Review 發現的問題與修正
+| # | 嚴重度 | 位置 | 問題 | 修正 |
+|---|--------|------|------|------|
+| 1 | 🔴 Correctness | `App.vue:54` | `labels[category] \|\| category` 對未知 category 回傳原始 slug 或 `undefined`（舊版預設回 'Course Homework'） | 改 `?? 'Project'`，並把 lookup 提至模組層常數 |
+| 2 | 🔴 Correctness | `ProjectModal.vue:22` | `v-if="selectedProject.gallery"` 將空陣列當成 truthy，會吃掉 `previewImage` fallback 並渲染空白 wrapper | 改 `v-if="selectedProject.gallery?.length"` |
+| 3 | 🟡 Security | `ProjectModal.vue:60, 70` | demoUrl 缺 `rel`、githubUrl 只有 `rel="noreferrer"`（缺 `noopener`），舊瀏覽器有 tabnabbing 風險 | 兩個 anchor 都改成 `rel="noopener noreferrer"` |
+| 4 | 🟢 Efficiency | `App.vue:49` | `labels` 物件每次呼叫都重建 | 與 #1 同次重構，提至模組層常數 |
+| 5 | 🟢 Cleanup | `projects.js:96, 99, 104` | `BASE + 'sources/...'` 同一個檔名重複三次，改名易破 | 抽出 `sketchupBuildingImg` / `sketchupEntranceImg` 兩個常數 |
+| 6 | 🧹 Hygiene | root `sources/` ↔ `vite-app/public/sources/` | 兩份 binary 完全相同（同 size、同 mtime）| `git reset --hard HEAD~1` 撤回多餘的追蹤 commit |
+
+### 重要決策
+- 以 `vite-app/public/sources/` 作為唯一資產來源，因為實際被 `import.meta.env.BASE_URL + 'sources/...'` 引用的就是這份；root `sources/` 屬於改名前的歷史殘留，無人引用。
+- `getCategoryLabel` fallback 不直接回傳 `category` 原值（會洩漏 slug），改回固定字串 `'Project'`，避免未來新增 category 時 UI 顯示原始 key。
+- `rel="noopener noreferrer"` 加在所有 `target="_blank"` anchor 上，即使現代瀏覽器自動 `noopener`，仍補強舊版 Safari / WebView。
+- todo.md 放 repo root（非 `docs/`），作為當前在飛的事項清單，與 `docs/dev-log.md`（歷史紀錄）職責分離。
+
+### 執行指令
+```bash
+git diff HEAD~1 --stat                 # 確認 review scope
+git reset --hard HEAD~1                # 撤回 c9a312e（重複 binary）
+cd vite-app && npm run build           # 驗證 0 errors
+cd vite-app && npm run dev -- --port 5180   # 起 dev server
+curl http://localhost:5180/ChenYuPersonalPage/sources/sketchup-building-model.jpg  # asset 驗證
+```
+
+### 測試 / 驗證結果
+- `npm run build` 通過：48 modules transformed、CSS 7.67 kB gzip、JS 86.87 kB gzip，0 errors。
+- Vite dev server 在 `http://localhost:5180/ChenYuPersonalPage/` 啟動，388 ms ready。
+- 所有 touched 路徑回傳 HTTP 200：首頁、`App.vue` HMR、`projects.js`、`ProjectModal.vue`、兩張 SketchUp 圖。
+- 透過 dev server 輸出確認 `CATEGORY_LABELS` 常數、`?? 'Project'` fallback、`gallery?.length` 判斷、兩處 `rel: "noopener noreferrer"`、`sketchupBuildingImg`/`sketchupEntranceImg` 引用，全部在 Vite 轉譯後正確存活。
+
+### 遇到的問題
+- Auto mode classifier 擋下直接 `git push origin main`（理由：繞過 PR review）。本地 `main` 已重新對齊 `origin/main`，code 修正 commit 待使用者決定走 PR 還是手動 push。
+- 第一次 `cd vite-app && npm run dev` 用背景模式跑時，因 bash 背景子 shell 不保留 cwd 而失敗，改用絕對路徑後正常。
+
+### 下一步建議
+- 把目前 working tree 的三檔修改 commit 成一個「review fixes」commit，並決定推送策略。
+- 把 root `sources/` 加進 `.gitignore`（如果工作流中還會在那裡暫存圖片）。
+- 後續新增 category 時，記得同步更新 `App.vue` 的 `CATEGORY_LABELS`，避免 UI 顯示固定 fallback。
+
+---
+
 ## 2026-06-11（四）Glassmorphism 改版紀錄整理 + 工作檔案
 
 ### 任務摘要
