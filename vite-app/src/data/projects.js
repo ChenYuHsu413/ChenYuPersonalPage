@@ -7,7 +7,7 @@ export const PROJECTS = [
     {
         id: 'hw-cosmos-img',
         title: 'AI生圖工作室',
-        category: 'homework',
+        category: 'aiml',
         highlight: '已部署 Streamlit Cloud · 即時文字轉圖像',
         shortDescription: '結合 Cosmos 與 Streamlit 開發的 AI 文本生成圖像工具。',
         longDescription: '此課程作業使用 Python 配合 Streamlit 框架，建構一個 AI 圖像生成工作室。使用者可以輸入文字描述（Prompt），系統將呼叫 Cosmos 生成模型，將文本描述轉換成高品質的圖像，並提供方便的參數調整與下載功能。',
@@ -21,7 +21,7 @@ export const PROJECTS = [
     {
         id: 'hw-linear-regression',
         title: '線性回歸分析',
-        category: 'homework',
+        category: 'aiml',
         highlight: '互動調參 · 動態視覺化梯度下降收斂',
         shortDescription: '基於 Streamlit 視覺化呈現線性回歸模型預測與訓練分析。',
         longDescription: '此課程作業展示了機器學習中的線性回歸（Linear Regression）演算法。透過 Streamlit 網頁介面，動態呈現數據點分佈、擬合回歸線、損失函數收斂曲線，並允許使用者動態調整超參數以觀察模型學習成效。',
@@ -35,7 +35,7 @@ export const PROJECTS = [
     {
         id: 'hw-ml-algorithms',
         title: '機器學習十大演算法互動式學習平台',
-        category: 'homework',
+        category: 'aiml',
         highlight: '10 大演算法 · 互動式視覺化調參',
         shortDescription: '涵蓋十大機器學習演算法的互動式視覺化學習平台。',
         longDescription: '此課程作業建構了一個互動式機器學習教學平台，完整介紹十大經典機器學習演算法，包含線性回歸、邏輯回歸、決策樹、隨機森林、SVM、K-Means 等。使用者可透過視覺化圖表與即時參數調整，深入理解各演算法的運作原理與適用情境，兼具學習性與實用性。',

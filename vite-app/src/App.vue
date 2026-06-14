@@ -49,7 +49,7 @@ const deploymentCount = computed(() => PROJECTS.filter(p => p.demoUrl).length)
 
 const CATEGORY_LABELS = {
     project: 'Personal Project',
-    homework: 'AI / ML Showcase',
+    aiml: 'AI / ML Showcase',
     archive: 'Archive Work'
 }
 

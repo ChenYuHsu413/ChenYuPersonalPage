@@ -18,7 +18,7 @@ const emit = defineEmits(['update:activeTab', 'open-modal'])
             <button :class="{ 'active': activeTab === 'all' }" @click="emit('update:activeTab', 'all')">
                 <i class="fas fa-th-large"></i> All Works
             </button>
-            <button :class="{ 'active': activeTab === 'homework' }" @click="emit('update:activeTab', 'homework')">
+            <button :class="{ 'active': activeTab === 'aiml' }" @click="emit('update:activeTab', 'aiml')">
                 <i class="fas fa-brain"></i> AI / ML
             </button>
             <button :class="{ 'active': activeTab === 'project' }" @click="emit('update:activeTab', 'project')">

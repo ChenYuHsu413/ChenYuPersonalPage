@@ -113,7 +113,7 @@ Open `vite-app/src/data/projects.js` and add a new object to the `PROJECTS` arra
 {
     id: 'hw-new',
     title: 'Your Project Title',
-    category: 'homework',          // 'homework' (shown as AI / ML Showcase), 'project', or 'archive'
+    category: 'aiml',              // 'aiml' (shown as AI / ML Showcase), 'project', or 'archive'
     highlight: 'One-line outcome badge shown on the card',
     shortDescription: 'Short card description.',
     longDescription: 'Full description shown in the modal.',
