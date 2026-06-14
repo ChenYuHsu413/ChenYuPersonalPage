@@ -1,6 +1,7 @@
 <script setup>
 defineProps({
-    githubStats: Object
+    githubStats: Object,
+    deploymentCount: Number
 })
 </script>
 
@@ -8,7 +9,7 @@ defineProps({
     <section id="about" class="section-container">
         <div class="section-header">
             <span class="section-num">01 / About</span>
-            <h2>Clean layouts, reliable structures, polished execution.</h2>
+            <h2>Generalist engineer. Deliberate pivot into AI tooling.</h2>
         </div>
         <div class="about-content">
             <div class="about-decoration">
@@ -16,20 +17,20 @@ defineProps({
             </div>
             <div class="about-text-wrapper">
                 <p>
-                    I enjoy converting creative concepts into structured, semantic, and pixel-perfect webpages. I pay close attention to structural clarity, responsive layout designs, and smooth micro-interactions that elevate the overall user experience.
+                    Web engineer crossing into AI integration. Java/Spring &rarr; Angular/Node &rarr; TypeScript &rarr; AI tooling. The path was deliberate; the focus now is making AI features feel native inside everyday web products.
                 </p>
                 <div class="stats-row">
                     <div class="stat-card">
-                        <span class="stat-number">Vue 3</span>
-                        <span class="stat-label">Front-End Engine</span>
+                        <span class="stat-number">{{ deploymentCount }}</span>
+                        <span class="stat-label">Live Deployments</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">GSAP</span>
-                        <span class="stat-label">Motion Platform</span>
+                        <span class="stat-number">Web + AI</span>
+                        <span class="stat-label">Current Focus</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Responsive Grid</span>
+                        <span class="stat-number">NTHU CS</span>
+                        <span class="stat-label">Cluster Gold</span>
                     </div>
                     <div v-if="githubStats.repos !== null" class="stat-card">
                         <span class="stat-number">{{ githubStats.repos }}</span>

@@ -21,13 +21,52 @@
                 </article>
                 <article class="timeline-item">
                     <div class="timeline-marker"></div>
+                    <div class="timeline-time">2022 - 2026</div>
+                    <div class="timeline-content">
+                        <h3>Working Holiday &middot; Australia</h3>
+                        <p>Worked, saved, and self-studied AI fundamentals during a second working holiday in Australia.</p>
+                        <div class="skills-tags">
+                            <span class="tag">Working Holiday</span>
+                            <span class="tag">Australia</span>
+                            <span class="tag">Self-Study</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
                     <div class="timeline-time">2022</div>
                     <div class="timeline-content">
                         <h3>VisionAsia Corporation</h3>
-                        <p>Worked as an engineer, supporting technical implementation, troubleshooting, and product-related engineering tasks.</p>
+                        <p>Built TypeScript front-end features for a web product.</p>
                         <div class="skills-tags">
-                            <span class="tag">Engineer</span>
-                            <span class="tag">Technical Support</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Front-End</span>
+                            <span class="tag">Web Product</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">2020 - 2022</div>
+                    <div class="timeline-content">
+                        <h3>National Examination Preparation</h3>
+                        <p>Full-time self-study for Taiwan's national civil service examination.</p>
+                        <div class="skills-tags">
+                            <span class="tag">Self-Study</span>
+                            <span class="tag">Career Exploration</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">2018 - 2020</div>
+                    <div class="timeline-content">
+                        <h3>Working Holiday &middot; Australia</h3>
+                        <p>Worked, saved, and built English fluency during a first working holiday in Australia.</p>
+                        <div class="skills-tags">
+                            <span class="tag">Working Holiday</span>
+                            <span class="tag">Australia</span>
+                            <span class="tag">English Environment</span>
                         </div>
                     </div>
                 </article>
@@ -36,10 +75,11 @@
                     <div class="timeline-time">2017 - 2018</div>
                     <div class="timeline-content">
                         <h3>Genie Network</h3>
-                        <p>Worked as a full stack engineer, building and maintaining web application features across front-end and back-end layers.</p>
+                        <p>Built full-stack web features &mdash; Angular + TypeScript on the front, Node.js on the back.</p>
                         <div class="skills-tags">
-                            <span class="tag">Full Stack Engineer</span>
-                            <span class="tag">Web Development</span>
+                            <span class="tag">Angular</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Node.js</span>
                         </div>
                     </div>
                 </article>
@@ -48,34 +88,11 @@
                     <div class="timeline-time">2017</div>
                     <div class="timeline-content">
                         <h3>Want Want China</h3>
-                        <p>Worked as a Java engineer, contributing to enterprise application development and maintenance.</p>
+                        <p>Built Java + Spring MVC web features for enterprise systems.</p>
                         <div class="skills-tags">
-                            <span class="tag">Java Engineer</span>
-                            <span class="tag">Enterprise Systems</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2015 - 2016</div>
-                    <div class="timeline-content">
-                        <h3>NVIDIA Taiwan</h3>
-                        <p>Served as a student ambassador, supporting campus outreach and technology promotion activities.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Student Ambassador</span>
-                            <span class="tag">Campus Outreach</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2015</div>
-                    <div class="timeline-content">
-                        <h3>Industrial Technology Research Institute (ITRI)</h3>
-                        <p>Worked part time, gaining early industry experience in a research and technology environment.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Part Time</span>
-                            <span class="tag">Research Institute</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Spring MVC</span>
+                            <span class="tag">Enterprise</span>
                         </div>
                     </div>
                 </article>
@@ -84,10 +101,11 @@
                     <div class="timeline-time">2012 - 2016</div>
                     <div class="timeline-content">
                         <h3>National Tsing Hua University</h3>
-                        <p>Majored in Computer Science, building a foundation in programming, systems, and software engineering.</p>
+                        <p>Majored in Computer Science. NVIDIA Taiwan student ambassador, ITRI part-time research, and Taiwan Student Cluster Competition gold &mdash; all during 2015&ndash;2016.</p>
                         <div class="skills-tags">
                             <span class="tag">Computer Science</span>
-                            <span class="tag">Education</span>
+                            <span class="tag">Cluster Comp Gold</span>
+                            <span class="tag">NVIDIA Ambassador</span>
                         </div>
                     </div>
                 </article>

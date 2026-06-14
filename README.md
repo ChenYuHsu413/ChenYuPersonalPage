@@ -24,7 +24,7 @@
 
 ## ✨ Features
 
-- 🔍 **Dynamic Work Filtering** — Vue 3 reactive tabs switching between All Works, Personal Projects, and Course Homework
+- 🔍 **Dynamic Work Filtering** — Vue 3 reactive tabs switching between All Works, AI / ML Showcase, Personal Projects, and Archive
 - 🪟 **Glassmorphism UI** — CSS-variable glass recipe, animated global background, grid texture, and Chromium-only liquid-glass fallback path
 - 🎬 **GSAP Motion Suite** — Scroll-triggered stagger entrance animations across all sections via ScrollTrigger
 - 🗂 **Project Detail Modals** — Click any card for a full overlay with description, tech tags, and source links
@@ -113,7 +113,7 @@ Open `vite-app/src/data/projects.js` and add a new object to the `PROJECTS` arra
 {
     id: 'hw-new',
     title: 'Your Project Title',
-    category: 'homework',          // 'homework' or 'project'
+    category: 'homework',          // 'homework' (shown as AI / ML Showcase), 'project', or 'archive'
     highlight: 'One-line outcome badge shown on the card',
     shortDescription: 'Short card description.',
     longDescription: 'Full description shown in the modal.',

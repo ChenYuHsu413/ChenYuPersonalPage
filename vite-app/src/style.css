@@ -1169,6 +1169,7 @@ header.scrolled {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 8px;
+    white-space: nowrap;
 }
 
 .stat-label {

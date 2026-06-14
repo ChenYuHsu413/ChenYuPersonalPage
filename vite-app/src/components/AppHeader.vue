@@ -18,7 +18,7 @@ const emit = defineEmits(['toggle-menu', 'toggle-theme', 'scroll-to'])
             <ul class="nav-links" :class="{ 'active': menuActive }">
                 <li><a href="#about" @click.prevent="emit('scroll-to', 'about')">About</a></li>
                 <li><a href="#resume" @click.prevent="emit('scroll-to', 'resume')">Resume</a></li>
-                <li><a href="#honors" @click.prevent="emit('scroll-to', 'honors')">Honors</a></li>
+                <li><a href="#honors" @click.prevent="emit('scroll-to', 'honors')">Early Achievements</a></li>
                 <li><a href="#work" @click.prevent="emit('scroll-to', 'work')">Work</a></li>
                 <li><a href="#contact" @click.prevent="emit('scroll-to', 'contact')">Contact</a></li>
                 <li>

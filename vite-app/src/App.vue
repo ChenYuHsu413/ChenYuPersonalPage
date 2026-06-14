@@ -45,9 +45,11 @@ const filteredProjects = computed(() => {
     return PROJECTS.filter(p => p.category === activeTab.value)
 })
 
+const deploymentCount = computed(() => PROJECTS.filter(p => p.demoUrl).length)
+
 const CATEGORY_LABELS = {
     project: 'Personal Project',
-    homework: 'Course Homework',
+    homework: 'AI / ML Showcase',
     archive: 'Archive Work'
 }
 
@@ -200,7 +202,7 @@ onUnmounted(() => {
         @scroll-to="scrollToSection"
     />
 
-    <AboutSection :github-stats="githubStats" />
+    <AboutSection :github-stats="githubStats" :deployment-count="deploymentCount" />
 
     <ResumeSection />
 

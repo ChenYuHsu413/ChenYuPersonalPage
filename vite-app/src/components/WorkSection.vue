@@ -11,18 +11,18 @@ const emit = defineEmits(['update:activeTab', 'open-modal'])
     <section id="work" class="section-container">
         <div class="section-header">
             <span class="section-num">04 / Work</span>
-            <h2>Interactive Showcase &amp; Assignment Hub</h2>
+            <h2>Selected Web &amp; AI Projects</h2>
         </div>
 
         <div class="filter-tabs">
             <button :class="{ 'active': activeTab === 'all' }" @click="emit('update:activeTab', 'all')">
                 <i class="fas fa-th-large"></i> All Works
             </button>
+            <button :class="{ 'active': activeTab === 'homework' }" @click="emit('update:activeTab', 'homework')">
+                <i class="fas fa-brain"></i> AI / ML
+            </button>
             <button :class="{ 'active': activeTab === 'project' }" @click="emit('update:activeTab', 'project')">
                 <i class="fas fa-rocket"></i> Personal Projects
-            </button>
-            <button :class="{ 'active': activeTab === 'homework' }" @click="emit('update:activeTab', 'homework')">
-                <i class="fas fa-graduation-cap"></i> Course Homework
             </button>
             <button :class="{ 'active': activeTab === 'archive' }" @click="emit('update:activeTab', 'archive')">
                 <i class="fas fa-archive"></i> Archive
