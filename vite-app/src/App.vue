@@ -37,7 +37,8 @@ const currentDate = ref('Loading date...')
 const formStatus = ref('idle')
 const formStatusMessage = ref('')
 const isDark = ref(true)
-const githubStats = ref({ repos: null })
+const FALLBACK_REPOS = 16
+const githubStats = ref({ repos: FALLBACK_REPOS })
 const timerInterval = ref(null)
 
 const filteredProjects = computed(() => {
@@ -90,8 +91,12 @@ function toggleTheme() {
 
 function fetchGitHubStats() {
     fetch('https://api.github.com/users/ChenYuHsu413')
-        .then(r => r.json())
-        .then(data => { githubStats.value.repos = data.public_repos })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+            if (data && typeof data.public_repos === 'number') {
+                githubStats.value.repos = data.public_repos
+            }
+        })
         .catch(() => {})
 }
 
