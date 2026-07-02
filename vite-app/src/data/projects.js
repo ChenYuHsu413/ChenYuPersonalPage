@@ -166,7 +166,7 @@ export const PROJECTS = [
         tags: ['Next.js', 'TypeScript', 'Leaflet', 'Canvas', 'CWA API', 'NOAA GFS'],
         demoUrl: 'https://taiwan-weather-map.vercel.app/',
         githubUrl: 'https://github.com/ChenYuHsu413/taiwan-weather-map',
-        previewImage: 'https://opengraph.githubassets.com/taiwan-weather-map/ChenYuHsu413/taiwan-weather-map',
+        previewImage: 'https://raw.githubusercontent.com/ChenYuHsu413/taiwan-weather-map/main/docs/screenshot.png',
         colorGradient: 'linear-gradient(135deg, #06b6d4 0%, #2563eb 100%)',
         date: '2026'
     },
