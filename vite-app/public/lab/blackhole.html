@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Black Hole Lab</title>
+<!--
+  Test page for src/blackhole/ (adapted from the author's own visual-lab experiment).
+  Dev only: run `npm run dev` and open /ChenYuPersonalPage/lab/blackhole.html
+  Query params: ?stats=1 shows FPS. Any option can be preset, e.g.
+  ?exposure=0.7&center=0.65,0.4&radius=0.34&particleCount=6000&steps=88&intro=1&vignette=1&grain=1&bg=0a0a0b
+-->
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0a0b; color: #f3f0ea;
+    font: 12px/1.4 ui-monospace, Consolas, monospace; }
+  #stage { position: fixed; inset: 0; }
+  #panel { position: fixed; top: 12px; left: 12px; z-index: 2; width: 240px; padding: 10px 12px;
+    background: rgba(10, 10, 11, 0.85); border: 1px solid #2a2927; }
+  #panel[hidden] { display: none; }
+  #panel label { display: grid; grid-template-columns: 92px 1fr 44px; gap: 6px; align-items: center; margin: 4px 0; }
+  #panel input[type=range] { width: 100%; }
+  #panel .row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  #panel button { font: inherit; color: inherit; background: none; border: 1px solid #2a2927; padding: 3px 8px; cursor: pointer; }
+  #stats { position: fixed; top: 12px; right: 12px; z-index: 2; padding: 4px 8px;
+    background: rgba(10, 10, 11, 0.85); border: 1px solid #2a2927; }
+  #err { position: fixed; bottom: 12px; left: 12px; color: #ff9a4a; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="panel">
+  <label>exposure <input type="range" id="exposure" min="0.2" max="1.5" step="0.05"><span></span></label>
+  <label>center x <input type="range" id="cx" min="0" max="1" step="0.01"><span></span></label>
+  <label>center y <input type="range" id="cy" min="0" max="1" step="0.01"><span></span></label>
+  <label>radius <input type="range" id="radius" min="0.1" max="0.6" step="0.01"><span></span></label>
+  <label>particles <input type="range" id="particleCount" min="0" max="8000" step="250"><span></span></label>
+  <label>steps <input type="range" id="steps" min="8" max="96" step="4"><span></span></label>
+  <label>grain <input type="range" id="grain" min="0" max="2" step="0.1"><span></span></label>
+  <label>maxDpr <input type="range" id="maxDpr" min="0.5" max="2" step="0.25"><span></span></label>
+  <div class="row">
+    <label style="display:flex;gap:4px"><input type="checkbox" id="intro"> intro</label>
+    <label style="display:flex;gap:4px"><input type="checkbox" id="vignette"> vignette</label>
+    <label style="display:flex;gap:4px"><input type="checkbox" id="reducedMotion"> reduced</label>
+  </div>
+  <div class="row">
+    <button id="apply">apply / replay</button>
+    <button id="pause">pause</button>
+    <button id="hide">hide panel (h)</button>
+  </div>
+</div>
+<div id="stats" hidden>– fps</div>
+<div id="err"></div>
+
+<script type="module">
+let initBlackHole
+try {
+  ({ initBlackHole } = await import('../src/blackhole/blackhole.js'))
+} catch (e) {
+  document.getElementById('err').textContent =
+    'Could not load ../src/blackhole/blackhole.js — this page only works under `npm run dev`.'
+  throw e
+}
+
+const q = new URLSearchParams(location.search)
+const num = (k, d) => q.has(k) ? +q.get(k) : d
+const bool = (k, d) => q.has(k) ? q.get(k) !== '0' : d
+const center = (q.get('center') || '0.65,0.4').split(',').map(Number)
+
+const state = {
+  exposure: num('exposure', 1),
+  cx: center[0], cy: center[1],
+  radius: num('radius', 0.34),
+  particleCount: num('particleCount', innerWidth <= 560 ? 2500 : 6000),
+  steps: num('steps', 88),
+  grain: num('grain', 1),
+  maxDpr: num('maxDpr', 2),
+  intro: bool('intro', true),
+  vignette: bool('vignette', true),
+  reducedMotion: bool('reducedMotion', false)
+}
+const bgHex = q.get('bg') ? '#' + q.get('bg') : undefined
+
+for (const k of Object.keys(state)) {
+  const input = document.getElementById(k)
+  if (input.type === 'checkbox') { input.checked = state[k]; input.onchange = () => { state[k] = input.checked } }
+  else {
+    const out = input.nextElementSibling
+    input.value = state[k]; out.textContent = state[k]
+    input.oninput = () => { state[k] = +input.value; out.textContent = input.value }
+  }
+}
+
+const stage = document.getElementById('stage')
+let bh = null, paused = false
+function apply() {
+  if (bh) bh.destroy()
+  const options = {
+    center: [state.cx, state.cy], radius: state.radius, exposure: state.exposure,
+    particleCount: state.particleCount, steps: state.steps, grain: state.grain,
+    maxDpr: state.maxDpr, intro: state.intro, vignette: state.vignette,
+    reducedMotion: state.reducedMotion, fallbackSrc: '../sources/blackhole-still.webp'
+  }
+  if (bgHex) options.background = bgHex
+  bh = initBlackHole(stage, options)
+  paused = false
+  window.__bh = bh
+  window.__bhOptions = options
+}
+apply()
+document.getElementById('apply').onclick = apply
+document.getElementById('pause').onclick = e => {
+  paused = !paused
+  paused ? bh.pause() : bh.resume()
+  e.target.textContent = paused ? 'resume' : 'pause'
+}
+const panel = document.getElementById('panel')
+document.getElementById('hide').onclick = () => { panel.hidden = true }
+addEventListener('keydown', e => { if (e.key === 'h') panel.hidden = !panel.hidden })
+if (q.get('panel') === '0') panel.hidden = true
+
+if (q.get('stats') === '1') {
+  const el = document.getElementById('stats')
+  el.hidden = false
+  let n = 0, t = performance.now()
+  window.__fps = null
+  ;(function loop(now) {
+    n++
+    if (now - t >= 1000) {
+      window.__fps = Math.round(n * 1000 / (now - t))
+      el.textContent = (bh && bh.webgl ? window.__fps + ' fps' : 'no webgl')
+      n = 0; t = now
+    }
+    requestAnimationFrame(loop)
+  })(performance.now())
+}
+</script>
+</body>
+</html>
