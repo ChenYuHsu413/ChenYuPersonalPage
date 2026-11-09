@@ -21,6 +21,13 @@
  *   intro         play the 2.4s "formation" intro. Default true
  *   reducedMotion render one static frame only. Default: prefers-reduced-motion
  *   fallbackSrc   image shown when WebGL is unavailable. Default none
+ *   ringIntensity photon ring glow strength. Default 1
+ *   ringWidth     photon ring core width in px. Default 2
+ *   ringHalo      photon ring outer halo falloff (shadow radii). Default 0.12
+ *   ringDoppler   0..1 ring brightness asymmetry (Doppler side brighter). Default 0.6
+ *   arcGain       lensed back-disk image brightness vs the front disk. Default 1.2
+ *   edgeSoft      disk inner-edge softening in Rs (anti-aliasing). Default 0.1
+ *   diskInner     disk inner radius in Rs (photon sphere is 1.5). Default 1.65
  */
 import { VS, FS, PVS, PFS } from './shaders.js'
 
@@ -30,7 +37,6 @@ const TEX_SCROLL = -1        // texture sampling sign so patterns move with matt
 const E_CAM = 26.0           // camera distance (Rs), same as shader
 const TILT = 14              // deg
 const BEAM_DIR = 180         // deg
-const DISK_IN = 2.0
 const DISK_OUT = 7.0
 const BASE_DISK = (TAU / 7) * Math.pow(2, 1.5) * 0.75
 const K_IDLE = (TAU / 7) * Math.pow(2, 1.5) * 0.75
@@ -65,6 +71,13 @@ export function initBlackHole(el, options = {}) {
         reducedMotion: typeof matchMedia === 'function'
             && matchMedia('(prefers-reduced-motion: reduce)').matches,
         fallbackSrc: null,
+        ringIntensity: 1,
+        ringWidth: 2,
+        ringHalo: 0.12,
+        ringDoppler: 0.6,
+        arcGain: 1.2,
+        edgeSoft: 0.1,
+        diskInner: 1.65,
         ...options
     }
 
@@ -126,6 +139,7 @@ export function initBlackHole(el, options = {}) {
     ;['uRes', 'uCenter', 'uTime', 'uRadius', 'uTilt', 'uBeamDir', 'uDiskIn', 'uDiskOut',
       'uDiskRot', 'uSteps', 'uBreath', 'uGrain', 'uExposure', 'uMass', 'uDiskFill',
       'uBlobRot', 'uTexScroll', 'uLensK', 'uDrift', 'uVig', 'uRingLit',
+      'uRingIntensity', 'uRingWidth', 'uRingHalo', 'uRingDoppler', 'uArcGain', 'uEdgeSoft',
       'uBg', 'uPhoton', 'uFiberMid', 'uFiberFar'].forEach(n => { loc[n] = gl.getUniformLocation(prog, n) })
 
     const pprog = link(PVS, PFS)
@@ -359,7 +373,7 @@ export function initBlackHole(el, options = {}) {
         gl.uniform1f(loc.uRadius, radiusPx())
         gl.uniform1f(loc.uTilt, TILT * Math.PI / 180)
         gl.uniform1f(loc.uBeamDir, BEAM_DIR * Math.PI / 180)
-        gl.uniform1f(loc.uDiskIn, DISK_IN)
+        gl.uniform1f(loc.uDiskIn, opt.diskInner)
         gl.uniform1f(loc.uDiskOut, DISK_OUT)
         gl.uniform1f(loc.uDiskRot, diskRot)
         gl.uniform1f(loc.uSteps, Math.max(8, Math.min(96, opt.steps)))
@@ -374,6 +388,12 @@ export function initBlackHole(el, options = {}) {
         gl.uniform1f(loc.uDrift, bgDrift)
         gl.uniform1f(loc.uVig, opt.vignette ? 1 : 0)
         gl.uniform1f(loc.uRingLit, ring)
+        gl.uniform1f(loc.uRingIntensity, opt.ringIntensity)
+        gl.uniform1f(loc.uRingWidth, opt.ringWidth)
+        gl.uniform1f(loc.uRingHalo, opt.ringHalo)
+        gl.uniform1f(loc.uRingDoppler, opt.ringDoppler)
+        gl.uniform1f(loc.uArcGain, opt.arcGain)
+        gl.uniform1f(loc.uEdgeSoft, opt.edgeSoft)
         gl.uniform3fv(loc.uBg, bg)
         gl.uniform3fv(loc.uPhoton, photon)
         gl.uniform3fv(loc.uFiberMid, fMid)

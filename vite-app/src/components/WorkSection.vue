@@ -19,41 +19,23 @@ const TABS = [
 
 const pad = n => String(n).padStart(2, '0')
 
-// Desktop hover preview (≥1024px with a real pointer)
-const PREVIEW_W = 360
+// Desktop hover preview (≥1200px with a real pointer): fixed in the empty column
+// between the titles and the category/year, vertically aligned with the active row
 const PREVIEW_H = 225
+const listEl = ref(null)
 const hoverItem = ref(null)
 const shownItem = ref(null)   // keeps the last image during fade-out
-const previewPos = ref({ x: 0, y: 0 })
+const previewTop = ref(0)
 let desktopQuery = null
 const canHover = ref(false)
 
-function placePreview(x, y) {
-    const maxX = window.innerWidth - PREVIEW_W - 16
-    const maxY = window.innerHeight - PREVIEW_H - 16
-    previewPos.value = {
-        x: Math.min(maxX, x + 24),
-        y: Math.max(16, Math.min(maxY, y - PREVIEW_H / 2))
-    }
-}
-
-function onRowEnter(item, e) {
+function showPreview(item, row) {
     if (!canHover.value) return
     hoverItem.value = item
     shownItem.value = item
-    placePreview(e.clientX, e.clientY)
-}
-
-function onRowMove(e) {
-    if (canHover.value && hoverItem.value) placePreview(e.clientX, e.clientY)
-}
-
-function onRowFocus(item, e) {
-    if (!canHover.value) return
-    const r = e.currentTarget.getBoundingClientRect()
-    hoverItem.value = item
-    shownItem.value = item
-    placePreview(r.left + r.width * 0.55, r.top + r.height / 2)
+    const max = listEl.value.clientHeight - PREVIEW_H
+    const top = row.offsetTop + row.offsetHeight / 2 - PREVIEW_H / 2
+    previewTop.value = Math.max(0, Math.min(max, top))
 }
 
 function clearHover() {
@@ -66,7 +48,7 @@ function syncQuery() {
 }
 
 onMounted(() => {
-    desktopQuery = window.matchMedia('(min-width: 1024px) and (hover: hover)')
+    desktopQuery = window.matchMedia('(min-width: 1200px) and (hover: hover)')
     syncQuery()
     desktopQuery.addEventListener('change', syncQuery)
 })
@@ -94,7 +76,8 @@ onUnmounted(() => {
             >{{ tab.label }}</button>
         </div>
 
-        <ol class="work-list" @mouseleave="clearHover">
+        <div ref="listEl" class="work-list-wrap" @mouseleave="clearHover">
+        <ol class="work-list">
             <li v-for="(item, i) in filteredProjects" :key="item.id">
                 <div
                     class="work-row"
@@ -103,9 +86,8 @@ onUnmounted(() => {
                     tabindex="0"
                     @click="emit('open-modal', item)"
                     @keydown.enter.prevent="emit('open-modal', item)"
-                    @mouseenter="onRowEnter(item, $event)"
-                    @mousemove="onRowMove"
-                    @focus="onRowFocus(item, $event)"
+                    @mouseenter="showPreview(item, $event.currentTarget)"
+                    @focus="showPreview(item, $event.currentTarget)"
                     @blur="clearHover"
                 >
                     <span class="row-num">{{ pad(i + 1) }}</span>
@@ -125,14 +107,14 @@ onUnmounted(() => {
                 </div>
             </li>
         </ol>
-
         <div
             class="work-float"
             :class="{ 'visible': hoverItem && hoverItem.previewImage }"
-            :style="{ transform: `translate(${previewPos.x}px, ${previewPos.y}px)` }"
+            :style="{ top: previewTop + 'px' }"
             aria-hidden="true"
         >
             <img v-if="shownItem && shownItem.previewImage" :key="shownItem.id" :src="shownItem.previewImage" alt="">
+        </div>
         </div>
     </section>
 </template>

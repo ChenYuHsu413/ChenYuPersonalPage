@@ -24,7 +24,7 @@ function blackHoleOptions() {
         background: '#0a0a0b',
         fallbackSrc: BASE + 'sources/blackhole-still.webp'
     }
-    if (mobile) Object.assign(options, { particleCount: 1200, steps: 48, maxDpr: 1.5 })
+    if (mobile) Object.assign(options, { particleCount: 1200, steps: 64, maxDpr: 1.5 })
     return options
 }
 

@@ -24,18 +24,16 @@
 
 ## ✨ Features
 
-- 🔍 **Dynamic Work Filtering** — Vue 3 reactive tabs switching between All / Professional / AI & ML / Web & Data / Game Tools / Archive; the All tab lists `featured` projects first
-- 🪟 **Glassmorphism UI** — CSS-variable glass recipe, animated global background, grid texture, and Chromium-only liquid-glass fallback path
-- 🎬 **GSAP Motion Suite** — Scroll-triggered stagger entrance animations across all sections via ScrollTrigger
-- 🗂 **Project Detail Modals** — Click any card for a full overlay with description, tech tags, and source links
-- 🕐 **Live Clock Widget** — Segmented digit-card for Taipei time with pulsing live dot and blinking colon separators
-- 📱 **Fully Responsive** — Mobile-first design adapting across mobile, tablet, and widescreen
+- 🕳 **Black Hole Hero** — Full-viewport WebGL black hole (Schwarzschild raymarched accretion disk, photon ring, lensed back-disk arc, particle swarm, "formation" intro). Pauses off screen, renders a single still frame under `prefers-reduced-motion`, uses lighter settings on phones, and falls back to a static image without WebGL
+- 🗂 **Numbered Work List** — Editorial list with All / Professional / AI & ML / Web & Data / Game Tools / Archive tabs; All shows `featured` projects first, then the rest by category order
+- 🖼 **Hover Previews** — On wide desktop screens the hovered row's screenshot appears in a dedicated column; tablets and phones show it inline under each row
+- ⌨️ **Keyboard Friendly** — Every work row is focusable, Enter opens the project modal, focus mirrors hover
+- 📋 **Project Detail Modal** — Description, tech tags, metadata, live demo / source links, and an unofficial-project notice for Game Tools
+- 🌑 **Dark Editorial Design** — Single dark theme, one warm accent color, Instrument Serif / Inter / JetBrains Mono with Noto Sans TC for Chinese
+- 🎞 **Light Motion** — Sections fade in once via a shared IntersectionObserver helper; no animation library
 - 📧 **EmailJS Contact Form** — Serverless delivery with loading / success / error states and auto-reply to sender
-- 🌐 **Open Graph Preview** — OG + Twitter Card meta tags for rich link previews on LINE, Facebook, and Twitter
-- 🏅 **Project Highlight Badges** — One-line outcome badge per card for quick-scan value communication
-- 🌙 **Light / Dark Mode** — CSS-variable theming, `localStorage` persistence, anti-FOUC inline script
-- 📊 **GitHub API Stats** — Live public repo count fetched from the GitHub API and shown as a stat card
-- ⚡ **Vite SFC Build** — Tree-shaken bundle (~84 kB gzip JS), HMR dev experience, GitHub Actions CI/CD
+- 🌐 **Open Graph Preview** — OG + Twitter Card meta tags for rich link previews
+- 📊 **GitHub API Stats** — Live public repo count fetched from the GitHub API
 
 ---
 
@@ -44,10 +42,11 @@
 | Layer | Technology |
 |---|---|
 | **Framework** | ![Vue](https://img.shields.io/badge/Vue_3-4FC08D?style=flat-square&logo=vue.js&logoColor=white) Composition API · `<script setup>` SFC |
-| **Build Tool** | ![Vite](https://img.shields.io/badge/Vite_5-646CFF?style=flat-square&logo=vite&logoColor=white) HMR · tree-shaking · GitHub Pages base path |
-| **Animation** | ![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=flat-square&logo=greensock&logoColor=black) ScrollTrigger · npm bundle |
+| **Build Tool** | ![Vite](https://img.shields.io/badge/Vite_5-646CFF?style=flat-square&logo=vite&logoColor=white) HMR · GitHub Pages base path |
+| **Graphics** | ![WebGL](https://img.shields.io/badge/WebGL-990000?style=flat-square&logo=webgl&logoColor=white) Zero-dependency black hole module (`src/blackhole/`) |
 | **Email** | ![EmailJS](https://img.shields.io/badge/EmailJS-f97316?style=flat-square&logoColor=white) `@emailjs/browser` · no backend required |
-| **Styling** | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) Custom properties · glassmorphism |
+| **Styling** | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) Design tokens in `style.css` (color, type, spacing) · no CSS framework |
+| **Fonts** | Google Fonts: Instrument Serif · Inter · JetBrains Mono · Noto Sans TC |
 | **Icons** | ![FontAwesome](https://img.shields.io/badge/Font_Awesome_6-528DD7?style=flat-square&logo=fontawesome&logoColor=white) CDN |
 | **Deploy** | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) → ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white) |
 
@@ -55,11 +54,13 @@
 
 ## 🧊 Redesign Notes
 
-The current `glassmorphism-redesign` work keeps the original Vue logic intact while refining the visual system:
+The site moved from the earlier glassmorphism look to a dark, editorial-minimal design (rounds 1–2, 2026-11):
 
-- `GlassBackground.vue` owns the animated gradient, glow orbs, grid, geometric details, cursor glow, and shared SVG liquid filter.
-- `style.css` centralizes glass parameters through CSS variables such as `--glass-bg`, `--glass-blur`, `--glass-saturate`, and `--grid-line`.
-- Liquid refraction is attempted only on Chromium via `html.liquid-ok`; other browsers and mobile layouts gracefully fall back to blur + saturate glass.
+- Design tokens (`--bg`, `--text`, `--text-2`, `--text-3`, `--line`, `--accent`, type and spacing scales) live at the top of `src/style.css`. Dark theme only; the light theme, glass effects, animated background and GSAP were removed.
+- `src/blackhole/` is a zero-dependency WebGL module adapted from the author's own visual-lab experiment: `initBlackHole(el, options)` returns `{ pause, resume, destroy, setOpacity }`. The hero passes its own options (center, radius, exposure, and lighter settings on phones).
+- `vite-app/lab/blackhole.html` is a dev-only test page with sliders for every option (`?stats=1` shows FPS). Open it at `/ChenYuPersonalPage/lab/blackhole.html` under `npm run dev`; it is not part of the build.
+- `public/sources/blackhole-still.webp` is the no-WebGL fallback, rendered from the module itself.
+- Before/after screenshots: `docs/redesign/round1/`, `docs/redesign/round2/`.
 - The latest implementation was verified with `npm run build` on 2026-11-09.
 - 2026-11-09 content update: re-split work categories into five (Professional / AI & ML / Web & Data / Game Tools / Archive), added 3 projects (ECHOAi website, LoL Worlds 2026, Deskrawl Monitor), and updated the Resume timeline.
 - Pending: `game-deskrawl-monitor` temporarily uses its GitHub OpenGraph image (`sources/game-deskrawl-monitor-og.png`); replace it with a Discord notification screenshot later.
@@ -67,7 +68,7 @@ The current `glassmorphism-redesign` work keeps the original Vue logic intact wh
 Detailed notes:
 
 - [log.md](./log.md) — 整理 Claude 討論與改版過程
-- [docs/glassmorphism-redesign-workfile.md](./docs/glassmorphism-redesign-workfile.md) — 工作檔案、驗收清單與可調參數
+- [docs/glassmorphism-redesign-workfile.md](./docs/glassmorphism-redesign-workfile.md) — 前一版（毛玻璃）改版的工作檔，僅供參考
 - [docs/dev-log.md](./docs/dev-log.md) — 專案開發紀錄
 
 ---
@@ -77,7 +78,7 @@ Detailed notes:
 ```text
 ChenYuPersonalPage/
 |-- README.md
-|-- log.md                    # Glassmorphism redesign discussion summary
+|-- log.md                     # Redesign discussion summary
 |-- .gitignore
 |-- .github/
 |   └── workflows/
@@ -86,22 +87,27 @@ ChenYuPersonalPage/
 |   |-- index.html
 |   |-- vite.config.js
 |   |-- package.json
+|   |-- lab/
+|   |   └── blackhole.html     # Dev-only black hole test page (not built)
 |   |-- public/
-|   |   └── sources/           # Static assets (images)
+|   |   └── sources/           # Static assets (project screenshots, black hole still)
 |   └── src/
-|       |-- App.vue            # Shared state, GSAP, EmailJS, theme
+|       |-- App.vue            # Shared state, project filtering, EmailJS
 |       |-- main.js
-|       |-- style.css
+|       |-- style.css          # Design tokens + all styles
+|       |-- blackhole/         # blackhole.js (module) · shaders.js (GLSL)
+|       |-- utils/reveal.js    # IntersectionObserver fade-in helper
 |       |-- data/projects.js   # PROJECTS static data module
 |       └── components/        # 9 SFCs
-|                              # AppHeader · HeroSection · AboutSection
-|                              # ResumeSection · HonorsSection · WorkSection
+|                              # AppHeader · HeroSection · WorkSection
+|                              # AboutSection · ResumeSection · HonorsSection
 |                              # ContactSection · ProjectModal · AppFooter
 └── docs/
     |-- AGENT.md
     |-- dev-log.md
     |-- glassmorphism-redesign-workfile.md
     |-- interview-qa.md
+    |-- redesign/              # Round 1–2 screenshots
     └── 工作報告.md
 ```
 

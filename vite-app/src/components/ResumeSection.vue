@@ -1,7 +1,7 @@
 <template>
     <section id="resume" class="section-container">
         <div class="section-header">
-            <span class="section-num">02 / Resume</span>
+            <span class="mono-label section-label">RESUME</span>
             <h2>Education and career experience in one readable path.</h2>
         </div>
         <div class="resume-grid">

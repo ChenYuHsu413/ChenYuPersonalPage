@@ -6,9 +6,10 @@
 <title>Black Hole Lab</title>
 <!--
   Test page for src/blackhole/ (adapted from the author's own visual-lab experiment).
-  Dev only: run `npm run dev` and open /ChenYuPersonalPage/lab/blackhole.html
+  Dev only (not part of the build): run `npm run dev` and open /ChenYuPersonalPage/lab/blackhole.html
   Query params: ?stats=1 shows FPS. Any option can be preset, e.g.
   ?exposure=0.7&center=0.65,0.4&radius=0.34&particleCount=6000&steps=88&intro=1&vignette=1&grain=1&bg=0a0a0b
+  &ringIntensity=1&ringWidth=2&ringHalo=0.12&ringDoppler=0.6&arcGain=1.2&edgeSoft=0.1&diskInner=1.65
 -->
 <style>
   html, body { margin: 0; height: 100%; background: #0a0a0b; color: #f3f0ea;
@@ -23,8 +24,7 @@
   #panel button { font: inherit; color: inherit; background: none; border: 1px solid #2a2927; padding: 3px 8px; cursor: pointer; }
   #stats { position: fixed; top: 12px; right: 12px; z-index: 2; padding: 4px 8px;
     background: rgba(10, 10, 11, 0.85); border: 1px solid #2a2927; }
-  #err { position: fixed; bottom: 12px; left: 12px; color: #ff9a4a; }
-</style>
+  </style>
 </head>
 <body>
 <div id="stage"></div>
@@ -37,6 +37,13 @@
   <label>steps <input type="range" id="steps" min="8" max="96" step="4"><span></span></label>
   <label>grain <input type="range" id="grain" min="0" max="2" step="0.1"><span></span></label>
   <label>maxDpr <input type="range" id="maxDpr" min="0.5" max="2" step="0.25"><span></span></label>
+  <label>ring <input type="range" id="ringIntensity" min="0" max="3" step="0.05"><span></span></label>
+  <label>ring width <input type="range" id="ringWidth" min="0.5" max="6" step="0.25"><span></span></label>
+  <label>ring halo <input type="range" id="ringHalo" min="0.005" max="0.3" step="0.005"><span></span></label>
+  <label>ring doppler <input type="range" id="ringDoppler" min="0" max="1" step="0.05"><span></span></label>
+  <label>arc gain <input type="range" id="arcGain" min="0" max="3" step="0.05"><span></span></label>
+  <label>disk inner <input type="range" id="diskInner" min="1.5" max="3" step="0.05"><span></span></label>
+  <label>edge soft <input type="range" id="edgeSoft" min="0" max="0.4" step="0.01"><span></span></label>
   <div class="row">
     <label style="display:flex;gap:4px"><input type="checkbox" id="intro"> intro</label>
     <label style="display:flex;gap:4px"><input type="checkbox" id="vignette"> vignette</label>
@@ -49,17 +56,9 @@
   </div>
 </div>
 <div id="stats" hidden>– fps</div>
-<div id="err"></div>
 
 <script type="module">
-let initBlackHole
-try {
-  ({ initBlackHole } = await import('../src/blackhole/blackhole.js'))
-} catch (e) {
-  document.getElementById('err').textContent =
-    'Could not load ../src/blackhole/blackhole.js — this page only works under `npm run dev`.'
-  throw e
-}
+import { initBlackHole } from '../src/blackhole/blackhole.js'
 
 const q = new URLSearchParams(location.search)
 const num = (k, d) => q.has(k) ? +q.get(k) : d
@@ -74,6 +73,13 @@ const state = {
   steps: num('steps', 88),
   grain: num('grain', 1),
   maxDpr: num('maxDpr', 2),
+  ringIntensity: num('ringIntensity', 1),
+  ringWidth: num('ringWidth', 2),
+  ringHalo: num('ringHalo', 0.12),
+  ringDoppler: num('ringDoppler', 0.6),
+  arcGain: num('arcGain', 1.2),
+  edgeSoft: num('edgeSoft', 0.1),
+  diskInner: num('diskInner', 1.65),
   intro: bool('intro', true),
   vignette: bool('vignette', true),
   reducedMotion: bool('reducedMotion', false)
@@ -98,7 +104,10 @@ function apply() {
     center: [state.cx, state.cy], radius: state.radius, exposure: state.exposure,
     particleCount: state.particleCount, steps: state.steps, grain: state.grain,
     maxDpr: state.maxDpr, intro: state.intro, vignette: state.vignette,
-    reducedMotion: state.reducedMotion, fallbackSrc: '../sources/blackhole-still.webp'
+    reducedMotion: state.reducedMotion, fallbackSrc: '../sources/blackhole-still.webp',
+    ringIntensity: state.ringIntensity, ringWidth: state.ringWidth, ringHalo: state.ringHalo,
+    ringDoppler: state.ringDoppler, arcGain: state.arcGain, edgeSoft: state.edgeSoft,
+    diskInner: state.diskInner
   }
   if (bgHex) options.background = bgHex
   bh = initBlackHole(stage, options)

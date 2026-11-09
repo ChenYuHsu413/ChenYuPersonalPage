@@ -18,7 +18,7 @@ function handleSubmit() {
 <template>
     <section id="contact" class="section-container">
         <div class="section-header">
-            <span class="section-num">05 / Contact</span>
+            <span class="mono-label section-label">CONTACT</span>
             <h2>Open to new ideas, collaborations, and discussions.</h2>
         </div>
         <div class="contact-grid">

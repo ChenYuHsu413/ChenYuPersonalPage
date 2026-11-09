@@ -1,7 +1,5 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import emailjs from '@emailjs/browser'
 import { PROJECTS } from './data/projects.js'
 import AppHeader from './components/AppHeader.vue'
@@ -13,8 +11,7 @@ import WorkSection from './components/WorkSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import ProjectModal from './components/ProjectModal.vue'
 import AppFooter from './components/AppFooter.vue'
-
-gsap.registerPlugin(ScrollTrigger)
+import { initReveal } from './utils/reveal.js'
 
 // State
 const scrolled = ref(false)
@@ -26,10 +23,14 @@ const formStatus = ref('idle')
 const formStatusMessage = ref('')
 const FALLBACK_REPOS = 16
 const githubStats = ref({ repos: FALLBACK_REPOS })
+let stopReveal = () => {}
 
 const filteredProjects = computed(() => {
     if (activeTab.value === 'all') {
-        const rank = p => p.featured ? FEATURED_ORDER.indexOf(p.id) : FEATURED_ORDER.length
+        // featured first (in FEATURED_ORDER), then by category order; stable sort keeps data order
+        const rank = p => p.featured
+            ? FEATURED_ORDER.indexOf(p.id)
+            : FEATURED_ORDER.length + CATEGORY_ORDER.indexOf(p.category)
         return [...PROJECTS].sort((a, b) => rank(a) - rank(b))
     }
     return PROJECTS.filter(p => p.category === activeTab.value)
@@ -44,12 +45,14 @@ const FEATURED_ORDER = [
     'hw-taiwan-weather-map'
 ]
 
+const CATEGORY_ORDER = ['professional', 'aiml', 'web', 'game', 'archive']
+
 const CATEGORY_LABELS = {
-    professional: 'Professional Work',
+    professional: 'Professional',
     aiml: 'AI & ML',
     web: 'Web & Data',
     game: 'Game Tools',
-    archive: 'Archive Work'
+    archive: 'Archive'
 }
 
 function getCategoryLabel(category) {
@@ -123,40 +126,15 @@ function submitContactForm(formData) {
     })
 }
 
-function initGSAPAnimations() {
-    const scrollReveal = (selector, from, to, start = 'top bottom-=80') => {
-        gsap.utils.toArray(selector).forEach(el => {
-            gsap.fromTo(el, from, {
-                ...to,
-                scrollTrigger: { trigger: el, start, toggleActions: 'play none none reverse' }
-            })
-        })
-    }
-
-    scrollReveal('.section-header',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
-    )
-    scrollReveal('.timeline-item',
-        { x: -30, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
-        'top bottom-=60'
-    )
-    scrollReveal('.stat-card',
-        { scale: 0.85, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.7)' },
-        'top bottom-=50'
-    )
-}
-
 onMounted(() => {
     window.addEventListener('scroll', handleScroll)
     window.addEventListener('keydown', handleKeydown)
-    nextTick(() => initGSAPAnimations())
+    nextTick(() => { stopReveal = initReveal('.section-header, .timeline-item, .stat-card') })
     fetchGitHubStats()
 })
 
 onUnmounted(() => {
+    stopReveal()
     window.removeEventListener('scroll', handleScroll)
     window.removeEventListener('keydown', handleKeydown)
 })

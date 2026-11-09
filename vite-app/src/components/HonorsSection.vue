@@ -1,7 +1,7 @@
 <template>
     <section id="honors" class="section-container">
         <div class="section-header">
-            <span class="section-num">03 / Early Achievements</span>
+            <span class="mono-label section-label">HONORS</span>
             <h2>Early recognitions in programming and academic contests.</h2>
         </div>
         <div class="honors-grid">

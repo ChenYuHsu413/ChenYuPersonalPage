@@ -55,6 +55,12 @@ uniform float uLensK;    // background lensing displacement (Rs)
 uniform float uDrift;    // slow inward drift of background grain (Rs)
 uniform float uVig;      // vignette on/off
 uniform float uRingLit;  // photon ring ignition 0 -> 1.15 -> 1
+uniform float uRingIntensity; // photon ring glow strength
+uniform float uRingWidth;     // photon ring core width (px)
+uniform float uRingHalo;      // outer halo falloff (shadow-radius units)
+uniform float uRingDoppler;   // 0..1 brightness asymmetry following the disk's Doppler side
+uniform float uArcGain;       // brightness of lensed (back-disk) images relative to the front disk
+uniform float uEdgeSoft;      // inner-edge softening of the disk (Rs)
 
 uniform vec3 uBg;
 uniform vec3 uPhoton;
@@ -164,7 +170,9 @@ void main(){
   vec3 e2 = length(nn) > 1e-5 ? normalize(cross(nn, e1)) : upv;
 
   float bImp = length(cross(camPos, rdir));
-  float hole = step(bImp, E_B0 * uMass);
+  // anti-aliased shadow edge: ~1px wide in impact-parameter space
+  float pxS = px / Rs;
+  float hole = 1.0 - smoothstep(E_B0 * uMass - E_B0 * pxS, E_B0 * uMass + E_B0 * pxS, bImp);
 
   float u  = 1.0 / E_CAM;
   float du = -u * dot(rdir, e1) / max(dot(rdir, e2), 1e-4);
@@ -192,15 +200,22 @@ void main(){
       float phiHit = phiR - hh * (1.0 - tt);
       float rh = length(H);
       float rFill = mix(rIn, rOut, uDiskFill);
-      if (rh > rIn && rh < rFill){
+      if (rh > rIn - uEdgeSoft && rh < rFill){
         float graze = abs(normalize(P - Pprev).y);
         float detail = smoothstep(0.015, 0.20, graze)
                      * (1.0 - 0.80 * smoothstep(0.9, 2.6, phiHit));
         float lensed = smoothstep(0.9, 1.6, phiHit);
         float front = 1.0 - lensed;
-        float arcMul = mix(0.80, S.y > 0.0 ? 0.55 : 0.40, lensed) * mix(1.0, 1.25, front);
-        vec4 d = diskTex(rh, atan(H.z, H.x), rot, detail, front);
+        // lensed images: above the hole a bit brighter than below, blended smoothly
+        // (a hard S.y > 0 switch here produced a horizontal seam at the hole's center line)
+        // and concentrated toward the inner edge so they read as a defined arc
+        float xr = clamp((rh - rIn) / (rOut - rIn), 0.0, 1.0);
+        float lensedMul = uArcGain * mix(0.5, 1.0, smoothstep(-0.12, 0.12, S.y))
+                        * mix(1.0, pow(1.0 - xr, 1.5), lensed);
+        float arcMul = mix(1.0, lensedMul, lensed);
+        vec4 d = diskTex(max(rh, rIn), atan(H.z, H.x), rot, detail, front);
         float a = clamp(d.a * arcMul
+                        * smoothstep(rIn - uEdgeSoft, rIn + uEdgeSoft, rh)
                         * (1.0 - smoothstep(rFill - 0.6, rFill, rh)), 0.0, 1.0);
         acc += trans * a * d.rgb;
         trans *= 1.0 - a;
@@ -219,14 +234,17 @@ void main(){
 
   col = mix(col, E_SHADOW, hole) * trans + acc;
 
-  // Photon ring
+  // Photon ring: a soft glow hugging the shadow edge, brighter on the Doppler side.
+  // Gated by the transmittance along the ray, so any disk in front hides it.
   if (uRingLit > 0.001 && uMass > 0.02){
     float dRing = length(S) - uMass;
-    float w = px / Rs;
-    float er = dRing > 0.0
-      ? 1.0 - smoothstep(0.0, 1.05 * w, dRing)
-      : 1.0 - smoothstep(0.0, 2.10 * w, -dRing);
-    col = mix(col, E_RING, clamp(er * uRingLit * 0.9, 0.0, 1.0));
+    float w = max(uRingWidth, 0.5) * pxS;
+    float core = exp(-0.5 * dRing * dRing / (w * w));
+    float halo = dRing > 0.0 ? exp(-dRing / max(uRingHalo, 1e-3)) : exp(dRing / (2.0 * w));
+    float side = max(0.0, 1.0 + uRingDoppler * cos(atan(S.y, S.x) - uBeamDir));
+    vec3 ringCol = mix(uPhoton, E_RING, 0.35);
+    col += ringCol * (0.55 * core + 0.35 * halo) * side * uRingIntensity * uRingLit
+         * smoothstep(0.55, 0.95, trans);
   }
 
   col *= uExposure;

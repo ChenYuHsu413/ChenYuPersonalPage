@@ -8,7 +8,7 @@ defineProps({
 <template>
     <section id="about" class="section-container">
         <div class="section-header">
-            <span class="section-num">01 / About</span>
+            <span class="mono-label section-label">ABOUT</span>
             <h2>Full-stack engineer working at the intersection of web and AI.</h2>
         </div>
         <div class="about-content">
