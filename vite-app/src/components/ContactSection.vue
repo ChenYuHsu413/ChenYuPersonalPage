@@ -17,36 +17,23 @@ function handleSubmit() {
 
 <template>
     <section id="contact" class="section-container">
-        <div class="section-header">
-            <span class="mono-label section-label">CONTACT</span>
-            <h2>Open to new ideas, collaborations, and discussions.</h2>
-        </div>
+        <h2 class="mono-label section-label">CONTACT</h2>
         <div class="contact-grid">
-            <div class="contact-info-panel">
-                <p>
-                    If you have any questions about my work, want to collaborate on a project, or simply want to say hello, feel free to reach out using the contact links or form!
-                </p>
-                <div class="contact-details">
-                    <a class="contact-item" href="mailto:ChenYuHsu413@users.noreply.github.com">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <span class="label">Email</span>
-                            <span class="val">ChenYuHsu413@users.noreply.github.com</span>
-                        </div>
-                    </a>
-                    <a class="contact-item" href="https://github.com/ChenYuHsu413" target="_blank" rel="noreferrer">
-                        <i class="fab fa-github"></i>
-                        <div>
-                            <span class="label">GitHub</span>
-                            <span class="val">github.com/ChenYuHsu413</span>
-                        </div>
-                    </a>
-                </div>
+            <div class="contact-info-panel section-header">
+                <p class="section-title contact-invite">Open to new ideas, collaborations, and discussions.</p>
+                <ul class="contact-links">
+                    <li>
+                        <a class="text-link" href="mailto:ChenYuHsu413@users.noreply.github.com">ChenYuHsu413@users.noreply.github.com</a>
+                    </li>
+                    <li>
+                        <a class="text-link" href="https://github.com/ChenYuHsu413" target="_blank" rel="noreferrer">github.com/ChenYuHsu413</a>
+                    </li>
+                </ul>
             </div>
 
             <div class="contact-form-panel">
-                <div v-if="formStatus === 'success'" class="form-success">
-                    <i class="fas fa-check-circle"></i>
+                <div v-if="formStatus === 'success'" class="form-success" role="status">
+                    <span class="mono-label">SENT</span>
                     <p>{{ formStatusMessage }}</p>
                 </div>
                 <form v-else @submit.prevent="handleSubmit">
@@ -62,10 +49,9 @@ function handleSubmit() {
                         <label for="form-message">Message</label>
                         <textarea id="form-message" rows="4" placeholder="Write your message here..." required v-model="form.message" :disabled="formStatus === 'loading'"></textarea>
                     </div>
-                    <p v-if="formStatus === 'error'" class="form-error">{{ formStatusMessage }}</p>
-                    <button type="submit" class="btn primary-btn submit-btn" :disabled="formStatus === 'loading'">
-                        <i v-if="formStatus === 'loading'" class="fas fa-spinner fa-spin"></i>
-                        <span>{{ formStatus === 'loading' ? 'Sending...' : 'Send Message' }}</span>
+                    <p v-if="formStatus === 'error'" class="form-error" role="alert">{{ formStatusMessage }}</p>
+                    <button type="submit" class="submit-btn" :disabled="formStatus === 'loading'">
+                        {{ formStatus === 'loading' ? 'Sending…' : 'Send message →' }}
                     </button>
                 </form>
             </div>

@@ -54,13 +54,13 @@
 
 ## 🧊 Redesign Notes
 
-The site moved from the earlier glassmorphism look to a dark, editorial-minimal design (rounds 1–2, 2026-11):
+The site moved from the earlier glassmorphism look to a dark, editorial-minimal design (rounds 1–3, 2026-11):
 
 - Design tokens (`--bg`, `--text`, `--text-2`, `--text-3`, `--line`, `--accent`, type and spacing scales) live at the top of `src/style.css`. Dark theme only; the light theme, glass effects, animated background and GSAP were removed.
 - `src/blackhole/` is a zero-dependency WebGL module adapted from the author's own visual-lab experiment: `initBlackHole(el, options)` returns `{ pause, resume, destroy, setOpacity }`. The hero passes its own options (center, radius, exposure, and lighter settings on phones).
 - `vite-app/lab/blackhole.html` is a dev-only test page with sliders for every option (`?stats=1` shows FPS). Open it at `/ChenYuPersonalPage/lab/blackhole.html` under `npm run dev`; it is not part of the build.
 - `public/sources/blackhole-still.webp` is the no-WebGL fallback, rendered from the module itself.
-- Before/after screenshots: `docs/redesign/round1/`, `docs/redesign/round2/`.
+- Before/after screenshots: `docs/redesign/round1/`, `docs/redesign/round2/`, `docs/redesign/round3/`.
 - The latest implementation was verified with `npm run build` on 2026-11-09.
 - 2026-11-09 content update: re-split work categories into five (Professional / AI & ML / Web & Data / Game Tools / Archive), added 3 projects (ECHOAi website, LoL Worlds 2026, Deskrawl Monitor), and updated the Resume timeline.
 - Pending: `game-deskrawl-monitor` temporarily uses its GitHub OpenGraph image (`sources/game-deskrawl-monitor-og.png`); replace it with a Discord notification screenshot later.
@@ -107,7 +107,7 @@ ChenYuPersonalPage/
     |-- dev-log.md
     |-- glassmorphism-redesign-workfile.md
     |-- interview-qa.md
-    |-- redesign/              # Round 1–2 screenshots
+    |-- redesign/              # Round 1–3 screenshots
     └── 工作報告.md
 ```
 

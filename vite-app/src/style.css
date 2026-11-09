@@ -9,7 +9,7 @@
     --text-3: #8a877f;
     --line: #2a2927;
     --accent: #f5a05a;          /* warm orange taken from the accretion disk */
-    --bg-translucent: rgba(10, 10, 11, 0.82);
+    --bg-translucent: rgba(10, 10, 11, 0.92);
 
     /* Type */
     --font-serif: 'Instrument Serif', 'Noto Sans TC', Georgia, serif;
@@ -108,33 +108,6 @@ h1, h2, h3, h4 {
     font-size: var(--fs-xs);
     letter-spacing: 0.08em;
     color: var(--text-3);
-}
-
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--sp-2);
-    padding: var(--sp-3) var(--sp-5);
-    border-radius: var(--radius);
-    font-family: var(--font-mono);
-    font-size: var(--fs-sm);
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
-}
-
-.btn.primary-btn {
-    background: var(--text);
-    color: var(--bg);
-    border: none;
-}
-
-.btn.primary-btn:hover {
-    background: var(--accent);
 }
 
 /* ==========================================================================
@@ -313,11 +286,24 @@ header.scrolled {
     margin-bottom: var(--sp-3);
 }
 
-.section-header h2 {
+.section-title {
     font-family: var(--font-serif);
     font-weight: 400;
     font-size: var(--fs-2xl);
+    line-height: 1.2;
+    color: var(--text);
     max-width: 700px;
+}
+
+/* Section labels are h2 for the outline but keep the small mono look */
+.section-container h2.mono-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    max-width: none;
 }
 
 /* ==========================================================================
@@ -498,60 +484,84 @@ header.scrolled {
 }
 
 /* ==========================================================================
+   Shared text link (contact links, form submit)
+   ========================================================================== */
+.text-link,
+.submit-btn {
+    display: inline-flex;
+    align-items: flex-end;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--text);
+    border-bottom: 1px solid transparent;
+    padding: var(--sp-3) 0 2px;
+    transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* ==========================================================================
    About
    ========================================================================== */
-.about-content {
+.about-section {
     display: grid;
-    grid-template-columns: 0.3fr 1.7fr;
+    grid-template-columns: 12rem minmax(0, 1fr);
     gap: var(--sp-6);
     align-items: start;
 }
 
-.about-decoration {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 10px;
+.about-label {
+    padding-top: 0.6rem;
 }
 
-.deco-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
+.about-body {
+    max-width: 60ch;
+    margin-bottom: 0;
 }
 
-.about-text-wrapper p {
+.about-body .section-title {
+    margin-bottom: var(--sp-6);
+}
+
+.about-lead {
     font-size: var(--fs-md);
+    line-height: 1.85;
     color: var(--text-2);
-    margin-bottom: var(--sp-7);
-    max-width: 800px;
-    line-height: 1.8;
+    margin-bottom: var(--sp-6);
 }
 
-.stats-row {
-    display: flex;
-    gap: var(--sp-6);
-    flex-wrap: wrap;
+.about-skills {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    line-height: 2;
+    color: var(--text-2);
+    padding: var(--sp-4) 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--sp-6);
 }
 
-.stat-card {
-    padding: var(--sp-5) var(--sp-6);
-    min-width: 180px;
-    flex: 1;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-}
-
-.stat-number {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: var(--fs-xl);
-    color: var(--text);
-    margin-bottom: var(--sp-2);
+.about-skills .skill {
     white-space: nowrap;
 }
 
-.stat-label {
+.about-skills .sep,
+.honor-line .sep {
+    color: var(--text-3);
+}
+
+.about-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5) var(--sp-7);
+}
+
+.about-stats dt {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
     color: var(--text-3);
@@ -559,143 +569,101 @@ header.scrolled {
     letter-spacing: 0.04em;
 }
 
+.about-stats dd {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    line-height: 1.2;
+}
+
 /* ==========================================================================
    Resume
    ========================================================================== */
-.resume-grid {
+.resume-list {
+    list-style: none;
+    border-top: 1px solid var(--line);
+}
+
+.resume-row {
     display: grid;
-    grid-template-columns: 1fr;
-    max-width: 800px;
-    margin: 0 auto;
+    grid-template-columns: 9rem minmax(0, 1fr) 14rem;
+    gap: var(--sp-5);
+    align-items: baseline;
+    padding: var(--sp-5) 0;
+    border-bottom: 1px solid var(--line);
 }
 
-.timeline {
-    border-left: 1px solid var(--line);
-    padding-left: 35px;
-    position: relative;
-}
-
-.timeline-item {
-    position: relative;
-    margin-bottom: var(--sp-8);
-}
-
-.timeline-item:last-child {
-    margin-bottom: 0;
-}
-
-.timeline-marker {
-    position: absolute;
-    left: -41px;
-    top: 7px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background-color: var(--bg);
-    border: 1px solid var(--text-3);
-    transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease;
-}
-
-.timeline-item:hover .timeline-marker {
-    border-color: var(--accent);
-    background-color: var(--accent);
-}
-
-.timeline-time {
+.resume-time {
     font-family: var(--font-mono);
     font-size: var(--fs-sm);
     color: var(--text-3);
-    margin-bottom: var(--sp-2);
+    white-space: nowrap;
 }
 
-.timeline-content {
-    padding: var(--sp-5);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+.resume-present {
+    color: var(--accent);
 }
 
-.timeline-content h3 {
-    font-size: var(--fs-lg);
-    margin-bottom: var(--sp-3);
-}
-
-.timeline-content p {
-    color: var(--text-2);
-    font-size: var(--fs-base);
-    margin-bottom: var(--sp-4);
-}
-
-.skills-tags {
-    display: flex;
-    gap: var(--sp-2);
-    flex-wrap: wrap;
-}
-
-.tag {
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    border: 1px solid var(--line);
-    color: var(--text-2);
-    padding: 2px var(--sp-2);
-    border-radius: var(--radius);
-}
-
-/* ==========================================================================
-   Honors
-   ========================================================================== */
-.honors-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--sp-5);
-}
-
-.honor-card {
-    display: grid;
-    grid-template-columns: 96px 1fr;
-    gap: var(--sp-5);
-    align-items: start;
-    padding: var(--sp-5);
-    min-height: 170px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-}
-
-.honor-year {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 76px;
-    height: 76px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    color: var(--text-2);
-    font-family: var(--font-mono);
-    font-size: var(--fs-base);
-}
-
-.honor-content h3 {
+.resume-main h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
     font-size: var(--fs-md);
-    line-height: 1.45;
-    margin-bottom: var(--sp-3);
+    margin-bottom: var(--sp-1);
 }
 
-.honor-content p {
+.resume-main p {
     color: var(--text-2);
     font-size: var(--fs-sm);
     line-height: 1.7;
 }
 
-.prize-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+.resume-tags {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
-    padding: 2px var(--sp-2);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    color: var(--text-3);
+    text-align: right;
+    line-height: 1.7;
+}
+
+/* ==========================================================================
+   Honors
+   ========================================================================== */
+.honors-list {
+    list-style: none;
+    border-top: 1px solid var(--line);
+}
+
+.honor-row {
+    padding: var(--sp-4) 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.honor-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--sp-3);
+}
+
+.honor-year {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--text-3);
+}
+
+.honor-name {
+    font-weight: 500;
+}
+
+.honor-place {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
     color: var(--text-2);
-    margin-bottom: var(--sp-2);
+}
+
+.honor-note {
+    margin-top: var(--sp-1);
+    font-size: var(--fs-sm);
+    color: var(--text-3);
 }
 
 /* ==========================================================================
@@ -703,66 +671,35 @@ header.scrolled {
    ========================================================================== */
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--sp-8);
     align-items: start;
 }
 
-.contact-info-panel p {
-    font-size: var(--fs-md);
-    color: var(--text-2);
-    margin-bottom: var(--sp-6);
-    line-height: 1.7;
+.contact-info-panel {
+    margin-bottom: 0;
 }
 
-.contact-details {
+.section-title.contact-invite {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: var(--sp-6);
+}
+
+.contact-links {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--sp-4);
+    align-items: flex-start;
+    gap: var(--sp-1);
 }
 
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-5);
-    padding: var(--sp-5);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    transition: border-color var(--dur-fast) ease;
-}
-
-.contact-item:hover {
-    border-color: var(--text-3);
-}
-
-.contact-item i {
-    font-size: var(--fs-lg);
-    color: var(--text-3);
-}
-
-.contact-item .label {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    text-transform: uppercase;
-}
-
-.contact-item .val {
-    display: block;
-    font-size: var(--fs-base);
-    color: var(--text);
+.contact-links .text-link {
     word-break: break-all;
 }
 
-.contact-form-panel {
-    padding: var(--sp-6);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-}
-
 .form-group {
-    margin-bottom: var(--sp-5);
+    margin-bottom: var(--sp-6);
 }
 
 .form-group label {
@@ -772,19 +709,20 @@ header.scrolled {
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-3);
-    margin-bottom: var(--sp-2);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
     background: transparent;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: var(--sp-3) var(--sp-4);
+    border: none;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    padding: var(--sp-3) 0;
     font-family: var(--font-sans);
     color: var(--text);
     font-size: var(--fs-base);
+    resize: vertical;
     transition: border-color var(--dur-fast) ease;
 }
 
@@ -796,7 +734,7 @@ header.scrolled {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--accent);
+    border-bottom-color: var(--accent);
 }
 
 .form-group input:disabled,
@@ -806,31 +744,34 @@ header.scrolled {
 }
 
 .submit-btn {
-    width: 100%;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: var(--accent);
+    cursor: pointer;
+}
+
+.submit-btn:hover:not(:disabled),
+.submit-btn:focus-visible {
+    color: var(--accent);
 }
 
 .submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    color: var(--text-3);
+    border-bottom-color: var(--line);
+    cursor: progress;
 }
 
 .form-success {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: var(--sp-8) var(--sp-5);
-    gap: var(--sp-4);
-    color: var(--text);
-}
-
-.form-success i {
-    font-size: var(--fs-2xl);
+    padding: var(--sp-6) 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
 }
 
 .form-success p {
-    color: var(--text-2);
+    margin-top: var(--sp-2);
+    color: var(--text);
 }
 
 .form-error {
@@ -1116,44 +1057,39 @@ header.scrolled {
 
 footer {
     border-top: 1px solid var(--line);
-    padding: var(--sp-6) 0;
     margin-top: var(--sp-6);
 }
 
 .footer-content {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--gutter);
+    padding: var(--sp-5) var(--gutter);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--text-3);
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+}
+
+.footer-built {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
-    flex-wrap: wrap;
-    gap: var(--sp-5);
-}
-
-.footer-links {
-    display: flex;
-    gap: var(--sp-5);
-}
-
-.footer-links a:hover {
-    color: var(--accent);
+    color: var(--text-3);
 }
 
 /* ==========================================================================
    Responsive
    ========================================================================== */
 @media (max-width: 992px) {
-    .about-content {
+    .about-section {
         grid-template-columns: 1fr;
-        gap: var(--sp-5);
+        gap: var(--sp-3);
     }
 
-    .about-decoration {
-        justify-content: flex-start;
+    .about-label {
+        padding-top: 0;
     }
 
     .contact-grid {
@@ -1161,8 +1097,13 @@ footer {
         gap: var(--sp-7);
     }
 
-    .honors-grid {
-        grid-template-columns: 1fr;
+    .resume-row {
+        grid-template-columns: 8rem minmax(0, 1fr);
+    }
+
+    .resume-tags {
+        grid-column: 2;
+        text-align: left;
     }
 }
 
@@ -1177,32 +1118,79 @@ footer {
         padding-bottom: var(--sp-8);
     }
 
+    /* Mobile menu: full-screen overlay */
     .menu-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin-right: -12px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .logo {
+        position: relative;
+        z-index: 2;
+        padding: var(--sp-3) 0;
+    }
+
+    header.menu-open {
+        background-color: var(--bg);
+        border-bottom-color: var(--line);
     }
 
     .nav-links {
         position: fixed;
-        top: var(--header-height);
-        left: 0;
-        width: 100%;
-        height: calc(100vh - var(--header-height));
+        inset: 0;
+        z-index: 1;
+        padding: calc(var(--header-height) + var(--sp-6)) var(--gutter) var(--sp-7);
         background-color: var(--bg);
         flex-direction: column;
-        justify-content: center;
-        gap: var(--sp-6);
-        padding-bottom: var(--sp-9);
-        transform: translateX(100%);
-        transition: transform var(--dur) var(--ease);
-        border-top: 1px solid var(--line);
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: var(--sp-2);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity var(--dur) ease, visibility 0s linear var(--dur);
     }
 
     .nav-links.active {
-        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+        transition: opacity var(--dur) ease, visibility 0s;
     }
 
     .nav-links a {
-        font-size: var(--fs-md);
+        display: block;
+        font-family: var(--font-serif);
+        font-size: 2.75rem;
+        line-height: 1.2;
+        color: var(--text);
+        padding: var(--sp-1) 0;
+    }
+
+    .nav-links .github-icon-link {
+        font-size: var(--fs-xl) !important;
+        margin-top: var(--sp-4);
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Tap targets */
+    .filter-tabs button {
+        min-height: 44px;
+    }
+
+    .modal-close-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* The header logo already returns to the top on phones */
+    .scroll-to-top {
+        display: none;
     }
 
     .hero-inner {
@@ -1213,45 +1201,43 @@ footer {
         font-size: var(--fs-base);
     }
 
+    .hero-link {
+        display: inline-flex;
+        align-items: flex-end;
+        min-height: 44px;
+    }
+
     .modal-details-grid {
         grid-template-columns: 1fr;
         gap: var(--sp-6);
     }
 
     .modal-body {
-        padding: var(--sp-5) var(--sp-4);
+        padding: var(--sp-5) var(--gutter);
     }
 
     .modal-header-banner {
-        padding: var(--sp-7) var(--sp-4) var(--sp-4);
+        padding: var(--sp-7) var(--gutter) var(--sp-4);
     }
 
-    .honor-card {
+    /* Resume: year above the title, tags under the description */
+    .resume-row {
         grid-template-columns: 1fr;
-        gap: var(--sp-4);
-        min-height: auto;
+        gap: var(--sp-1);
+    }
+
+    .resume-tags {
+        grid-column: 1;
+        margin-top: var(--sp-1);
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
 @media (max-width: 480px) {
-    .stats-row {
-        gap: var(--sp-4);
-    }
-
-    .stat-card {
-        padding: var(--sp-4);
-    }
-
-    .contact-form-panel {
-        padding: var(--sp-5);
-    }
-
-    .honor-year {
-        width: 64px;
-        height: 64px;
-        font-size: var(--fs-sm);
-    }
-
     .modal-header-banner h2 {
         font-size: var(--fs-xl);
     }

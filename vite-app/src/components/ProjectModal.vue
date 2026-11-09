@@ -10,13 +10,20 @@ const emit = defineEmits(['close-modal'])
 <template>
     <div class="modal-overlay" :class="{ 'active': modalActive }" @click.self="emit('close-modal')">
         <transition name="modal-scale">
-            <div v-if="modalActive && selectedProject" class="modal-card" @click.stop>
+            <div
+                v-if="modalActive && selectedProject"
+                class="modal-card"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
+                @click.stop
+            >
                 <button class="modal-close-btn" @click="emit('close-modal')" aria-label="Close modal">
                     <i class="fas fa-times"></i>
                 </button>
                 <div class="modal-header-banner">
                     <span class="modal-category-badge">{{ getCategoryLabel(selectedProject.category) }}</span>
-                    <h2>{{ selectedProject.title }}</h2>
+                    <h2 id="modal-title">{{ selectedProject.title }}</h2>
                 </div>
                 <div class="modal-body">
                     <div class="modal-gallery" v-if="selectedProject.gallery?.length">

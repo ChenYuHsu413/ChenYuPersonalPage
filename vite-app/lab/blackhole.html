@@ -9,7 +9,7 @@
   Dev only (not part of the build): run `npm run dev` and open /ChenYuPersonalPage/lab/blackhole.html
   Query params: ?stats=1 shows FPS. Any option can be preset, e.g.
   ?exposure=0.7&center=0.65,0.4&radius=0.34&particleCount=6000&steps=88&intro=1&vignette=1&grain=1&bg=0a0a0b
-  &ringIntensity=1&ringWidth=2&ringHalo=0.12&ringDoppler=0.6&arcGain=1.2&edgeSoft=0.1&diskInner=1.65
+  &ringIntensity=1&ringWidth=2&ringHalo=0.12&ringDoppler=0.6&arcGain=1.2&edgeSoft=0.1&diskInner=1.65&outerSoft=2.5
 -->
 <style>
   html, body { margin: 0; height: 100%; background: #0a0a0b; color: #f3f0ea;
@@ -43,6 +43,7 @@
   <label>ring doppler <input type="range" id="ringDoppler" min="0" max="1" step="0.05"><span></span></label>
   <label>arc gain <input type="range" id="arcGain" min="0" max="3" step="0.05"><span></span></label>
   <label>disk inner <input type="range" id="diskInner" min="1.5" max="3" step="0.05"><span></span></label>
+  <label>outer soft <input type="range" id="outerSoft" min="0.1" max="4" step="0.1"><span></span></label>
   <label>edge soft <input type="range" id="edgeSoft" min="0" max="0.4" step="0.01"><span></span></label>
   <div class="row">
     <label style="display:flex;gap:4px"><input type="checkbox" id="intro"> intro</label>
@@ -80,6 +81,7 @@ const state = {
   arcGain: num('arcGain', 1.2),
   edgeSoft: num('edgeSoft', 0.1),
   diskInner: num('diskInner', 1.65),
+  outerSoft: num('outerSoft', 2.5),
   intro: bool('intro', true),
   vignette: bool('vignette', true),
   reducedMotion: bool('reducedMotion', false)
@@ -107,7 +109,7 @@ function apply() {
     reducedMotion: state.reducedMotion, fallbackSrc: '../sources/blackhole-still.webp',
     ringIntensity: state.ringIntensity, ringWidth: state.ringWidth, ringHalo: state.ringHalo,
     ringDoppler: state.ringDoppler, arcGain: state.arcGain, edgeSoft: state.edgeSoft,
-    diskInner: state.diskInner
+    diskInner: state.diskInner, outerSoft: state.outerSoft
   }
   if (bgHex) options.background = bgHex
   bh = initBlackHole(stage, options)

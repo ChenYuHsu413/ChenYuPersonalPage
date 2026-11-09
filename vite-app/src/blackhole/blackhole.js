@@ -28,6 +28,7 @@
  *   arcGain       lensed back-disk image brightness vs the front disk. Default 1.2
  *   edgeSoft      disk inner-edge softening in Rs (anti-aliasing). Default 0.1
  *   diskInner     disk inner radius in Rs (photon sphere is 1.5). Default 1.65
+ *   outerSoft     disk outer-edge fade width in Rs. Default 2.5
  */
 import { VS, FS, PVS, PFS } from './shaders.js'
 
@@ -78,6 +79,7 @@ export function initBlackHole(el, options = {}) {
         arcGain: 1.2,
         edgeSoft: 0.1,
         diskInner: 1.65,
+        outerSoft: 2.5,
         ...options
     }
 
@@ -139,7 +141,7 @@ export function initBlackHole(el, options = {}) {
     ;['uRes', 'uCenter', 'uTime', 'uRadius', 'uTilt', 'uBeamDir', 'uDiskIn', 'uDiskOut',
       'uDiskRot', 'uSteps', 'uBreath', 'uGrain', 'uExposure', 'uMass', 'uDiskFill',
       'uBlobRot', 'uTexScroll', 'uLensK', 'uDrift', 'uVig', 'uRingLit',
-      'uRingIntensity', 'uRingWidth', 'uRingHalo', 'uRingDoppler', 'uArcGain', 'uEdgeSoft',
+      'uRingIntensity', 'uRingWidth', 'uRingHalo', 'uRingDoppler', 'uArcGain', 'uEdgeSoft', 'uOuterSoft',
       'uBg', 'uPhoton', 'uFiberMid', 'uFiberFar'].forEach(n => { loc[n] = gl.getUniformLocation(prog, n) })
 
     const pprog = link(PVS, PFS)
@@ -394,6 +396,7 @@ export function initBlackHole(el, options = {}) {
         gl.uniform1f(loc.uRingDoppler, opt.ringDoppler)
         gl.uniform1f(loc.uArcGain, opt.arcGain)
         gl.uniform1f(loc.uEdgeSoft, opt.edgeSoft)
+        gl.uniform1f(loc.uOuterSoft, opt.outerSoft)
         gl.uniform3fv(loc.uBg, bg)
         gl.uniform3fv(loc.uPhoton, photon)
         gl.uniform3fv(loc.uFiberMid, fMid)

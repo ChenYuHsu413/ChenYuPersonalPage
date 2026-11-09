@@ -1,127 +1,79 @@
+<script setup>
+const ENTRIES = [
+    {
+        time: '2026.09 –', present: true,
+        title: 'SaySing Information · AI Engineer',
+        desc: 'Building AI-powered products and internal tools; led development of the bilingual ECHOAi brand website with an AI voice guide.',
+        tags: ['AI Engineering', 'Next.js', 'Now']
+    },
+    {
+        time: '2026',
+        title: 'AI Course',
+        desc: 'Completed coursework in AI fundamentals, practical tools, and applied project workflows.',
+        tags: ['AI', 'Coursework']
+    },
+    {
+        time: '2022 – 2026',
+        title: 'Working Holiday · Australia',
+        desc: 'Worked, saved, and self-studied AI fundamentals during a second working holiday in Australia.',
+        tags: ['Working Holiday', 'Australia', 'Self-Study']
+    },
+    {
+        time: '2022',
+        title: 'VisionAsia Corporation',
+        desc: 'Built TypeScript front-end features for a web product.',
+        tags: ['TypeScript', 'Front-End', 'Web Product']
+    },
+    {
+        time: '2020 – 2022',
+        title: 'National Examination Preparation',
+        desc: "Full-time self-study for Taiwan's national civil service examination.",
+        tags: ['Self-Study', 'Career Exploration']
+    },
+    {
+        time: '2018 – 2020',
+        title: 'Working Holiday · Australia',
+        desc: 'Worked, saved, and built English fluency during a first working holiday in Australia.',
+        tags: ['Working Holiday', 'Australia', 'English Environment']
+    },
+    {
+        time: '2017 – 2018',
+        title: 'Genie Network',
+        desc: 'Built full-stack web features — Angular + TypeScript on the front, Node.js on the back.',
+        tags: ['Angular', 'TypeScript', 'Node.js']
+    },
+    {
+        time: '2017',
+        title: 'Want Want China',
+        desc: 'Built Java + Spring MVC web features for enterprise systems.',
+        tags: ['Java', 'Spring MVC', 'Enterprise']
+    },
+    {
+        time: '2012 – 2017',
+        title: 'National Tsing Hua University',
+        desc: 'Majored in Computer Science. NVIDIA Taiwan student ambassador, ITRI part-time research, and Taiwan Student Cluster Competition gold — all during 2015–2016.',
+        tags: ['Computer Science', 'Cluster Comp Gold', 'NVIDIA Ambassador']
+    }
+]
+</script>
+
 <template>
     <section id="resume" class="section-container">
         <div class="section-header">
-            <span class="mono-label section-label">RESUME</span>
-            <h2>Education and career experience in one readable path.</h2>
+            <h2 class="mono-label section-label">RESUME</h2>
+            <p class="section-title">Education and career experience in one readable path.</p>
         </div>
-        <div class="resume-grid">
-            <div class="timeline">
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2026.09 - Present</div>
-                    <div class="timeline-content">
-                        <h3>SaySing Information &middot; AI Engineer</h3>
-                        <p>Building AI-powered products and internal tools; led development of the bilingual ECHOAi brand website with an AI voice guide.</p>
-                        <div class="skills-tags">
-                            <span class="tag">AI Engineering</span>
-                            <span class="tag">Next.js</span>
-                            <span class="tag">Now</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2026</div>
-                    <div class="timeline-content">
-                        <h3>AI Course</h3>
-                        <p>Completed coursework in AI fundamentals, practical tools, and applied project workflows.</p>
-                        <div class="skills-tags">
-                            <span class="tag">AI</span>
-                            <span class="tag">Coursework</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2022 - 2026</div>
-                    <div class="timeline-content">
-                        <h3>Working Holiday &middot; Australia</h3>
-                        <p>Worked, saved, and self-studied AI fundamentals during a second working holiday in Australia.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Working Holiday</span>
-                            <span class="tag">Australia</span>
-                            <span class="tag">Self-Study</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2022</div>
-                    <div class="timeline-content">
-                        <h3>VisionAsia Corporation</h3>
-                        <p>Built TypeScript front-end features for a web product.</p>
-                        <div class="skills-tags">
-                            <span class="tag">TypeScript</span>
-                            <span class="tag">Front-End</span>
-                            <span class="tag">Web Product</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2020 - 2022</div>
-                    <div class="timeline-content">
-                        <h3>National Examination Preparation</h3>
-                        <p>Full-time self-study for Taiwan's national civil service examination.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Self-Study</span>
-                            <span class="tag">Career Exploration</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2018 - 2020</div>
-                    <div class="timeline-content">
-                        <h3>Working Holiday &middot; Australia</h3>
-                        <p>Worked, saved, and built English fluency during a first working holiday in Australia.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Working Holiday</span>
-                            <span class="tag">Australia</span>
-                            <span class="tag">English Environment</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2017 - 2018</div>
-                    <div class="timeline-content">
-                        <h3>Genie Network</h3>
-                        <p>Built full-stack web features &mdash; Angular + TypeScript on the front, Node.js on the back.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Angular</span>
-                            <span class="tag">TypeScript</span>
-                            <span class="tag">Node.js</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2017</div>
-                    <div class="timeline-content">
-                        <h3>Want Want China</h3>
-                        <p>Built Java + Spring MVC web features for enterprise systems.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Java</span>
-                            <span class="tag">Spring MVC</span>
-                            <span class="tag">Enterprise</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-time">2012 - 2017</div>
-                    <div class="timeline-content">
-                        <h3>National Tsing Hua University</h3>
-                        <p>Majored in Computer Science. NVIDIA Taiwan student ambassador, ITRI part-time research, and Taiwan Student Cluster Competition gold &mdash; all during 2015&ndash;2016.</p>
-                        <div class="skills-tags">
-                            <span class="tag">Computer Science</span>
-                            <span class="tag">Cluster Comp Gold</span>
-                            <span class="tag">NVIDIA Ambassador</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
+        <ol class="resume-list">
+            <li v-for="entry in ENTRIES" :key="entry.time + entry.title" class="resume-row">
+                <span class="resume-time">
+                    {{ entry.time }}<span v-if="entry.present" class="resume-present"> Present</span>
+                </span>
+                <div class="resume-main">
+                    <h3>{{ entry.title }}</h3>
+                    <p>{{ entry.desc }}</p>
+                </div>
+                <span class="resume-tags">{{ entry.tags.join(' · ') }}</span>
+            </li>
+        </ol>
     </section>
 </template>

@@ -1,39 +1,35 @@
+<script setup>
+// Newest first
+const HONORS = [
+    { year: '2015', name: 'Taiwan Student Cluster Competition', place: 'First Prize' },
+    { year: '2012', name: 'National College Programming Contest', place: 'Third Prize' },
+    { year: '2012', name: 'The ACM-ICPC Asia Kaohsiung Regional Contest', place: 'Honorable Mention' },
+    {
+        year: '2010',
+        name: 'High School Student Academic Competence Contest, Computer Science',
+        place: 'Regional Semi-Final · 6th Place',
+        note: 'Qualified to participate in the national final contest.'
+    }
+]
+</script>
+
 <template>
     <section id="honors" class="section-container">
         <div class="section-header">
-            <span class="mono-label section-label">HONORS</span>
-            <h2>Early recognitions in programming and academic contests.</h2>
+            <h2 class="mono-label section-label">HONORS</h2>
+            <p class="section-title">Early recognitions in programming and academic contests.</p>
         </div>
-        <div class="honors-grid">
-            <article class="honor-card">
-                <div class="honor-year">2015</div>
-                <div class="honor-content">
-                    <h3>Taiwan Student Cluster Competition</h3>
-                    <span class="prize-badge prize-gold"><i class="fas fa-trophy"></i> First Prize</span>
-                </div>
-            </article>
-            <article class="honor-card">
-                <div class="honor-year">2012</div>
-                <div class="honor-content">
-                    <h3>National College Programming Contest</h3>
-                    <span class="prize-badge prize-bronze"><i class="fas fa-medal"></i> Third Prize</span>
-                </div>
-            </article>
-            <article class="honor-card">
-                <div class="honor-year">2012</div>
-                <div class="honor-content">
-                    <h3>The ACM-ICPC Asia Kaohsiung Regional Contest</h3>
-                    <span class="prize-badge prize-silver"><i class="fas fa-star"></i> Honorable Mention</span>
-                </div>
-            </article>
-            <article class="honor-card">
-                <div class="honor-year">2010</div>
-                <div class="honor-content">
-                    <h3>High School Student Academic Competence Contest, Computer Science</h3>
-                    <span class="prize-badge prize-default"><i class="fas fa-award"></i> Regional Semi-Final · 6th Place</span>
-                    <p>Qualified to participate in the national final contest.</p>
-                </div>
-            </article>
-        </div>
+        <ul class="honors-list">
+            <li v-for="h in HONORS" :key="h.year + h.name" class="honor-row">
+                <p class="honor-line">
+                    <span class="honor-year">{{ h.year }}</span>
+                    <span class="sep" aria-hidden="true">·</span>
+                    <span class="honor-name">{{ h.name }}</span>
+                    <span class="sep" aria-hidden="true">·</span>
+                    <span class="honor-place">{{ h.place }}</span>
+                </p>
+                <p v-if="h.note" class="honor-note">{{ h.note }}</p>
+            </li>
+        </ul>
     </section>
 </template>

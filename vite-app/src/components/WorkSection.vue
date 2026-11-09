@@ -61,7 +61,7 @@ onUnmounted(() => {
 <template>
     <section id="work" class="section-container work-section">
         <div class="work-head">
-            <span class="mono-label">SELECTED WORK</span>
+            <h2 class="mono-label">SELECTED WORK</h2>
             <span class="mono-label work-count">{{ pad(filteredProjects.length) }}</span>
         </div>
 

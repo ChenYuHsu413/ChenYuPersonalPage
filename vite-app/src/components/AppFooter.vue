@@ -1,17 +1,8 @@
-<script setup>
-const emit = defineEmits(['scroll-to'])
-</script>
-
 <template>
     <footer>
         <div class="footer-content">
-            <p>&copy; 2026 Chen Yu Hsu. Full-stack &amp; AI portfolio. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="https://github.com/ChenYuHsu413" target="_blank" rel="noreferrer">GitHub</a>
-                <a href="#about" @click.prevent="emit('scroll-to', 'about')">About</a>
-                <a href="#honors" @click.prevent="emit('scroll-to', 'honors')">Early Achievements</a>
-                <a href="#work" @click.prevent="emit('scroll-to', 'work')">Work</a>
-            </div>
+            <p>&copy; 2026 Chen Yu Hsu</p>
+            <p class="footer-built">Built with Vue + WebGL</p>
         </div>
     </footer>
 </template>

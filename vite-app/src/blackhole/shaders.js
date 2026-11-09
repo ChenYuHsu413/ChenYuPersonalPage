@@ -61,6 +61,7 @@ uniform float uRingHalo;      // outer halo falloff (shadow-radius units)
 uniform float uRingDoppler;   // 0..1 brightness asymmetry following the disk's Doppler side
 uniform float uArcGain;       // brightness of lensed (back-disk) images relative to the front disk
 uniform float uEdgeSoft;      // inner-edge softening of the disk (Rs)
+uniform float uOuterSoft;     // outer-edge fade width of the disk (Rs)
 
 uniform vec3 uBg;
 uniform vec3 uPhoton;
@@ -216,7 +217,10 @@ void main(){
         vec4 d = diskTex(max(rh, rIn), atan(H.z, H.x), rot, detail, front);
         float a = clamp(d.a * arcMul
                         * smoothstep(rIn - uEdgeSoft, rIn + uEdgeSoft, rh)
-                        * (1.0 - smoothstep(rFill - 0.6, rFill, rh)), 0.0, 1.0);
+                        * (1.0 - smoothstep(rFill - uOuterSoft, rFill, rh)), 0.0, 1.0);
+        // lensed images seen *through* the front disk read as scratches: hide them
+        // once the ray has already passed a mostly opaque front layer
+        a *= mix(1.0, smoothstep(0.55, 0.95, trans), lensed);
         acc += trans * a * d.rgb;
         trans *= 1.0 - a;
       }

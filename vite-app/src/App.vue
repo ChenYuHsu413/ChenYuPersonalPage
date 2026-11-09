@@ -21,7 +21,7 @@ const modalActive = ref(false)
 const selectedProject = ref(null)
 const formStatus = ref('idle')
 const formStatusMessage = ref('')
-const FALLBACK_REPOS = 16
+const FALLBACK_REPOS = 31
 const githubStats = ref({ repos: FALLBACK_REPOS })
 let stopReveal = () => {}
 
@@ -65,6 +65,10 @@ function handleScroll() {
 
 function toggleMenu() {
     menuActive.value = !menuActive.value
+}
+
+function closeMenu() {
+    menuActive.value = false
 }
 
 function scrollToSection(sectionId) {
@@ -129,7 +133,7 @@ function submitContactForm(formData) {
 onMounted(() => {
     window.addEventListener('scroll', handleScroll)
     window.addEventListener('keydown', handleKeydown)
-    nextTick(() => { stopReveal = initReveal('.section-header, .timeline-item, .stat-card') })
+    nextTick(() => { stopReveal = initReveal('.section-header, .resume-row, .honor-row') })
     fetchGitHubStats()
 })
 
@@ -145,9 +149,11 @@ onUnmounted(() => {
         :scrolled="scrolled"
         :menu-active="menuActive"
         @toggle-menu="toggleMenu"
+        @close-menu="closeMenu"
         @scroll-to="scrollToSection"
     />
 
+    <main>
     <HeroSection @scroll-to="scrollToSection" />
 
     <WorkSection
@@ -169,6 +175,7 @@ onUnmounted(() => {
         :form-status-message="formStatusMessage"
         @submit-form="submitContactForm"
     />
+    </main>
 
     <ProjectModal
         :modal-active="modalActive"
@@ -186,5 +193,5 @@ onUnmounted(() => {
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <AppFooter @scroll-to="scrollToSection" />
+    <AppFooter />
 </template>
