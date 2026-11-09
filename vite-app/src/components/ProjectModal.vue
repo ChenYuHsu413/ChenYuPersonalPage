@@ -75,6 +75,9 @@ const emit = defineEmits(['close-modal'])
                             </div>
                         </div>
                     </div>
+                    <p v-if="selectedProject.category === 'game'" class="caption-subtitle">
+                        非官方玩家專案，遊戲名稱、資料與素材之版權屬原廠所有。
+                    </p>
                 </div>
             </div>
         </transition>

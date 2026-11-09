@@ -8,14 +8,26 @@
             <div class="timeline">
                 <article class="timeline-item">
                     <div class="timeline-marker"></div>
+                    <div class="timeline-time">2026.09 - Present</div>
+                    <div class="timeline-content">
+                        <h3>SaySing Information &middot; AI Engineer</h3>
+                        <p>Building AI-powered products and internal tools; led development of the bilingual ECHOAi brand website with an AI voice guide.</p>
+                        <div class="skills-tags">
+                            <span class="tag">AI Engineering</span>
+                            <span class="tag">Next.js</span>
+                            <span class="tag">Now</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
                     <div class="timeline-time">2026</div>
                     <div class="timeline-content">
                         <h3>AI Course</h3>
-                        <p>Currently studying artificial intelligence fundamentals, practical tools, and applied project workflows.</p>
+                        <p>Completed coursework in AI fundamentals, practical tools, and applied project workflows.</p>
                         <div class="skills-tags">
                             <span class="tag">AI</span>
                             <span class="tag">Coursework</span>
-                            <span class="tag">Now</span>
                         </div>
                     </div>
                 </article>
@@ -98,7 +110,7 @@
                 </article>
                 <article class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">2012 - 2016</div>
+                    <div class="timeline-time">2012 - 2017</div>
                     <div class="timeline-content">
                         <h3>National Tsing Hua University</h3>
                         <p>Majored in Computer Science. NVIDIA Taiwan student ambassador, ITRI part-time research, and Taiwan Student Cluster Competition gold &mdash; all during 2015&ndash;2016.</p>

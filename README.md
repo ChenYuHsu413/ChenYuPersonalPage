@@ -24,7 +24,7 @@
 
 ## ✨ Features
 
-- 🔍 **Dynamic Work Filtering** — Vue 3 reactive tabs switching between All Works, AI / ML Showcase, Personal Projects, and Archive
+- 🔍 **Dynamic Work Filtering** — Vue 3 reactive tabs switching between All / Professional / AI & ML / Web & Data / Game Tools / Archive; the All tab lists `featured` projects first
 - 🪟 **Glassmorphism UI** — CSS-variable glass recipe, animated global background, grid texture, and Chromium-only liquid-glass fallback path
 - 🎬 **GSAP Motion Suite** — Scroll-triggered stagger entrance animations across all sections via ScrollTrigger
 - 🗂 **Project Detail Modals** — Click any card for a full overlay with description, tech tags, and source links
@@ -60,7 +60,9 @@ The current `glassmorphism-redesign` work keeps the original Vue logic intact wh
 - `GlassBackground.vue` owns the animated gradient, glow orbs, grid, geometric details, cursor glow, and shared SVG liquid filter.
 - `style.css` centralizes glass parameters through CSS variables such as `--glass-bg`, `--glass-blur`, `--glass-saturate`, and `--grid-line`.
 - Liquid refraction is attempted only on Chromium via `html.liquid-ok`; other browsers and mobile layouts gracefully fall back to blur + saturate glass.
-- The latest implementation was verified with `npm run build` on 2026-06-11.
+- The latest implementation was verified with `npm run build` on 2026-11-09.
+- 2026-11-09 content update: re-split work categories into five (Professional / AI & ML / Web & Data / Game Tools / Archive), added 3 projects (ECHOAi website, LoL Worlds 2026, Deskrawl Monitor), and updated the Resume timeline.
+- Pending: `game-deskrawl-monitor` temporarily uses its GitHub OpenGraph image (`sources/game-deskrawl-monitor-og.png`); replace it with a Discord notification screenshot later.
 
 Detailed notes:
 
@@ -113,7 +115,7 @@ Open `vite-app/src/data/projects.js` and add a new object to the `PROJECTS` arra
 {
     id: 'hw-new',
     title: 'Your Project Title',
-    category: 'aiml',              // 'aiml' (shown as AI / ML Showcase), 'project', or 'archive'
+    category: 'aiml',              // 'professional', 'aiml' (AI & ML), 'web' (Web & Data), 'game' (Game Tools), or 'archive'
     highlight: 'One-line outcome badge shown on the card',
     shortDescription: 'Short card description.',
     longDescription: 'Full description shown in the modal.',

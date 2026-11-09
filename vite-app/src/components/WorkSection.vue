@@ -15,15 +15,20 @@ const emit = defineEmits(['update:activeTab', 'open-modal'])
         </div>
 
         <div class="filter-tabs">
-            <button :class="{ 'active': activeTab === 'featured' }"
-                    @click="emit('update:activeTab', 'featured')">
-                <i class="fas fa-star"></i> Featured
+            <button :class="{ 'active': activeTab === 'all' }" @click="emit('update:activeTab', 'all')">
+                <i class="fas fa-th-large"></i> All
+            </button>
+            <button :class="{ 'active': activeTab === 'professional' }" @click="emit('update:activeTab', 'professional')">
+                <i class="fas fa-briefcase"></i> Professional
             </button>
             <button :class="{ 'active': activeTab === 'aiml' }" @click="emit('update:activeTab', 'aiml')">
-                <i class="fas fa-brain"></i> AI / ML
+                <i class="fas fa-brain"></i> AI &amp; ML
             </button>
-            <button :class="{ 'active': activeTab === 'project' }" @click="emit('update:activeTab', 'project')">
-                <i class="fas fa-rocket"></i> Personal Projects
+            <button :class="{ 'active': activeTab === 'web' }" @click="emit('update:activeTab', 'web')">
+                <i class="fas fa-globe"></i> Web &amp; Data
+            </button>
+            <button :class="{ 'active': activeTab === 'game' }" @click="emit('update:activeTab', 'game')">
+                <i class="fas fa-gamepad"></i> Game Tools
             </button>
             <button :class="{ 'active': activeTab === 'archive' }" @click="emit('update:activeTab', 'archive')">
                 <i class="fas fa-archive"></i> Archive

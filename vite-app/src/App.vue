@@ -29,7 +29,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 // State
 const scrolled = ref(false)
 const menuActive = ref(false)
-const activeTab = ref('featured')
+const activeTab = ref('all')
 const modalActive = ref(false)
 const selectedProject = ref(null)
 const currentTime = ref('--:--:--')
@@ -42,16 +42,27 @@ const githubStats = ref({ repos: FALLBACK_REPOS })
 const timerInterval = ref(null)
 
 const filteredProjects = computed(() => {
-    if (activeTab.value === 'featured') return PROJECTS.filter(p => p.featured)
-    if (activeTab.value === 'all') return PROJECTS
+    if (activeTab.value === 'all') {
+        const rank = p => p.featured ? FEATURED_ORDER.indexOf(p.id) : FEATURED_ORDER.length
+        return [...PROJECTS].sort((a, b) => rank(a) - rank(b))
+    }
     return PROJECTS.filter(p => p.category === activeTab.value)
 })
 
 const deploymentCount = computed(() => PROJECTS.filter(p => p.demoUrl).length)
 
+const FEATURED_ORDER = [
+    'pro-echoai-website',
+    'aiml-ai-town',
+    'aiml-servo-predictive-maintenance',
+    'hw-taiwan-weather-map'
+]
+
 const CATEGORY_LABELS = {
-    project: 'Personal Project',
-    aiml: 'AI / ML Showcase',
+    professional: 'Professional Work',
+    aiml: 'AI & ML',
+    web: 'Web & Data',
+    game: 'Game Tools',
     archive: 'Archive Work'
 }
 

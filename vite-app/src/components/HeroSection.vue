@@ -30,7 +30,7 @@ const clockAngles = computed(() => {
                 <p class="eyebrow fade-in-up">Full-Stack Engineer · AI Tooling</p>
                 <h1 class="fade-in-up">Chen Yu Hsu</h1>
                 <p class="hero-description fade-in-up">
-                    Full-stack engineer with industry experience across web and enterprise stacks. NTHU CS, Taiwan Student Cluster Competition gold medalist &mdash; now focused on AI-powered web products.
+                    Full-stack engineer building AI-powered web products, with industry experience across web and enterprise stacks. NTHU CS, Taiwan Student Cluster Competition gold medalist.
                 </p>
                 <div class="hero-buttons fade-in-up">
                     <a class="btn primary-btn" href="#work" @click.prevent="emit('scroll-to', 'work')">Explore Work</a>

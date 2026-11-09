@@ -9,7 +9,7 @@ defineProps({
     <section id="about" class="section-container">
         <div class="section-header">
             <span class="section-num">01 / About</span>
-            <h2>Generalist engineer. Deliberate pivot into AI tooling.</h2>
+            <h2>Full-stack engineer working at the intersection of web and AI.</h2>
         </div>
         <div class="about-content">
             <div class="about-decoration">
@@ -17,7 +17,7 @@ defineProps({
             </div>
             <div class="about-text-wrapper">
                 <p>
-                    Web engineer crossing into AI integration. Java/Spring &rarr; Angular/Node &rarr; TypeScript &rarr; AI tooling. The path was deliberate; the focus now is making AI features feel native inside everyday web products.
+                    Currently an AI Engineer at SaySing, turning AI into products people actually use &mdash; voice guides, LLM integrations, and assistants that route visitors to the right page. On the side, I keep building personal projects like multi-agent simulations and predictive maintenance.
                 </p>
                 <div class="stats-row">
                     <div class="stat-card">
