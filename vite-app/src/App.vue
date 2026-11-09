@@ -4,7 +4,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import emailjs from '@emailjs/browser'
 import { PROJECTS } from './data/projects.js'
-import GlassBackground from './components/GlassBackground.vue'
 import AppHeader from './components/AppHeader.vue'
 import HeroSection from './components/HeroSection.vue'
 import AboutSection from './components/AboutSection.vue'
@@ -17,29 +16,16 @@ import AppFooter from './components/AppFooter.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const timeFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Taipei',
-    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-})
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Taipei',
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-})
-
 // State
 const scrolled = ref(false)
 const menuActive = ref(false)
 const activeTab = ref('all')
 const modalActive = ref(false)
 const selectedProject = ref(null)
-const currentTime = ref('--:--:--')
-const currentDate = ref('Loading date...')
 const formStatus = ref('idle')
 const formStatusMessage = ref('')
-const isDark = ref(true)
 const FALLBACK_REPOS = 16
 const githubStats = ref({ repos: FALLBACK_REPOS })
-const timerInterval = ref(null)
 
 const filteredProjects = computed(() => {
     if (activeTab.value === 'all') {
@@ -70,12 +56,6 @@ function getCategoryLabel(category) {
     return CATEGORY_LABELS[category] ?? 'Project'
 }
 
-function updateTime() {
-    const now = new Date()
-    currentTime.value = timeFormatter.format(now)
-    currentDate.value = dateFormatter.format(now)
-}
-
 function handleScroll() {
     scrolled.value = window.scrollY > 50
 }
@@ -92,13 +72,6 @@ function scrollToSection(sectionId) {
         const offsetPosition = el.getBoundingClientRect().top + window.scrollY - headerHeight
         window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
     }
-}
-
-function toggleTheme() {
-    isDark.value = !isDark.value
-    const theme = isDark.value ? 'dark' : 'light'
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('theme', theme)
 }
 
 function fetchGitHubStats() {
@@ -151,11 +124,6 @@ function submitContactForm(formData) {
 }
 
 function initGSAPAnimations() {
-    gsap.to('.fade-in-up', {
-        y: 0, opacity: 1,
-        duration: 1.0, stagger: 0.15, ease: 'power3.out'
-    })
-
     const scrollReveal = (selector, from, to, start = 'top bottom-=80') => {
         gsap.utils.toArray(selector).forEach(el => {
             gsap.fromTo(el, from, {
@@ -182,12 +150,6 @@ function initGSAPAnimations() {
 }
 
 onMounted(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark'
-    isDark.value = savedTheme === 'dark'
-    document.documentElement.setAttribute('data-theme', savedTheme)
-
-    updateTime()
-    timerInterval.value = setInterval(updateTime, 1000)
     window.addEventListener('scroll', handleScroll)
     window.addEventListener('keydown', handleKeydown)
     nextTick(() => initGSAPAnimations())
@@ -195,35 +157,20 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    clearInterval(timerInterval.value)
     window.removeEventListener('scroll', handleScroll)
     window.removeEventListener('keydown', handleKeydown)
 })
 </script>
 
 <template>
-    <GlassBackground />
-
     <AppHeader
         :scrolled="scrolled"
         :menu-active="menuActive"
-        :is-dark="isDark"
         @toggle-menu="toggleMenu"
-        @toggle-theme="toggleTheme"
         @scroll-to="scrollToSection"
     />
 
-    <HeroSection
-        :current-time="currentTime"
-        :current-date="currentDate"
-        @scroll-to="scrollToSection"
-    />
-
-    <AboutSection :github-stats="githubStats" :deployment-count="deploymentCount" />
-
-    <ResumeSection />
-
-    <HonorsSection />
+    <HeroSection @scroll-to="scrollToSection" />
 
     <WorkSection
         :filtered-projects="filteredProjects"
@@ -232,6 +179,12 @@ onUnmounted(() => {
         @update:active-tab="activeTab = $event"
         @open-modal="openModal"
     />
+
+    <AboutSection :github-stats="githubStats" :deployment-count="deploymentCount" />
+
+    <ResumeSection />
+
+    <HonorsSection />
 
     <ContactSection
         :form-status="formStatus"

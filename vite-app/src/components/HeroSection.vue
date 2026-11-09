@@ -1,125 +1,84 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { initBlackHole } from '../blackhole/blackhole.js'
 
-const props = defineProps({
-    currentTime: String,
-    currentDate: String
-})
 const emit = defineEmits(['scroll-to'])
 
-const timeParts = computed(() => {
-    const t = props.currentTime || '--:--:--'
-    const [h = '--', m = '--', s = '--'] = t.split(':')
-    return { h, m, s }
+const BASE = import.meta.env.BASE_URL
+const hero = ref(null)
+const bhEl = ref(null)
+const content = ref(null)
+
+let bh = null
+let io = null
+let ticking = false
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+function blackHoleOptions() {
+    const mobile = window.matchMedia('(max-width: 767px)').matches
+    const options = {
+        center: [0.65, 0.4],
+        radius: 0.24,
+        exposure: 0.7,
+        grain: 0.8,
+        background: '#0a0a0b',
+        fallbackSrc: BASE + 'sources/blackhole-still.webp'
+    }
+    if (mobile) Object.assign(options, { particleCount: 1200, steps: 48, maxDpr: 1.5 })
+    return options
+}
+
+// Scroll progress 0..1 across the hero: black hole fades + scales, text fades up
+function applyScroll() {
+    ticking = false
+    if (!hero.value) return
+    const p = Math.min(1, Math.max(0, window.scrollY / hero.value.offsetHeight))
+    if (bh) bh.setOpacity(Math.max(0, 1 - p * 1.2))
+    content.value.style.opacity = String(Math.max(0, 1 - p * 1.8))
+    if (reducedMotion) return
+    bhEl.value.style.transform = `scale(${1 + 0.08 * p})`
+    content.value.style.transform = `translateY(${-60 * p}px)`
+}
+
+function onScroll() {
+    if (!ticking) {
+        ticking = true
+        requestAnimationFrame(applyScroll)
+    }
+}
+
+onMounted(() => {
+    bh = initBlackHole(bhEl.value, blackHoleOptions())
+    // Stop rendering while the hero is off screen
+    io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) bh.resume()
+        else bh.pause()
+    })
+    io.observe(hero.value)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    applyScroll()
 })
 
-const clockAngles = computed(() => {
-    const [h, m, s] = (props.currentTime || '00:00:00').split(':').map(v => Number(v) || 0)
-    return {
-        hour: (h % 12) * 30 + m * 0.5,
-        minute: m * 6 + s * 0.1,
-        second: s * 6
-    }
+onUnmounted(() => {
+    window.removeEventListener('scroll', onScroll)
+    if (io) io.disconnect()
+    if (bh) bh.destroy()
 })
 </script>
 
 <template>
-    <main id="home" class="hero-section">
-        <div class="hero-wrapper">
-            <div class="hero-text-content">
-                <p class="eyebrow fade-in-up">Full-Stack Engineer · AI Tooling</p>
-                <h1 class="fade-in-up">Chen Yu Hsu</h1>
-                <p class="hero-description fade-in-up">
+    <section id="home" ref="hero" class="hero">
+        <div ref="bhEl" class="hero-bh" aria-hidden="true"></div>
+        <div class="hero-fade" aria-hidden="true"></div>
+        <div ref="content" class="hero-content">
+            <div class="hero-inner">
+                <p class="hero-eyebrow">AI ENGINEER · TAICHUNG, TW</p>
+                <h1 class="hero-name">Chen Yu Hsu</h1>
+                <p class="hero-desc">
                     Full-stack engineer building AI-powered web products, with industry experience across web and enterprise stacks. NTHU CS, Taiwan Student Cluster Competition gold medalist.
                 </p>
-                <div class="hero-buttons fade-in-up">
-                    <a class="btn primary-btn" href="#work" @click.prevent="emit('scroll-to', 'work')">Explore Work</a>
-                    <a class="btn secondary-btn" href="#contact" @click.prevent="emit('scroll-to', 'contact')">Get in Touch</a>
-                </div>
-
-                <div class="clock-widget fade-in-up">
-                    <div class="clock-header">
-                        <span class="clock-dot"></span>
-                        <span class="clock-label">Taipei</span>
-                        <span class="clock-live">Live</span>
-                    </div>
-                    <div class="clock-body">
-                        <div class="clock-dial" aria-hidden="true">
-                            <span
-                                v-for="n in 12"
-                                :key="n"
-                                class="dial-tick"
-                                :style="{ transform: `rotate(${n * 30}deg)` }"
-                            ></span>
-                            <span class="dial-hand hand-hour" :style="{ transform: `rotate(${clockAngles.hour}deg)` }"></span>
-                            <span class="dial-hand hand-minute" :style="{ transform: `rotate(${clockAngles.minute}deg)` }"></span>
-                            <span class="dial-hand hand-second" :style="{ transform: `rotate(${clockAngles.second}deg)` }"></span>
-                            <span class="dial-center"></span>
-                        </div>
-                        <div class="clock-digits">
-                        <div class="digit-group">
-                            <span class="digit">
-                                <transition name="digit-roll">
-                                    <span class="digit-value" :key="timeParts.h[0]">{{ timeParts.h[0] }}</span>
-                                </transition>
-                            </span>
-                            <span class="digit">
-                                <transition name="digit-roll">
-                                    <span class="digit-value" :key="timeParts.h[1]">{{ timeParts.h[1] }}</span>
-                                </transition>
-                            </span>
-                        </div>
-                        <span class="digit-sep">:</span>
-                        <div class="digit-group">
-                            <span class="digit">
-                                <transition name="digit-roll">
-                                    <span class="digit-value" :key="timeParts.m[0]">{{ timeParts.m[0] }}</span>
-                                </transition>
-                            </span>
-                            <span class="digit">
-                                <transition name="digit-roll">
-                                    <span class="digit-value" :key="timeParts.m[1]">{{ timeParts.m[1] }}</span>
-                                </transition>
-                            </span>
-                        </div>
-                        <span class="digit-sep">:</span>
-                        <div class="digit-group">
-                            <span class="digit">
-                                <transition name="digit-roll">
-                                    <span class="digit-value" :key="timeParts.s[0]">{{ timeParts.s[0] }}</span>
-                                </transition>
-                            </span>
-                            <span class="digit">
-                                <transition name="digit-roll">
-                                    <span class="digit-value" :key="timeParts.s[1]">{{ timeParts.s[1] }}</span>
-                                </transition>
-                            </span>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="clock-date">{{ currentDate }}</div>
-                </div>
-            </div>
-
-            <div class="portrait-container fade-in-up">
-                <div class="portrait-card">
-                    <div class="portrait-img-wrapper">
-                        <img class="portrait-img" src="/sources/PikaSheen.jpg" alt="Chen Yu Hsu profile illustration">
-                    </div>
-                    <div class="portrait-caption">
-                        <div>
-                            <div class="caption-title">Web Developer Portfolio</div>
-                            <div class="caption-subtitle">HTML / CSS / JavaScript / Vue</div>
-                        </div>
-                        <span class="caption-year">2026</span>
-                    </div>
-                </div>
+                <a class="hero-link" href="#work" @click.prevent="emit('scroll-to', 'work')">View work ↓</a>
             </div>
         </div>
-
-        <div class="scroll-indicator" @click="emit('scroll-to', 'about')">
-            <span class="mouse-icon"><span class="mouse-wheel"></span></span>
-            <span class="arrow-down"><i class="fas fa-chevron-down"></i></span>
-        </div>
-    </main>
+    </section>
 </template>

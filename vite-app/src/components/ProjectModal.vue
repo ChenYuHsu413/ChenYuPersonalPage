@@ -14,7 +14,7 @@ const emit = defineEmits(['close-modal'])
                 <button class="modal-close-btn" @click="emit('close-modal')" aria-label="Close modal">
                     <i class="fas fa-times"></i>
                 </button>
-                <div class="modal-header-banner" :style="{ background: selectedProject.colorGradient }">
+                <div class="modal-header-banner">
                     <span class="modal-category-badge">{{ getCategoryLabel(selectedProject.category) }}</span>
                     <h2>{{ selectedProject.title }}</h2>
                 </div>
