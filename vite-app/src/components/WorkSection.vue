@@ -1,45 +1,59 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 
 defineProps({
     filteredProjects: Array,
     activeTab: String,
+    totalCount: Number,
     getCategoryLabel: Function
 })
-const emit = defineEmits(['update:activeTab', 'open-modal'])
+const emit = defineEmits(['update:activeTab', 'open-modal', 'scroll-to'])
 
 const TABS = [
-    { key: 'all', label: 'All' },
+    { key: 'selected', label: 'Selected' },
     { key: 'professional', label: 'Professional' },
     { key: 'aiml', label: 'AI & ML' },
     { key: 'web', label: 'Web & Data' },
     { key: 'game', label: 'Game Tools' },
-    { key: 'archive', label: 'Archive' }
+    { key: 'archive', label: 'Archive' },
+    { key: 'all', label: 'All' }
 ]
 
 const pad = n => String(n).padStart(2, '0')
 
 // Desktop hover preview (≥1200px with a real pointer): fixed in the empty column
-// between the titles and the category/year, vertically aligned with the active row
-const PREVIEW_H = 225
+// between the titles and the category/year, vertically centred on the active row
+// and clamped so it never leaves the list area
 const listEl = ref(null)
+const floatEl = ref(null)
+const tabsEl = ref(null)
 const hoverItem = ref(null)
 const shownItem = ref(null)   // keeps the last image during fade-out
 const previewTop = ref(0)
 let desktopQuery = null
 const canHover = ref(false)
 
-function showPreview(item, row) {
+async function showPreview(item, row) {
     if (!canHover.value) return
     hoverItem.value = item
     shownItem.value = item
-    const max = listEl.value.clientHeight - PREVIEW_H
-    const top = row.offsetTop + row.offsetHeight / 2 - PREVIEW_H / 2
+    await nextTick()   // caption length changes the preview height
+    const h = floatEl.value.offsetHeight
+    const max = listEl.value.clientHeight - h
+    const top = row.offsetTop + row.offsetHeight / 2 - h / 2
     previewTop.value = Math.max(0, Math.min(max, top))
 }
 
 function clearHover() {
     hoverItem.value = null
+}
+
+async function showAll() {
+    emit('update:activeTab', 'all')
+    emit('scroll-to', 'work')
+    // the "View all" button disappears with the tab switch; keep keyboard focus nearby
+    await nextTick()
+    tabsEl.value.querySelector('[aria-selected="true"]').focus({ preventScroll: true })
 }
 
 function syncQuery() {
@@ -65,7 +79,7 @@ onUnmounted(() => {
             <span class="mono-label work-count">{{ pad(filteredProjects.length) }}</span>
         </div>
 
-        <div class="filter-tabs" role="tablist" aria-label="Project categories">
+        <div ref="tabsEl" class="filter-tabs" role="tablist" aria-label="Project categories">
             <button
                 v-for="tab in TABS"
                 :key="tab.key"
@@ -91,29 +105,25 @@ onUnmounted(() => {
                     @blur="clearHover"
                 >
                     <span class="row-num">{{ pad(i + 1) }}</span>
-                    <div class="row-main">
-                        <h3 class="row-title">{{ item.title }}</h3>
-                        <p v-if="item.highlight" class="row-highlight">{{ item.highlight }}</p>
-                    </div>
-                    <span class="row-meta">{{ getCategoryLabel(item.category) }} · {{ item.date }}</span>
-                    <div v-if="item.previewImage" class="row-preview">
-                        <img
-                            :src="item.previewImage"
-                            :alt="`${item.title} preview image`"
-                            loading="lazy"
-                            @error="$event.target.style.display='none'"
-                        >
-                    </div>
+                    <h3 class="row-title">{{ item.title }}</h3>
+                    <span class="row-meta"><span class="row-category">{{ getCategoryLabel(item.category) }} · </span>{{ item.date }}</span>
                 </div>
             </li>
         </ol>
+        <p v-if="activeTab === 'selected'" class="work-all">
+            <button type="button" class="hero-link work-all-link" @click="showAll">View all {{ totalCount }} projects →</button>
+        </p>
         <div
+            ref="floatEl"
             class="work-float"
             :class="{ 'visible': hoverItem && hoverItem.previewImage }"
             :style="{ top: previewTop + 'px' }"
             aria-hidden="true"
         >
-            <img v-if="shownItem && shownItem.previewImage" :key="shownItem.id" :src="shownItem.previewImage" alt="">
+            <div class="work-float-img">
+                <img v-if="shownItem && shownItem.previewImage" :key="shownItem.id" :src="shownItem.previewImage" alt="">
+            </div>
+            <p v-if="shownItem && shownItem.highlight" class="project-highlight work-float-caption">{{ shownItem.highlight }}</p>
         </div>
         </div>
     </section>

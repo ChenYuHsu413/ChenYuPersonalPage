@@ -1,4 +1,6 @@
 <script setup>
+import AppIcon from './AppIcon.vue'
+
 defineProps({
     modalActive: Boolean,
     selectedProject: Object,
@@ -19,11 +21,12 @@ const emit = defineEmits(['close-modal'])
                 @click.stop
             >
                 <button class="modal-close-btn" @click="emit('close-modal')" aria-label="Close modal">
-                    <i class="fas fa-times"></i>
+                    <AppIcon name="xmark" />
                 </button>
                 <div class="modal-header-banner">
                     <span class="modal-category-badge">{{ getCategoryLabel(selectedProject.category) }}</span>
                     <h2 id="modal-title">{{ selectedProject.title }}</h2>
+                    <p v-if="selectedProject.highlight" class="project-highlight modal-highlight">{{ selectedProject.highlight }}</p>
                 </div>
                 <div class="modal-body">
                     <div class="modal-gallery" v-if="selectedProject.gallery?.length">
@@ -68,7 +71,7 @@ const emit = defineEmits(['close-modal'])
                                     :target="selectedProject.demoUrl.startsWith('http') ? '_blank' : '_self'"
                                     rel="noopener noreferrer"
                                 >
-                                    <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    <AppIcon name="external-link" /> Open Live Demo
                                 </a>
                                 <a
                                     v-if="selectedProject.githubUrl"
@@ -77,7 +80,7 @@ const emit = defineEmits(['close-modal'])
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <i class="fab fa-github"></i> View Source Code
+                                    <AppIcon name="github" /> View Source Code
                                 </a>
                             </div>
                         </div>

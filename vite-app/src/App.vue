@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import emailjs from '@emailjs/browser'
 import { PROJECTS } from './data/projects.js'
+import { SELECTED_IDS } from './data/selected.js'
 import AppHeader from './components/AppHeader.vue'
 import HeroSection from './components/HeroSection.vue'
 import AboutSection from './components/AboutSection.vue'
@@ -11,12 +12,13 @@ import WorkSection from './components/WorkSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import ProjectModal from './components/ProjectModal.vue'
 import AppFooter from './components/AppFooter.vue'
+import AppIcon from './components/AppIcon.vue'
 import { initReveal } from './utils/reveal.js'
 
 // State
 const scrolled = ref(false)
 const menuActive = ref(false)
-const activeTab = ref('all')
+const activeTab = ref('selected')
 const modalActive = ref(false)
 const selectedProject = ref(null)
 const formStatus = ref('idle')
@@ -25,25 +27,26 @@ const FALLBACK_REPOS = 31
 const githubStats = ref({ repos: FALLBACK_REPOS })
 let stopReveal = () => {}
 
+// Resolved once at load so a missing id warns a single time
+const SELECTED_PROJECTS = SELECTED_IDS.flatMap(id => {
+    const project = PROJECTS.find(p => p.id === id)
+    if (!project) console.warn(`[selected.js] Unknown project id "${id}", skipped`)
+    return project ? [project] : []
+})
+
 const filteredProjects = computed(() => {
+    if (activeTab.value === 'selected') return SELECTED_PROJECTS
     if (activeTab.value === 'all') {
-        // featured first (in FEATURED_ORDER), then by category order; stable sort keeps data order
-        const rank = p => p.featured
-            ? FEATURED_ORDER.indexOf(p.id)
-            : FEATURED_ORDER.length + CATEGORY_ORDER.indexOf(p.category)
+        // Selected first (in SELECTED_IDS order), then by category order; stable sort keeps data order
+        const rank = p => SELECTED_PROJECTS.includes(p)
+            ? SELECTED_PROJECTS.indexOf(p)
+            : SELECTED_PROJECTS.length + CATEGORY_ORDER.indexOf(p.category)
         return [...PROJECTS].sort((a, b) => rank(a) - rank(b))
     }
     return PROJECTS.filter(p => p.category === activeTab.value)
 })
 
 const deploymentCount = computed(() => PROJECTS.filter(p => p.demoUrl).length)
-
-const FEATURED_ORDER = [
-    'pro-echoai-website',
-    'aiml-ai-town',
-    'aiml-servo-predictive-maintenance',
-    'hw-taiwan-weather-map'
-]
 
 const CATEGORY_ORDER = ['professional', 'aiml', 'web', 'game', 'archive']
 
@@ -159,9 +162,11 @@ onUnmounted(() => {
     <WorkSection
         :filtered-projects="filteredProjects"
         :active-tab="activeTab"
+        :total-count="PROJECTS.length"
         :get-category-label="getCategoryLabel"
         @update:active-tab="activeTab = $event"
         @open-modal="openModal"
+        @scroll-to="scrollToSection"
     />
 
     <AboutSection :github-stats="githubStats" :deployment-count="deploymentCount" />
@@ -190,7 +195,7 @@ onUnmounted(() => {
         @click="scrollToSection('home')"
         aria-label="Scroll to top"
     >
-        <i class="fas fa-arrow-up"></i>
+        <AppIcon name="arrow-up" />
     </button>
 
     <AppFooter />

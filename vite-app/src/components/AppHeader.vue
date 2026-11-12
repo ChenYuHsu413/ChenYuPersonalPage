@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, nextTick, onUnmounted } from 'vue'
+import AppIcon from './AppIcon.vue'
 
 const props = defineProps({
     scrolled: Boolean,
@@ -66,7 +67,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 <li><a href="#contact" @click.prevent="emit('scroll-to', 'contact')">contact</a></li>
                 <li>
                     <a class="github-icon-link" href="https://github.com/ChenYuHsu413" target="_blank" rel="noreferrer" aria-label="GitHub Profile" @click="emit('close-menu')">
-                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <AppIcon name="github" />
                     </a>
                 </li>
             </ul>
@@ -79,7 +80,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 :aria-label="menuActive ? 'Close navigation menu' : 'Open navigation menu'"
                 @click="emit('toggle-menu')"
             >
-                <i :class="menuActive ? 'fas fa-times' : 'fas fa-bars'" aria-hidden="true"></i>
+                <AppIcon :name="menuActive ? 'xmark' : 'bars'" />
             </button>
         </nav>
     </header>

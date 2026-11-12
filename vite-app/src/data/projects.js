@@ -14,7 +14,6 @@ const lolWorldsImg = BASE + 'sources/lol-worlds-2026.png'
 export const PROJECTS = [
     {
         id: 'pro-echoai-website',
-        featured: true,
         title: 'ECHOAi 品牌官網',
         category: 'professional',
         highlight: '中英雙語 · 語音導覽小幫手 · AI 導頁白名單',
@@ -180,7 +179,6 @@ export const PROJECTS = [
     },
     {
         id: 'hw-taiwan-weather-map',
-        featured: true,
         title: '台灣即時氣象視覺化地圖',
         category: 'web',
         highlight: '未使用 Windy API 或框架 · 自行實作類 Windy 風場效果',
@@ -195,7 +193,6 @@ export const PROJECTS = [
     },
     {
         id: 'aiml-ai-town',
-        featured: true,
         title: 'AI Town 多代理人社會模擬',
         category: 'aiml',
         highlight: '5 個 LLM 代理人 · 謠言傳播與關係系統 · 近零 LLM 成本',
@@ -209,7 +206,6 @@ export const PROJECTS = [
     },
     {
         id: 'aiml-servo-predictive-maintenance',
-        featured: true,
         title: 'AI 伺服馬達預測性維護系統',
         category: 'aiml',
         highlight: '健康分類 macro-F1 0.819 · 退化回歸 R² 0.944 · MLOps 閉環',

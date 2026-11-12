@@ -25,8 +25,8 @@
 ## ✨ Features
 
 - 🕳 **Black Hole Hero** — Full-viewport WebGL black hole (Schwarzschild raymarched accretion disk, photon ring, lensed back-disk arc, particle swarm, "formation" intro). Pauses off screen, renders a single still frame under `prefers-reduced-motion`, uses lighter settings on phones, and falls back to a static image without WebGL
-- 🗂 **Numbered Work List** — Editorial list with All / Professional / AI & ML / Web & Data / Game Tools / Archive tabs; All shows `featured` projects first, then the rest by category order
-- 🖼 **Hover Previews** — On wide desktop screens the hovered row's screenshot appears in a dedicated column; tablets and phones show it inline under each row
+- 🗂 **Numbered Work List** — Compact single-line rows (number · title · category · year) with Selected / Professional / AI & ML / Web & Data / Game Tools / Archive / All tabs. **Selected** is the default and shows a hand-picked list in a fixed order, ending with a "View all N projects →" link to the All tab; All shows the Selected projects first (in list order), then the rest by category order. To change the Selected list, edit the `SELECTED_IDS` array in `vite-app/src/data/selected.js` (project ids from `projects.js`, in display order; unknown ids are skipped with a console warning)
+- 🖼 **Hover Previews** — On wide desktop screens (≥1200px with a mouse) the hovered row's screenshot and one-line highlight appear in a dedicated column, clamped to the list area; below 1200px rows stay single-line without images and a tap opens the modal. On phones the tabs scroll sideways on one line
 - ⌨️ **Keyboard Friendly** — Every work row is focusable, Enter opens the project modal, focus mirrors hover
 - 📋 **Project Detail Modal** — Description, tech tags, metadata, live demo / source links, and an unofficial-project notice for Game Tools
 - 🌑 **Dark Editorial Design** — Single dark theme, one warm accent color, Instrument Serif / Inter / JetBrains Mono with Noto Sans TC for Chinese
@@ -47,7 +47,7 @@
 | **Email** | ![EmailJS](https://img.shields.io/badge/EmailJS-f97316?style=flat-square&logoColor=white) `@emailjs/browser` · no backend required |
 | **Styling** | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) Design tokens in `style.css` (color, type, spacing) · no CSS framework |
 | **Fonts** | Google Fonts: Instrument Serif · Inter · JetBrains Mono · Noto Sans TC |
-| **Icons** | ![FontAwesome](https://img.shields.io/badge/Font_Awesome_6-528DD7?style=flat-square&logo=fontawesome&logoColor=white) CDN |
+| **Icons** | Inline SVG via `AppIcon.vue` (paths from Font Awesome Free 6.4.0, CC BY 4.0) · no icon font / CDN |
 | **Deploy** | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) → ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white) |
 
 ---
@@ -98,16 +98,17 @@ ChenYuPersonalPage/
 |       |-- blackhole/         # blackhole.js (module) · shaders.js (GLSL)
 |       |-- utils/reveal.js    # IntersectionObserver fade-in helper
 |       |-- data/projects.js   # PROJECTS static data module
-|       └── components/        # 9 SFCs
+|       |-- data/selected.js   # SELECTED_IDS: Work "Selected" tab list + order
+|       └── components/        # 10 SFCs
 |                              # AppHeader · HeroSection · WorkSection
 |                              # AboutSection · ResumeSection · HonorsSection
-|                              # ContactSection · ProjectModal · AppFooter
+|                              # ContactSection · ProjectModal · AppFooter · AppIcon
 └── docs/
     |-- AGENT.md
     |-- dev-log.md
     |-- glassmorphism-redesign-workfile.md
     |-- interview-qa.md
-    |-- redesign/              # Round 1–3 screenshots
+    |-- redesign/              # Round 1–3 + work-compact screenshots
     └── 工作報告.md
 ```
 
